@@ -1,0 +1,338 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9E832C95-8D23-4122-801F-F4F352C6D106}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>DirectEmailResults</RootNamespace>
+    <AssemblyName>Inbox Emailer</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>C:\Users\HP\source\repos\Upwork\NetEmail\Publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>7</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>2</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>NetEmail.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>1A55435907DED610E20B01A124C3268B32F381A1</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>DirectEmailResults_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Backgrounder">
+      <HintPath>..\ReferencedAssembly\Backgrounder.dll</HintPath>
+    </Reference>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.10.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
+      <HintPath>..\packages\Portable.BouncyCastle.1.8.10\lib\net40\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="MimeKit, Version=2.13.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
+      <HintPath>..\packages\MimeKit.2.13.0\lib\net45\MimeKit.dll</HintPath>
+    </Reference>
+    <Reference Include="S22.Imap, Version=3.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\S22.Imap.3.6.0.0\lib\net40\S22.Imap.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\netstandard1.1\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.110.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.110.0\lib\net45\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.EF6, Version=1.0.110.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.110.0\lib\net45\System.Data.SQLite.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.110.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.110.0\lib\net45\System.Data.SQLite.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Business\BlackListEmailBusiness.cs" />
+    <Compile Include="Business\CustomerBusiness.cs" />
+    <Compile Include="Business\EmailSettingsBusiness.cs" />
+    <Compile Include="Business\SettingsBusiness.cs" />
+    <Compile Include="Business\CampaignBusiness.cs" />
+    <Compile Include="Business\EmailQueueBusiness.cs" />
+    <Compile Include="Business\TemplateBusiness.cs" />
+    <Compile Include="DTO\BlackListEmailDto.cs" />
+    <Compile Include="DTO\CampaignCustomerDTO.cs" />
+    <Compile Include="DTO\CampaignDTO.cs" />
+    <Compile Include="DTO\EmailDTO.cs" />
+    <Compile Include="DTO\EmailQueueItem.cs" />
+    <Compile Include="DTO\ViewEmailDto.cs" />
+    <Compile Include="Entity\BlackListEmails.cs" />
+    <Compile Include="Entity\CampaignCustomer.cs" />
+    <Compile Include="Entity\Campaign.cs" />
+    <Compile Include="Entity\EmailQueueLog.cs" />
+    <Compile Include="Entity\Template.cs" />
+    <Compile Include="Entity\Customer.cs" />
+    <Compile Include="Entity\Email.cs" />
+    <Compile Include="View\CampaignsEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\CampaignsEdit.Designer.cs">
+      <DependentUpon>CampaignsEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\Customers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Customers.Designer.cs">
+      <DependentUpon>Customers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\Dashboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Dashboard.Designer.cs">
+      <DependentUpon>Dashboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\NetEmailContext.cs" />
+    <Compile Include="Entity\Setting.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\EditCustomer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\EditCustomer.Designer.cs">
+      <DependentUpon>EditCustomer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\EditEmailAccount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\EditEmailAccount.Designer.cs">
+      <DependentUpon>EditEmailAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\EditEmailAccountTestEmailAddress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\EditEmailAccountTestEmailAddress.Designer.cs">
+      <DependentUpon>EditEmailAccountTestEmailAddress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\EditTemplate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\EditTemplate.Designer.cs">
+      <DependentUpon>EditTemplate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\Settings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Settings.Designer.cs">
+      <DependentUpon>Settings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\Campaigns.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Campaigns.Designer.cs">
+      <DependentUpon>Campaigns.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\EmailQueueLog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\EmailQueueLog.Designer.cs">
+      <DependentUpon>EmailQueueLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\BalckListEmails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\BalckListEmails.Designer.cs">
+      <DependentUpon>BalckListEmails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\Templates.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Templates.Designer.cs">
+      <DependentUpon>Templates.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\UnifiedInboxEmails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\UnifiedInboxEmails.Designer.cs">
+      <DependentUpon>UnifiedInboxEmails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\UploadCustomerCSV.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\UploadCustomerCSV.Designer.cs">
+      <DependentUpon>UploadCustomerCSV.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="View\CampaignsEdit.resx">
+      <DependentUpon>CampaignsEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Customers.resx">
+      <DependentUpon>Customers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Dashboard.resx">
+      <DependentUpon>Dashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="View\EditCustomer.resx">
+      <DependentUpon>EditCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\EditEmailAccount.resx">
+      <DependentUpon>EditEmailAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\EditEmailAccountTestEmailAddress.resx">
+      <DependentUpon>EditEmailAccountTestEmailAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\EditTemplate.resx">
+      <DependentUpon>EditTemplate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Settings.resx">
+      <DependentUpon>Settings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Campaigns.resx">
+      <DependentUpon>Campaigns.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\EmailQueueLog.resx">
+      <DependentUpon>EmailQueueLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\BalckListEmails.resx">
+      <DependentUpon>BalckListEmails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Templates.resx">
+      <DependentUpon>Templates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\UnifiedInboxEmails.resx">
+      <DependentUpon>UnifiedInboxEmails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\UploadCustomerCSV.resx">
+      <DependentUpon>UploadCustomerCSV.cs</DependentUpon>
+    </EmbeddedResource>
+    <Content Include="Files\sample_customers_csv_file.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="DirectEmailResults_TemporaryKey.pfx" />
+    <Compile Include="NetEmail.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Files\Editor\bootstrap.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\Editor\Editor.html">
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\Editor\Editor.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\Editor\jquery.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\Editor\summernote.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NetEmail.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NetMail.Utility\DirectEmailResults.Utility.csproj">
+      <Project>{f409496e-e8d7-4da2-849f-bcd6b9e19952}</Project>
+      <Name>DirectEmailResults.Utility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.110.0\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.110.0\build\net45\System.Data.SQLite.Core.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Bu proje bu bilgisayarda olmayan NuGet paketlerine başvuru yapıyor. Bunları indirmek için NuGet Paket Geri Yükleme'yi kullanın. Daha fazla bilgi için, bkz. http://go.microsoft.com/fwlink/?LinkID=322105. Eksik dosya: {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.110.0\build\net45\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.110.0\build\net45\System.Data.SQLite.Core.targets'))" />
+  </Target>
+</Project>
