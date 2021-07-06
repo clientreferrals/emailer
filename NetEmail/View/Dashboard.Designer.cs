@@ -253,7 +253,7 @@
             this.blackEmailsButton.Name = "blackEmailsButton";
             this.blackEmailsButton.Size = new System.Drawing.Size(202, 57);
             this.blackEmailsButton.TabIndex = 7;
-            this.blackEmailsButton.Text = "Black emails";
+            this.blackEmailsButton.Text = "Block Emails";
             this.blackEmailsButton.UseVisualStyleBackColor = true;
             this.blackEmailsButton.Click += new System.EventHandler(this.blackEmailsButton_Click);
             // 

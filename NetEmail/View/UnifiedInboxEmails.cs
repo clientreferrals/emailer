@@ -60,7 +60,7 @@ namespace DirectEmailResults.View
                 totalEmailNumber = 0;
                 downloadLable.Text = "Downloading Emails please wait....";
                 CreateGridView();
-                _ = DownloadEmails();
+                 DownloadEmails();
             }
             catch (Exception ex)
             {
@@ -113,71 +113,79 @@ namespace DirectEmailResults.View
             RefreshEmailsTable();
         }
 
-        private async Task DownloadEmails()
+        private void DownloadEmails()
         {
             this.refreshButtonEmails.Enabled = false;
             this.dataGridEmails.Enabled = false;
+            downloadLable.Text = "Downloading Emails please wait....";
             foreach (var item in emailRecords)
             {
-                try
+                bgHelper.Background(() =>
                 {
-                    using (ImapClient client = new ImapClient(item.PopHost, Convert.ToInt32(item.PopPort), true))
+                    try
                     {
-                        // Login
-                        client.Login(item.Address, item.Password, AuthMethod.Auto);
-
-                        IEnumerable<uint> uids = client.Search(SearchCondition.Unseen());
-
-                        foreach (var uid in uids)
+                        using (ImapClient client = new ImapClient(item.PopHost, Convert.ToInt32(item.PopPort), true))
                         {
-                            MailMessage mailMessage = client.GetMessage(uid);
-                            if (blackListEmailRecords.Where(x => x.EmailAddress == mailMessage.From.Address).Any())
+                            // Login
+                            client.Login(item.Address, item.Password, AuthMethod.Auto);
+
+                            IEnumerable<uint> uids = client.Search(SearchCondition.Unseen());
+
+                            foreach (var uid in uids)
                             {
-                                client.DeleteMessage(uid);
-                            }
-                            else
-                            {
-                                ViewEmailDto _currentEmail = new ViewEmailDto
+                                MailMessage mailMessage = client.GetMessage(uid);
+                                if (blackListEmailRecords.Where(x => x.EmailAddress == mailMessage.From.Address).Any())
                                 {
-                                    CurrentCompleteEmail = mailMessage,
-                                    DateOfEmail = mailMessage.Date(),
-                                    Subject = mailMessage.Subject,
-                                    FromEmailAddress = mailMessage.From.Address.ToString(),
-                                    Body = mailMessage.Body,
-                                    CurrentUserEmail = item,
-                                    UID = uid
-                                };
-                                unReadEmails.Add(_currentEmail);
-                                // add to Grid View  
-                                AddNewRow(_currentEmail);
-                                await Task.Delay(5);
+                                    client.DeleteMessage(uid);
+                                }
+                                else
+                                {
+                                    ViewEmailDto _currentEmail = new ViewEmailDto
+                                    {
+                                        CurrentCompleteEmail = mailMessage,
+                                        DateOfEmail = mailMessage.Date(),
+                                        Subject = mailMessage.Subject,
+                                        FromEmailAddress = mailMessage.From.Address.ToString(),
+                                        Body = mailMessage.Body,
+                                        CurrentUserEmail = item,
+                                        UID = uid
+                                    };
+                                    unReadEmails.Add(_currentEmail);
+                                    bgHelper.Foreground(() =>
+                                    {
+                                        // add to Grid View  
+                                        AddNewRow(_currentEmail);
+                                    });
+                                }
                             }
-
                         }
+                        bgHelper.Foreground(() =>
+                        {
+                            this.dataGridEmails.Enabled = true;
+                            refreshButtonEmails.Enabled = true;
+                            this.dataGridEmails.ReadOnly = false;
+                            downloadLable.Text = "Download Completed";
+
+                            datatable.Rows.Clear();
+
+                            unReadEmails = unReadEmails.OrderByDescending(x => x.DateOfEmail).ToList();
+                            foreach (var email in unReadEmails)
+                            {
+                                DataRow row = this.datatable.NewRow();
+                                row["Subject"] = email.Subject;
+                                row["DateOfEmail"] = email.DateOfEmail;
+                                datatable.Rows.Add(row);
+                            }
+                            dataGridEmails.DataSource = datatable;
+                        });
+                        }
+                    catch (Exception ex)
+                    {
+                        //MessageBox.Show(ex.ToString(), "Error while downloading emails for " + item.Address,
+                        //    MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                }
-                catch (Exception ex)
-                {
-                    //MessageBox.Show(ex.ToString(), "Error while downloading emails for " + item.Address,
-                    //    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                });
             }
-            this.dataGridEmails.Enabled = true;
-            refreshButtonEmails.Enabled = true;
-            this.dataGridEmails.ReadOnly = false;
-            downloadLable.Text = "Download Completed";
-
-            datatable.Rows.Clear();
-
-            unReadEmails = unReadEmails.OrderByDescending(x => x.DateOfEmail).ToList();
-            foreach (var email in unReadEmails)
-            {
-                DataRow row = this.datatable.NewRow();
-                row["Subject"] = email.Subject;
-                row["DateOfEmail"] = email.DateOfEmail; 
-                datatable.Rows.Add(row);
-            }
-            dataGridEmails.DataSource = datatable;
         }
         private void AddNewRow(ViewEmailDto currentEmail)
         {
@@ -193,6 +201,7 @@ namespace DirectEmailResults.View
             totalEmailNumber += 1;
             totalLabel.Text = totalEmailNumber.ToString();
         }
+
         private void UnifiedInboxEmails_Load(object sender, EventArgs e)
         {
             this.Activated += AfterLoading;

@@ -41,7 +41,7 @@ namespace DirectEmailResults.View
             this.addEmailToBlackListButton.Name = "addEmailToBlackListButton";
             this.addEmailToBlackListButton.Size = new System.Drawing.Size(116, 23);
             this.addEmailToBlackListButton.TabIndex = 0;
-            this.addEmailToBlackListButton.Text = "Add Email to black list";
+            this.addEmailToBlackListButton.Text = "Add Emails to Block";
             this.addEmailToBlackListButton.UseVisualStyleBackColor = true;
             this.addEmailToBlackListButton.Click += new System.EventHandler(this.addEmailToBlackListButton_Click);
             // 
