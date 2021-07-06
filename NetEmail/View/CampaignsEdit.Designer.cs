@@ -92,7 +92,7 @@
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(234, 13);
             this.label7.TabIndex = 14;
-            this.label7.Text = "You can use @Name@ and @Surname@ tags.";
+            this.label7.Text = "You can use @Name@ tags.";
             // 
             // tbxMailSubject
             // 

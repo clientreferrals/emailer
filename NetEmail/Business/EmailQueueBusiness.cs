@@ -75,7 +75,7 @@ namespace NetEmail.Business
                                 t.Name as TemplateName,
                                 t.Content as TemplateContent,
                                 cu.Name as CustomerName,
-                                cu.Surname as CustomerSurname,
+                                cu.PhoneNo as CustomerPhoneNo,
                                 cu.Email as CustomerEmail,
                                 c.MailSubject as MailSubject
                             from CampaignCustomer cc
@@ -107,7 +107,7 @@ namespace NetEmail.Business
                     Id = maxId + 1,
                     Campaign = item.CampaignName,
                     Template = item.TemplateName,
-                    Customer = item.CustomerName + " " + item.CustomerSurname,
+                    Customer = item.CustomerName + " " + item.CustomerPhoneNo,
                     From = from,
                     To = item.CustomerEmail,
                     Mail = mail,

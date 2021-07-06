@@ -34,6 +34,50 @@ namespace NetMail.Business
                     ");
                 }
             }
+            else
+            {
+                try
+                {
+                    using (var db = new NetEmailContext())
+                    {
+                        if (!IsColumnExists("PhoneNo"))
+                        {
+                            db.Database.ExecuteSqlCommand(@"
+                               ALTER TABLE Customer
+                               ADD PhoneNo VARCHAR;
+                             ");
+                        }
+                        if (!IsColumnExists("Website"))
+                        {
+                            db.Database.ExecuteSqlCommand(@"
+                             ALTER TABLE Customer
+                              ADD Website VARCHAR;
+                             ");
+                        }
+
+                        if (!IsColumnExists("City"))
+                        {
+                            db.Database.ExecuteSqlCommand(@"
+                             ALTER TABLE Customer
+                              ADD City VARCHAR;
+                             ");
+                        }
+
+                        if (!IsColumnExists("State"))
+                        {
+                            db.Database.ExecuteSqlCommand(@"
+                             ALTER TABLE Customer
+                              ADD State VARCHAR;
+                             ");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+            }
         }
 
         private bool IsTableExists(String tableName)
@@ -49,19 +93,33 @@ namespace NetMail.Business
                 else return false;
             }
         }
+        private bool IsColumnExists(string columName)
+        {
+            using (var db = new NetEmailContext())
+            {
+                int a = db.Database.SqlQuery<int>(
+                    "SELECT COUNT(*) AS CNTREC FROM pragma_table_info('Customer') WHERE name='" + columName + "'")
+                    .FirstOrDefault();
+
+                if (a > 0) return true;
+                else return false;
+            }
+        }
 
         #endregion
 
         #region Public Methods
 
-        public List<Customer> GetCustomers(string name, string surname, string tag)
+        public List<Customer> GetCustomers(string name, string phoneNo, string tag, string website, string city)
         {
             using (var db = new NetEmailContext())
             {
                 var query = db.Customers.AsQueryable();
 
                 if (string.IsNullOrEmpty(name) == false) query = query.Where(q => q.Name.Contains(name));
-                if (string.IsNullOrEmpty(surname) == false) query = query.Where(q => q.Surname.Contains(surname));
+                if (string.IsNullOrEmpty(phoneNo) == false) query = query.Where(q => q.PhoneNo.Contains(phoneNo));
+                if (string.IsNullOrEmpty(website) == false) query = query.Where(q => q.Website.Contains(website));
+                if (string.IsNullOrEmpty(city) == false) query = query.Where(q => q.City.Contains(city));
                 if (string.IsNullOrEmpty(tag) == false) query = query.Where(q => q.Tags.Contains(tag + "|"));
 
                 var result = query.ToList();
@@ -71,9 +129,9 @@ namespace NetMail.Business
             }
         }
 
-        public Customer Save(int id, string name, string surname, string tags, string email)
+        public Customer Save(int id, string name, string phoneNo, string tags, string email, string website, string state, string city)
         {
-            if (string.IsNullOrEmpty(tags)) throw new Exception("Please enter a tag for customer: " + name + " " + surname);
+            if (string.IsNullOrEmpty(tags)) throw new Exception("Please enter a tag for customer: " + name);
 
             if (tags.Last() != '|') tags += '|';
 
@@ -91,9 +149,12 @@ namespace NetMail.Business
                     {
                         Id = maxId + 1,
                         Name = name,
-                        Surname = surname,
+                        PhoneNo = phoneNo,
                         Tags = tags,
-                        Email = email
+                        Email = email,
+                        Website = website,
+                        State = state,
+                        City = city
                     };
 
                     db.Customers.Add(record);
@@ -109,10 +170,12 @@ namespace NetMail.Business
                     var record = db.Customers.Where(x => x.Id == id).FirstOrDefault();
 
                     record.Name = name;
-                    record.Surname = surname;
+                    record.PhoneNo = phoneNo;
                     record.Tags = tags;
                     record.Email = email;
-
+                    record.Website = website;
+                    record.State = state;
+                    record.City = city;
                     db.SaveChanges();
 
                     return record;

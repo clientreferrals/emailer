@@ -87,7 +87,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(380, 13);
             this.label2.TabIndex = 2;
-            this.label2.Text = "Please use @Name@ and @Surname@ tags for customer name and surname.";
+            this.label2.Text = "Please use @Name@ tags for customer name";
             // 
             // webBrowser1
             // 

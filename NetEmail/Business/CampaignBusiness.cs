@@ -131,7 +131,7 @@ namespace NetEmail.Business
                                                     {
                                                         Id = cc.Id,
                                                         Name = c.Name,
-                                                        Surname = c.Surname,
+                                                        PhoneNo = c.PhoneNo,
                                                         Tags = c.Tags,
                                                         Email = c.Email,
                                                         IsSent = cc.IsSent == 1 ? true : false

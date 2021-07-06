@@ -1,15 +1,8 @@
 ﻿using Backgrounder;
-using Microsoft.VisualBasic.FileIO;
 using NetMail.Business;
 using NetMail.Utility;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace NetEmail.View
@@ -89,11 +82,13 @@ namespace NetEmail.View
                                 CustomerBusiness.Instance.Save(
                                     id: 0,
                                     name: row["Name"].ToString(),
-                                    surname: row["Surname"].ToString(),
+                                    phoneNo: row["phoneNo"].ToString(),
                                     email: row["Email"].ToString(),
-                                    tags: tbxTag.Text
-                                );
-
+                                    tags: tbxTag.Text,
+                                    website: row["Website"].ToString(),
+                                    state: row["State"].ToString(),
+                                    city: row["City"].ToString()
+                                ); 
                                 i++;
 
                                 bgHelper.Foreground(() =>

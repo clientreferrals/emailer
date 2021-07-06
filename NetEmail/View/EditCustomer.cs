@@ -1,13 +1,6 @@
 ﻿using NetEmail.Entity;
 using NetMail.Business;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace NetEmail.View
@@ -26,21 +19,26 @@ namespace NetEmail.View
 
                 tbxEmail.Text = CustomerRecord.Email;
                 tbxName.Text = CustomerRecord.Name;
-                tbxSurname.Text = CustomerRecord.Surname;
+                tbxPhoneNo.Text = CustomerRecord.PhoneNo;
                 tbxTags.Text = CustomerRecord.Tags;
+                txbWebsite.Text = CustomerRecord.Website;
+                txbState.Text = CustomerRecord.State;
+                txbCity.Text = CustomerRecord.City;
+                tbxName.Focus();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-            
+
         }
 
         private void btnOK_Click(object sender, EventArgs e)
         {
             try
             {
-                CustomerBusiness.Instance.Save(CustomerRecord.Id, tbxName.Text, tbxSurname.Text, tbxTags.Text, tbxEmail.Text);
+                CustomerBusiness.Instance.Save(CustomerRecord.Id, tbxName.Text.Trim(),
+                    tbxPhoneNo.Text.Trim(), tbxTags.Text.Trim(), tbxEmail.Text.Trim(), txbWebsite.Text.Trim(), txbState.Text.Trim(), txbCity.Text.Trim());
 
                 this.Close();
             }
@@ -48,7 +46,7 @@ namespace NetEmail.View
             {
                 MessageBox.Show(ex.Message);
             }
-            
+
 
 
         }
@@ -74,7 +72,7 @@ namespace NetEmail.View
             {
                 MessageBox.Show(ex.Message);
             }
-            
+
         }
     }
 }

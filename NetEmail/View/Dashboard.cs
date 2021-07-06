@@ -50,7 +50,8 @@ namespace NetEmail.View
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    string inner = ex.InnerException == null ? "Inner exception is null" : ex.InnerException.ToString();
+                    MessageBox.Show(ex.Message + " Inner Exception."+ inner);
                 }
 
             });
@@ -223,8 +224,8 @@ namespace NetEmail.View
 
                 if (item.CustomerEmail.Contains("@fake.com") == false)
                 {
-                    string title = item.MailSubject.Replace("@Name@", item.CustomerName).Replace("@Surname@", item.CustomerSurname);
-                    string message = item.TemplateContent.Replace("@Name@", item.CustomerName).Replace("@Surname@", item.CustomerSurname);
+                    string title = item.MailSubject.Replace("@Name@", item.CustomerName);
+                    string message = item.TemplateContent.Replace("@Name@", item.CustomerName);
 
                     Response<bool> sendResult = EmailHelper.Instance.SetCredentials(emailAccount.Host,
                     emailAccount.Port,
