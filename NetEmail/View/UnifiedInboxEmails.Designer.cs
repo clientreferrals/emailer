@@ -89,9 +89,12 @@ namespace DirectEmailResults.View
             // 
             // dataGridEmails
             // 
+            this.dataGridEmails.AllowUserToAddRows = false;
+            this.dataGridEmails.AllowUserToDeleteRows = false;
             this.dataGridEmails.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridEmails.Location = new System.Drawing.Point(18, 48);
             this.dataGridEmails.Name = "dataGridEmails";
+            this.dataGridEmails.ReadOnly = true;
             this.dataGridEmails.Size = new System.Drawing.Size(521, 589);
             this.dataGridEmails.TabIndex = 2;
             this.dataGridEmails.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridCustomers_CellDoubleClick);

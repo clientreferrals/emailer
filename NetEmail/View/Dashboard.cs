@@ -189,9 +189,20 @@ namespace NetEmail.View
                                 EmailQueueBusiness.Instance.SaveEmailQueueLog(item, "", "", "Sent limit reached for all email addresses. Please increase email limits in settings and restart the program.");
                                 return;
                             }
-
-                            SendMail(item, availableEmails[index]);
-                            index++;
+                            bool isEmailSend = false;
+                            while (isEmailSend == false)
+                            {
+                                if(index == availableEmails.Count)
+                                {
+                                    isEmailSend = true;
+                                    index = 0 ;
+                                }
+                                else
+                                { 
+                                    index++;
+                                }
+                                isEmailSend = SendMail(item, availableEmails[index]).Success;
+                            }
                             bgHelper.Foreground(() =>
                             {
                                 lblRemaining.Text = (Convert.ToInt32(lblRemaining.Text) - 1).ToString();
@@ -238,7 +249,7 @@ namespace NetEmail.View
                     if (sendResult.Success == false)
                     {
                         EmailQueueBusiness.Instance.SaveEmailQueueLog(item, emailAccount.FromAddress, "", sendResult.Message);
-                        return sendResult;
+                        
                     }
                 }
 

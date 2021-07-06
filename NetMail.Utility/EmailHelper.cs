@@ -31,20 +31,21 @@ namespace NetMail.Utility
         {
             try
             {
-                SmtpClient client = new SmtpClient();
-                client.Host = host;
-                client.Port = port;
-                client.UseDefaultCredentials = false;
-                client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                client.EnableSsl = true;
-
-                client.Credentials = new NetworkCredential(mailAddress, password);
+                SmtpClient client = new SmtpClient
+                {
+                    Host = host,
+                    Port = port,
+                    UseDefaultCredentials = false,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    EnableSsl = true, 
+                    Credentials = new NetworkCredential(mailAddress, password)
+                };
 
                 MailAddress from = new MailAddress(fromAddress, fromAlias);
                 MailMessage mail = new MailMessage();
                 mail.From = from;
                 mail.Subject = subject;
-                mail.Body = message;
+                mail.Body = message + "<footer> <p> Call Referrals<br>1500 Chestnut St, Suite #1626, Philadelphia, PA 19102</p></footer> ";
                 mail.IsBodyHtml = true;
 
                 recepients.ForEach(r => mail.To.Add(r));

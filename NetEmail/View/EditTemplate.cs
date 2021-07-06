@@ -19,7 +19,7 @@ namespace NetEmail.View
 {
     public partial class EditTemplate : Form
     {
-        Template TemplateRecord;
+        Template templateRecord;
         BackgroundHelper bgHelper;
 
         public EditTemplate(Template t)
@@ -30,12 +30,12 @@ namespace NetEmail.View
 
                 bgHelper = new BackgroundHelper();
 
-                TemplateRecord = t;
+                templateRecord = t;
 
-                string editorUrl = System.AppDomain.CurrentDomain.BaseDirectory + "Files\\Editor\\Editor.html";
+                string editorUrl = AppDomain.CurrentDomain.BaseDirectory + "Files\\Editor\\Editor.html";
                 webBrowser1.Navigate(editorUrl);
 
-                tbxName.Text = TemplateRecord.Name;
+                tbxName.Text = templateRecord.Name;
                 webBrowser1.DocumentCompleted += WebBrowser1_DocumentCompleted;
             }
             catch (Exception ex)
@@ -64,7 +64,7 @@ namespace NetEmail.View
             {
                 try
                 {
-                    webBrowser1.Document.InvokeScript("setContent", new String[] { TemplateRecord.Content });
+                    webBrowser1.Document.InvokeScript("setContent", new String[] { templateRecord.Content });
                 }
                 catch (Exception ex)
                 {
@@ -88,7 +88,7 @@ namespace NetEmail.View
         {
             try
             {
-                TemplateBusiness.Instance.Save(TemplateRecord.Id, tbxName.Text, GetElementByClassName("note-editable").InnerHtml);
+                TemplateBusiness.Instance.Save(templateRecord.Id, tbxName.Text, GetElementByClassName("note-editable").InnerHtml);
                 this.Close();
             }
             catch (Exception ex)
@@ -119,7 +119,7 @@ namespace NetEmail.View
 
                 if (confirmResult == DialogResult.Yes)
                 {
-                    TemplateBusiness.Instance.Delete(TemplateRecord.Id);
+                    TemplateBusiness.Instance.Delete(templateRecord.Id);
                     this.Close();
                 }
             }

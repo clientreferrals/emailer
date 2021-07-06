@@ -36,8 +36,6 @@
             this.tableEmails = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.tbxFromWaitTime = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.tbxTryAgain = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.tbxToWaitTime = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -70,9 +68,9 @@
             // 
             this.groupBox2.Controls.Add(this.btnAddEmail);
             this.groupBox2.Controls.Add(this.tableEmails);
-            this.groupBox2.Location = new System.Drawing.Point(12, 112);
+            this.groupBox2.Location = new System.Drawing.Point(12, 120);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(511, 374);
+            this.groupBox2.Size = new System.Drawing.Size(511, 366);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Email Accounts";
@@ -89,9 +87,12 @@
             // 
             // tableEmails
             // 
+            this.tableEmails.AllowUserToAddRows = false;
+            this.tableEmails.AllowUserToDeleteRows = false;
             this.tableEmails.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.tableEmails.Location = new System.Drawing.Point(7, 20);
+            this.tableEmails.Location = new System.Drawing.Point(0, 19);
             this.tableEmails.Name = "tableEmails";
+            this.tableEmails.ReadOnly = true;
             this.tableEmails.Size = new System.Drawing.Size(493, 311);
             this.tableEmails.TabIndex = 0;
             this.tableEmails.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tableEmails_CellContentDoubleClick);
@@ -112,30 +113,14 @@
             this.tbxFromWaitTime.Size = new System.Drawing.Size(133, 20);
             this.tbxFromWaitTime.TabIndex = 1;
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 56);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(81, 13);
-            this.label2.TabIndex = 10;
-            this.label2.Text = "Try again count";
-            // 
-            // tbxTryAgain
-            // 
-            this.tbxTryAgain.Location = new System.Drawing.Point(106, 53);
-            this.tbxTryAgain.Name = "tbxTryAgain";
-            this.tbxTryAgain.Size = new System.Drawing.Size(133, 20);
-            this.tbxTryAgain.TabIndex = 3;
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(255, 20);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(66, 13);
+            this.label3.Size = new System.Drawing.Size(63, 13);
             this.label3.TabIndex = 4;
-            this.label3.Text = "To  seconds";
+            this.label3.Text = "To seconds";
             // 
             // tbxToWaitTime
             // 
@@ -148,13 +133,11 @@
             // 
             this.groupBox1.Controls.Add(this.tbxToWaitTime);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.tbxTryAgain);
-            this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.tbxFromWaitTime);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(511, 94);
+            this.groupBox1.Size = new System.Drawing.Size(511, 102);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Basic";
@@ -188,8 +171,6 @@
         private System.Windows.Forms.Button btnAddEmail;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tbxFromWaitTime;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox tbxTryAgain;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tbxToWaitTime;
         private System.Windows.Forms.GroupBox groupBox1;

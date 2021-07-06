@@ -32,12 +32,8 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tbxHostAddress = new System.Windows.Forms.TextBox();
             this.tbxDailyLimit = new System.Windows.Forms.TextBox();
-            this.tbxFromAddress = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.tbxFromAlias = new System.Windows.Forms.TextBox();
             this.tbxPort = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -54,6 +50,8 @@
             this.popHostAddressTbx = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tbxFromAlias = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -63,17 +61,15 @@
             // 
             this.groupBox1.Controls.Add(this.tbxHostAddress);
             this.groupBox1.Controls.Add(this.tbxDailyLimit);
-            this.groupBox1.Controls.Add(this.tbxFromAddress);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.tbxFromAlias);
             this.groupBox1.Controls.Add(this.tbxPort);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(14, 98);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(383, 155);
+            this.groupBox1.Size = new System.Drawing.Size(383, 134);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "SMTP";
@@ -89,19 +85,12 @@
             // 
             // tbxDailyLimit
             // 
-            this.tbxDailyLimit.Location = new System.Drawing.Point(148, 126);
+            this.tbxDailyLimit.Location = new System.Drawing.Point(147, 104);
             this.tbxDailyLimit.Name = "tbxDailyLimit";
             this.tbxDailyLimit.ReadOnly = true;
             this.tbxDailyLimit.Size = new System.Drawing.Size(229, 20);
             this.tbxDailyLimit.TabIndex = 7;
             this.tbxDailyLimit.Text = "500";
-            // 
-            // tbxFromAddress
-            // 
-            this.tbxFromAddress.Location = new System.Drawing.Point(147, 70);
-            this.tbxFromAddress.Name = "tbxFromAddress";
-            this.tbxFromAddress.Size = new System.Drawing.Size(229, 20);
-            this.tbxFromAddress.TabIndex = 5;
             // 
             // label7
             // 
@@ -115,36 +104,11 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(8, 129);
+            this.label6.Location = new System.Drawing.Point(7, 107);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(88, 13);
             this.label6.TabIndex = 10;
             this.label6.Text = "Limit in one cycle";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 70);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(70, 13);
-            this.label4.TabIndex = 8;
-            this.label4.Text = "From address";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(8, 96);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(54, 13);
-            this.label5.TabIndex = 9;
-            this.label5.Text = "From alias";
-            // 
-            // tbxFromAlias
-            // 
-            this.tbxFromAlias.Location = new System.Drawing.Point(148, 96);
-            this.tbxFromAlias.Name = "tbxFromAlias";
-            this.tbxFromAlias.Size = new System.Drawing.Size(229, 20);
-            this.tbxFromAlias.TabIndex = 6;
             // 
             // tbxPort
             // 
@@ -199,7 +163,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(320, 366);
+            this.btnCancel.Location = new System.Drawing.Point(320, 344);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 1;
@@ -209,7 +173,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(239, 366);
+            this.btnOK.Location = new System.Drawing.Point(239, 344);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 2;
@@ -219,7 +183,7 @@
             // 
             // btnTest
             // 
-            this.btnTest.Location = new System.Drawing.Point(99, 366);
+            this.btnTest.Location = new System.Drawing.Point(99, 344);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(75, 23);
             this.btnTest.TabIndex = 3;
@@ -229,7 +193,7 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(12, 366);
+            this.btnDelete.Location = new System.Drawing.Point(12, 344);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 23);
             this.btnDelete.TabIndex = 4;
@@ -243,7 +207,7 @@
             this.groupBox2.Controls.Add(this.label9);
             this.groupBox2.Controls.Add(this.popHostAddressTbx);
             this.groupBox2.Controls.Add(this.label8);
-            this.groupBox2.Location = new System.Drawing.Point(13, 259);
+            this.groupBox2.Location = new System.Drawing.Point(13, 238);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(384, 91);
             this.groupBox2.TabIndex = 5;
@@ -299,11 +263,27 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Credentials";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(7, 74);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(54, 13);
+            this.label5.TabIndex = 9;
+            this.label5.Text = "From alias";
+            // 
+            // tbxFromAlias
+            // 
+            this.tbxFromAlias.Location = new System.Drawing.Point(147, 74);
+            this.tbxFromAlias.Name = "tbxFromAlias";
+            this.tbxFromAlias.Size = new System.Drawing.Size(229, 20);
+            this.tbxFromAlias.TabIndex = 6;
+            // 
             // EditEmailAccount
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(414, 401);
+            this.ClientSize = new System.Drawing.Size(414, 373);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btnDelete);
@@ -328,12 +308,8 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox tbxFromAlias;
-        private System.Windows.Forms.TextBox tbxFromAddress;
         private System.Windows.Forms.TextBox tbxPassword;
         private System.Windows.Forms.TextBox tbxAddress;
         private System.Windows.Forms.TextBox tbxPort;
@@ -352,5 +328,7 @@
         private System.Windows.Forms.TextBox popHostAddressTbx;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox tbxFromAlias;
     }
 }

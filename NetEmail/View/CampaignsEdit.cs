@@ -103,8 +103,8 @@ namespace NetEmail.View
                 {
                     bgHelper.Foreground(() =>
                     {
-                        if (tbxName.Text == "") tbxName.Text = "New Campaign";
-                        if (tbxMailSubject.Text == "") tbxMailSubject.Text = "Mail Subject";
+                        if (tbxName.Text == "") tbxName.Text = "";
+                        if (tbxMailSubject.Text == "") tbxMailSubject.Text = "";
                     });
                 }
 

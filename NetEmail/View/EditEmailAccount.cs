@@ -49,8 +49,7 @@ namespace NetEmail.View
                 tbxFromAlias.Text = emailAccount.FromAlias;
                 tbxPassword.Text = emailAccount.Password;
                 tbxPort.Text = emailAccount.Port.ToString();
-                tbxHostAddress.Text = emailAccount.Host;
-
+                tbxHostAddress.Text = emailAccount.Host; 
                 popHostAddressTbx.Text = emailAccount.PopHost;
                 popPortNoTbx.Text = emailAccount.PopPort.ToString();
 
@@ -84,7 +83,7 @@ namespace NetEmail.View
                     port,
                     tbxAddress.Text,
                     tbxPassword.Text,
-                    tbxFromAddress.Text,
+                    tbxHostAddress.Text,
                     tbxFromAlias.Text,
                     dailyLimit,
                     Convert.ToInt32(popPortNoTbx.Text),
@@ -121,7 +120,7 @@ namespace NetEmail.View
                                                 Int32.Parse(tbxPort.Text),
                                                 tbxAddress.Text,
                                                 tbxPassword.Text,
-                                                tbxFromAddress.Text,
+                                                tbxHostAddress.Text,
                                                 tbxFromAlias.Text
                                                 )
                                                 .Send(new System.Collections.Generic.List<string>() { f2.ReturnValue }, "Test email", "This is a test email.");
