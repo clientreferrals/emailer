@@ -3,6 +3,7 @@
     public class EmailDTO
     {
         public int Id { get; set; }
+        public int SentCount { get; set; }
 
         public string Host { get; set; }
 

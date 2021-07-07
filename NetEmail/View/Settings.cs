@@ -27,6 +27,8 @@ namespace NetEmail.View
                 applicationSettingServices = new ApplicationSettingServices();
                 tbxFromWaitTime.Text = applicationSettingServices.GetValue("WaitFromTime");
                 tbxToWaitTime.Text = applicationSettingServices.GetValue("WaitToTime");
+                maxEmailTextBox.Text = applicationSettingServices.GetValue("MaxSendsPerDay");
+                
                 RefreshEmailsTable();
             }
             catch (Exception ex)
@@ -46,7 +48,8 @@ namespace NetEmail.View
             try
             {
                 int.TryParse(tbxFromWaitTime.Text, out int waitFromTime);
-                int.TryParse(tbxToWaitTime.Text, out int waitToTime);
+                int.TryParse(tbxToWaitTime.Text, out int waitToTime); 
+                int.TryParse(maxEmailTextBox.Text, out int maxSendsPerDay);
                 if (waitFromTime == 0)
                 {
                     MessageBox.Show("Please enter the From seconds");
@@ -59,6 +62,7 @@ namespace NetEmail.View
                 }
                 applicationSettingServices.AddUpdate("WaitFromTime", waitFromTime.ToString());
                 applicationSettingServices.AddUpdate("WaitToTime", waitToTime.ToString());
+                applicationSettingServices.AddUpdate("MaxSendsPerDay", maxSendsPerDay.ToString());
 
                 this.Close();
             }
@@ -84,6 +88,7 @@ namespace NetEmail.View
                         {
                             datatable = new DataTable();
                             datatable.Columns.Add(new DataColumn("ID"));
+                            datatable.Columns.Add(new DataColumn("SentCount"));
                             datatable.Columns.Add(new DataColumn("Address"));
                             datatable.Columns.Add(new DataColumn("FromAlias"));
 
@@ -98,6 +103,7 @@ namespace NetEmail.View
                         {
                             DataRow row = this.datatable.NewRow();
                             row["ID"] = email.Id.ToString();
+                            row["SentCount"] = email.SentCount.ToString();
                             row["Address"] = email.Address;
                             row["FromAlias"] = email.FromAlias;
                             datatable.Rows.Add(row);
@@ -106,8 +112,9 @@ namespace NetEmail.View
                         if (tableEmails.Rows.Count > 0)
                         {
                             tableEmails.Columns[0].Width = 50;
-                            tableEmails.Columns[1].Width = 200;
+                            tableEmails.Columns[1].Width = 50;
                             tableEmails.Columns[2].Width = 200;
+                            tableEmails.Columns[3].Width = 200;
                         }
                     });
                 }

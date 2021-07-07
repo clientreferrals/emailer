@@ -23,6 +23,7 @@ namespace NetEmail.View
         private readonly EmailQueueLogService emailQueueLogService;
         private readonly ApplicationSettingServices applicationSettingServices;
         private readonly CampaignService campaignService;
+        private readonly OurEmailListMaxPerDayService ourEmailListMaxPerDayService;
         public Dashboard()
         {
             try
@@ -32,6 +33,9 @@ namespace NetEmail.View
                 emailSettingService = new EmailSettingService();
                 emailQueueLogService = new EmailQueueLogService();
                 applicationSettingServices = new ApplicationSettingServices();
+                ourEmailListMaxPerDayService = new OurEmailListMaxPerDayService();
+                ourEmailListMaxPerDayService.ResetCount();
+
                 campaignService = new CampaignService();
                 bgHelper = new BackgroundHelper();
                 stopProcessingToolStripMenuItem.Enabled = false;
@@ -167,6 +171,7 @@ namespace NetEmail.View
                 IsQueueActive = true;
                 int waitFromTimeBetweenMails = Convert.ToInt32(applicationSettingServices.GetValue("WaitFromTime"));
                 int waitToTimeBetweenMails = Convert.ToInt32(applicationSettingServices.GetValue("WaitToTime"));
+                int maxSendsPerDay = Convert.ToInt32(applicationSettingServices.GetValue("MaxSendsPerDay"));
 
                 bgHelper.Background(() =>
                 {
@@ -186,19 +191,33 @@ namespace NetEmail.View
 
                             if (Emails.Count == 0)
                             {
-                                emailQueueLogService.SaveEmailQueueLog(item, "", "", "No emails defined in settings. Please define emails in settings.");
+                                emailQueueLogService.SaveEmailQueueLog(item, "", "", "No emails defined in settings. Please define emails in settings.", false);
                                 return;
                             }
                             if (availableEmails.Count < 1)
                             {
-                                emailQueueLogService.SaveEmailQueueLog(item, "", "", "Sent limit reached for all email addresses. Please increase email limits in settings and restart the program.");
+                                emailQueueLogService.SaveEmailQueueLog(item, "", "", "Sent limit reached for all email addresses. Please increase email limits in settings and restart the program.", false);
                                 return;
                             }
                             bool isEmailSend = false;
                             while (isEmailSend == false)
                             {
-                                isEmailSend = SendMail(item, availableEmails[index]).Success;
-                                if (index == availableEmails.Count)
+                                int alreadySentCount = ourEmailListMaxPerDayService.GetSentCount(availableEmails[index].Id);
+                                if (maxSendsPerDay > alreadySentCount)
+                                {
+                                    isEmailSend = SendMail(item, availableEmails[index]).Success;
+                                    if (isEmailSend)
+                                    {
+                                        ourEmailListMaxPerDayService.AddUpdate(availableEmails[index].Id);
+                                        bgHelper.Foreground(() =>
+                                        {
+                                            lblRemaining.Text = (Convert.ToInt32(lblRemaining.Text) - 1).ToString();
+                                            lblProcessed.Text = (Convert.ToInt32(lblProcessed.Text) + 1).ToString();
+                                            prgQueue.Value += 1;
+                                        });
+                                    }
+                                }
+                                if (index == availableEmails.Count - 1)
                                 {
                                     isEmailSend = true;
                                     index = 0;
@@ -208,12 +227,8 @@ namespace NetEmail.View
                                     index++;
                                 }
                             }
-                            bgHelper.Foreground(() =>
-                            {
-                                lblRemaining.Text = (Convert.ToInt32(lblRemaining.Text) - 1).ToString();
-                                lblProcessed.Text = (Convert.ToInt32(lblProcessed.Text) + 1).ToString();
-                                prgQueue.Value += 1;
-                            });
+
+
                             int threadSleepTime = myRandom.Next(waitFromTimeBetweenMails, waitToTimeBetweenMails);
                             Thread.Sleep(TimeSpan.FromSeconds(threadSleepTime));
                         }
@@ -252,13 +267,13 @@ namespace NetEmail.View
 
                     if (sendResult.Success == false)
                     {
-                        emailQueueLogService.SaveEmailQueueLog(item, emailAccount.Address, "", sendResult.Message);
+                        emailQueueLogService.SaveEmailQueueLog(item, emailAccount.Address, "", sendResult.Message, false);
 
                     }
                 }
 
                 campaignService.SetAsSent(item.CampaignCustomerId);
-                emailQueueLogService.SaveEmailQueueLog(item, emailAccount.Address, item.TemplateContent, "");
+                emailQueueLogService.SaveEmailQueueLog(item, emailAccount.Address, item.TemplateContent, "", true);
                 emailAccount.RemainingLimit -= 1;
 
                 return new Response<bool>(true);

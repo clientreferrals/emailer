@@ -88,6 +88,9 @@
     <Compile Include="DataBase\OurEmailList.cs">
       <DependentUpon>DirectEmailContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataBase\OurEmailListMaxPerDay.cs">
+      <DependentUpon>DirectEmailContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

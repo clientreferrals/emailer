@@ -19,5 +19,10 @@ namespace DataAccessLayer.DataBase
         public string TemplateContent { get; set; }
         public System.DateTime CreatedDateTime { get; set; }
         public Nullable<System.DateTime> EditedDateTime { get; set; }
+
+        public override string ToString()
+        {
+            return this.TemplateName;
+        }
     }
 }

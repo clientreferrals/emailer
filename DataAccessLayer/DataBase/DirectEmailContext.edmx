@@ -98,8 +98,19 @@
           <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="FromAlias" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="DailyLimit" Type="int" Nullable="false" />
+          <Property Name="SentCount" Type="int" Nullable="false" />
           <Property Name="IMAPHost" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="IMAPPort" Type="int" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="datetime" Nullable="false" />
+          <Property Name="EditedDateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="OurEmailListMaxPerDay">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmailId" Type="int" Nullable="false" />
+          <Property Name="SentCount" Type="int" Nullable="false" />
           <Property Name="CreatedDateTime" Type="datetime" Nullable="false" />
           <Property Name="EditedDateTime" Type="datetime" />
         </EntityType>
@@ -136,6 +147,7 @@
           <EntitySet Name="EmailQueueLog" EntityType="Self.EmailQueueLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmailTemplate" EntityType="Self.EmailTemplate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OurEmailList" EntityType="Self.OurEmailList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OurEmailListMaxPerDay" EntityType="Self.OurEmailListMaxPerDay" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_CampaignCustomer_Campaign" Association="Self.FK_CampaignCustomer_Campaign">
             <End Role="Campaign" EntitySet="Campaign" />
             <End Role="CampaignCustomer" EntitySet="CampaignCustomer" />
@@ -227,6 +239,7 @@
             <End Role="CampaignCustomer" EntitySet="CampaignCustomers" />
           </AssociationSet>
           <EntitySet Name="EmailQueueLogs" EntityType="DirectEmailerModel.EmailQueueLog" />
+          <EntitySet Name="OurEmailListMaxPerDays" EntityType="DirectEmailerModel.OurEmailListMaxPerDay" />
         </EntityContainer>
         <EntityType Name="BlockListEmail">
           <Key>
@@ -252,6 +265,7 @@
           <Property Name="IMAPPort" Type="Int32" Nullable="false" />
           <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="EditedDateTime" Type="DateTime" Precision="3" />
+          <Property Name="SentCount" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Campaign">
           <Key>
@@ -290,6 +304,16 @@
           <Property Name="ToAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="MailContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="ErrorLog" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EditedDateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="OurEmailListMaxPerDay">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmailId" Type="Int32" Nullable="false" />
+          <Property Name="SentCount" Type="Int32" Nullable="false" />
           <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="EditedDateTime" Type="DateTime" Precision="3" />
         </EntityType>
@@ -362,6 +386,7 @@
           <EntitySetMapping Name="OurEmailLists">
             <EntityTypeMapping TypeName="DirectEmailerModel.OurEmailList">
               <MappingFragment StoreEntitySet="OurEmailList">
+                <ScalarProperty Name="SentCount" ColumnName="SentCount" />
                 <ScalarProperty Name="EditedDateTime" ColumnName="EditedDateTime" />
                 <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
                 <ScalarProperty Name="IMAPPort" ColumnName="IMAPPort" />
@@ -401,6 +426,17 @@
                 <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
                 <ScalarProperty Name="Template" ColumnName="Template" />
                 <ScalarProperty Name="Campaign" ColumnName="Campaign" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OurEmailListMaxPerDays">
+            <EntityTypeMapping TypeName="DirectEmailerModel.OurEmailListMaxPerDay">
+              <MappingFragment StoreEntitySet="OurEmailListMaxPerDay">
+                <ScalarProperty Name="EditedDateTime" ColumnName="EditedDateTime" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="SentCount" ColumnName="SentCount" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

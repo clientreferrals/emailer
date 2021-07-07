@@ -12,19 +12,12 @@ namespace DataAccessLayer.DataBase
     using System;
     using System.Collections.Generic;
     
-    public partial class OurEmailList
+    public partial class OurEmailListMaxPerDay
     {
         public int Id { get; set; }
-        public string Host { get; set; }
-        public int Port { get; set; }
-        public string EmailAddress { get; set; }
-        public string Password { get; set; }
-        public string FromAlias { get; set; }
-        public int DailyLimit { get; set; }
-        public string IMAPHost { get; set; }
-        public int IMAPPort { get; set; }
+        public int EmailId { get; set; }
+        public int SentCount { get; set; }
         public System.DateTime CreatedDateTime { get; set; }
         public Nullable<System.DateTime> EditedDateTime { get; set; }
-        public int SentCount { get; set; }
     }
 }

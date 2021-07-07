@@ -49,7 +49,7 @@ namespace BusniessLayer
             }
         }
 
-        public bool SaveEmailQueueLog(EmailQueueItem item, string from, string mail, string errorLog)
+        public bool SaveEmailQueueLog(EmailQueueItem item, string fromEmailAddress, string mail, string errorLog, bool isEmailSent)
         {
             using (DirectEmailerEntities db = new DirectEmailerEntities())
             {
@@ -58,7 +58,7 @@ namespace BusniessLayer
                     Campaign = item.CampaignName,
                     Template = item.TemplateName,
                     CustomerName = item.CustomerName,
-                    FromAddress = from,
+                    FromAddress = fromEmailAddress,
                     ToAddress = item.CustomerEmail,
                     MailContent = mail,
                     ErrorLog = errorLog,
@@ -67,6 +67,16 @@ namespace BusniessLayer
 
                 db.EmailQueueLogs.Add(log);
                 db.SaveChanges();
+
+                if (isEmailSent)
+                {
+                    var email = db.OurEmailLists.Where(x => x.EmailAddress == fromEmailAddress).FirstOrDefault();
+                    if (email != null)
+                    {
+                        email.SentCount += 1;
+                        db.SaveChanges();
+                    }
+                }
             }
 
             return true;

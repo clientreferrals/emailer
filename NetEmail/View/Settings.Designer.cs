@@ -39,6 +39,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.tbxToWaitTime = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.maxEmailTextBox = new System.Windows.Forms.TextBox();
+            this.MaxSendsPerDay = new System.Windows.Forms.Label();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tableEmails)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -108,7 +110,7 @@
             // 
             // tbxFromWaitTime
             // 
-            this.tbxFromWaitTime.Location = new System.Drawing.Point(106, 19);
+            this.tbxFromWaitTime.Location = new System.Drawing.Point(121, 19);
             this.tbxFromWaitTime.Name = "tbxFromWaitTime";
             this.tbxFromWaitTime.Size = new System.Drawing.Size(133, 20);
             this.tbxFromWaitTime.TabIndex = 1;
@@ -116,7 +118,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(255, 20);
+            this.label3.Location = new System.Drawing.Point(273, 20);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(63, 13);
             this.label3.TabIndex = 4;
@@ -124,13 +126,15 @@
             // 
             // tbxToWaitTime
             // 
-            this.tbxToWaitTime.Location = new System.Drawing.Point(327, 19);
+            this.tbxToWaitTime.Location = new System.Drawing.Point(344, 17);
             this.tbxToWaitTime.Name = "tbxToWaitTime";
-            this.tbxToWaitTime.Size = new System.Drawing.Size(173, 20);
+            this.tbxToWaitTime.Size = new System.Drawing.Size(163, 20);
             this.tbxToWaitTime.TabIndex = 2;
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.maxEmailTextBox);
+            this.groupBox1.Controls.Add(this.MaxSendsPerDay);
             this.groupBox1.Controls.Add(this.tbxToWaitTime);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.tbxFromWaitTime);
@@ -141,6 +145,22 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Basic";
+            // 
+            // maxEmailTextBox
+            // 
+            this.maxEmailTextBox.Location = new System.Drawing.Point(121, 67);
+            this.maxEmailTextBox.Name = "maxEmailTextBox";
+            this.maxEmailTextBox.Size = new System.Drawing.Size(133, 20);
+            this.maxEmailTextBox.TabIndex = 6;
+            // 
+            // MaxSendsPerDay
+            // 
+            this.MaxSendsPerDay.AutoSize = true;
+            this.MaxSendsPerDay.Location = new System.Drawing.Point(8, 67);
+            this.MaxSendsPerDay.Name = "MaxSendsPerDay";
+            this.MaxSendsPerDay.Size = new System.Drawing.Size(107, 13);
+            this.MaxSendsPerDay.TabIndex = 5;
+            this.MaxSendsPerDay.Text = "Max Sends Per Day: ";
             // 
             // Settings
             // 
@@ -174,5 +194,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tbxToWaitTime;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.TextBox maxEmailTextBox;
+        private System.Windows.Forms.Label MaxSendsPerDay;
     }
 }

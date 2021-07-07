@@ -17,7 +17,7 @@ namespace BusniessLayer
                 return (from e in db.OurEmailLists
                         select new EmailDTO
                         {
-                            Address = e.EmailAddress,
+                            Address = e.EmailAddress, 
                             DailyLimit = e.DailyLimit, 
                             FromAlias = e.FromAlias,
                             Host = e.Host,
@@ -27,6 +27,7 @@ namespace BusniessLayer
                             RemainingLimit = e.DailyLimit,
                             IMAPHost = e.IMAPHost,
                             IMAPPort = e.IMAPPort,  
+                            SentCount = e.SentCount
                         }).ToList();
             }
         }

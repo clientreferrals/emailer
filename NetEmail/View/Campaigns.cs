@@ -67,7 +67,7 @@ namespace NetEmail.View
             {
                 CampaignsEdit form = new CampaignsEdit(new CampaignDTO()
                 {
-                    Name = "New"
+                    Name = ""
                 });
                 form.ShowDialog();
 

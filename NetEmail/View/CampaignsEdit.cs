@@ -231,7 +231,7 @@ namespace NetEmail.View
                     {
                         if (form.IsCustomersSelected == true && form.customerRecords != null && form.customerRecords.Count > 0)
                         {
-                            CampaignDTO campaign = campaignService.SaveCampaign(currentCampaign.Id, currentCampaign.Name, currentCampaign.TemplateId, tbxMailSubject.Text, form.customerRecords.Select(c => c.Id).ToList());
+                            CampaignDTO campaign = campaignService.SaveCampaign(currentCampaign.Id, tbxName.Text, currentCampaign.TemplateId, tbxMailSubject.Text, form.customerRecords.Select(c => c.Id).ToList());
 
                             currentCampaign = campaign;
                         }
