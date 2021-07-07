@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DirectEmailResults", "NetEm
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DirectEmailResults.Utility", "NetMail.Utility\DirectEmailResults.Utility.csproj", "{F409496E-E8D7-4DA2-849F-BCD6B9E19952}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "NetEmail.Setup", "NetEmail.Setup\NetEmail.Setup.vdproj", "{6C07416E-1843-47E9-84B9-B8AA0AFC802F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{5C0A6465-E8A7-4720-850B-1068B6DA3FB4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusniessLayer", "BusniessLayer\BusniessLayer.csproj", "{29E5E006-B6CF-429A-BB43-EEDBBB46E045}"
@@ -29,8 +27,6 @@ Global
 		{F409496E-E8D7-4DA2-849F-BCD6B9E19952}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F409496E-E8D7-4DA2-849F-BCD6B9E19952}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F409496E-E8D7-4DA2-849F-BCD6B9E19952}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6C07416E-1843-47E9-84B9-B8AA0AFC802F}.Debug|Any CPU.ActiveCfg = Debug
-		{6C07416E-1843-47E9-84B9-B8AA0AFC802F}.Release|Any CPU.ActiveCfg = Release
 		{5C0A6465-E8A7-4720-850B-1068B6DA3FB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5C0A6465-E8A7-4720-850B-1068B6DA3FB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C0A6465-E8A7-4720-850B-1068B6DA3FB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
