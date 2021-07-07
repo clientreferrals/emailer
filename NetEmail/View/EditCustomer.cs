@@ -1,5 +1,6 @@
-﻿using NetEmail.Entity;
-using NetMail.Business;
+﻿
+using BusniessLayer;
+using DataAccessLayer.DataBase;
 using System;
 using System.Windows.Forms;
 
@@ -7,14 +8,14 @@ namespace NetEmail.View
 {
     public partial class EditCustomer : Form
     {
-        Customer CustomerRecord = null;
-
+        readonly Customer CustomerRecord = null;
+        private readonly CustomerService customerService;
         public EditCustomer(Customer customer)
         {
             try
             {
                 InitializeComponent();
-
+                customerService = new CustomerService();
                 CustomerRecord = customer;
 
                 tbxEmail.Text = CustomerRecord.Email;
@@ -37,7 +38,7 @@ namespace NetEmail.View
         {
             try
             {
-                CustomerBusiness.Instance.Save(CustomerRecord.Id, tbxName.Text.Trim(),
+                customerService.Save(CustomerRecord.Id, tbxName.Text.Trim(),
                     tbxPhoneNo.Text.Trim(), tbxTags.Text.Trim(), tbxEmail.Text.Trim(), txbWebsite.Text.Trim(), txbState.Text.Trim(), txbCity.Text.Trim());
 
                 this.Close();
@@ -64,7 +65,7 @@ namespace NetEmail.View
 
                 if (confirmResult == DialogResult.Yes)
                 {
-                    CustomerBusiness.Instance.Delete(CustomerRecord.Id);
+                    customerService.Delete(CustomerRecord.Id);
                     this.Close();
                 }
             }

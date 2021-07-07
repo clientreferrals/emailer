@@ -1,6 +1,6 @@
-﻿using DirectEmailResults.Business;
-using DirectEmailResults.DTO;
-using S22.Imap;
+﻿
+using BusniessLayer;
+using Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.Net.Mail;
@@ -10,17 +10,19 @@ namespace DirectEmailResults.View
 {
     public partial class BalckListEmails : Form
     {
-        private List<BlackListEmailDto> emailRecords = new List<BlackListEmailDto>();
+        private List<BlockListEmailDto> emailRecords = new List<BlockListEmailDto>();
+        private readonly BlockListEmailService blockListEmailService;
 
         public BalckListEmails()
         {
             InitializeComponent();
-            emailRecords = BlackListEmailBusiness.Instance.GetBlackListEmails();
+            blockListEmailService = new BlockListEmailService();
+            emailRecords = blockListEmailService.GetBlackListEmails();
             GetBlackListEmails();
         }
         public void GetBlackListEmails()
         {
-            emailRecords = BlackListEmailBusiness.Instance.GetBlackListEmails();
+            emailRecords = blockListEmailService.GetBlackListEmails();
             blackListEmailsDataGridView.DataSource = emailRecords;
         }
 
@@ -41,7 +43,7 @@ namespace DirectEmailResults.View
                     MessageBox.Show("Please enter the valid email address.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                if (BlackListEmailBusiness.Instance.Save(0, email))
+                if (blockListEmailService.Save(0, email))
                 {
                     emailAddressTxb.Text = "";
                     emailAddressTxb.Focus();
@@ -73,13 +75,13 @@ namespace DirectEmailResults.View
             try
             {
                 var email = emailRecords[e.RowIndex];
-                
-                var confirmResult = MessageBox.Show("Are you sure to remove " + email.EmailAddress + " from black list?", "Delete", 
+
+                var confirmResult = MessageBox.Show("Are you sure to remove " + email.EmailAddress + " from black list?", "Delete",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (confirmResult == DialogResult.Yes)
                 {
-                    BlackListEmailBusiness.Instance.Delete(email.Id);
+                    blockListEmailService.Delete(email.Id);
 
                     GetBlackListEmails();
                 }

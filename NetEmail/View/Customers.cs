@@ -1,6 +1,6 @@
 ﻿using Backgrounder;
-using NetEmail.Entity;
-using NetMail.Business;
+using BusniessLayer;
+using DataAccessLayer.DataBase;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -15,18 +15,18 @@ namespace NetEmail.View
 
     public partial class Customers : Form
     {
-        BackgroundHelper bgHelper;
-        public List<Customer> CustomerRecords = new List<Customer>();
-        CustomersWindowType CurrentWindowType = CustomersWindowType.LIST;
+        private readonly BackgroundHelper bgHelper;
+        public List<Customer> customerRecords = new List<Customer>();
+        CustomersWindowType currentWindowType = CustomersWindowType.LIST;
         public bool IsCustomersSelected = false;
-
+        private readonly CustomerService customerService;
         public Customers(CustomersWindowType type = CustomersWindowType.LIST)
         {
             try
             {
                 InitializeComponent();
-
-                CurrentWindowType = type;
+                customerService = new CustomerService();
+                currentWindowType = type;
 
                 bgHelper = new BackgroundHelper();
 
@@ -44,7 +44,7 @@ namespace NetEmail.View
         {
             try
             {
-                if (CurrentWindowType == CustomersWindowType.LIST)
+                if (currentWindowType == CustomersWindowType.LIST)
                 {
                     btnSelectCustomers.Visible = false;
                 }
@@ -67,11 +67,11 @@ namespace NetEmail.View
             {
                 try
                 {
-                    CustomerRecords = CustomerBusiness.Instance.GetCustomers(tbxName.Text, tbxPhoneNo.Text, tbxTag.Text, txtWebsite.Text, txbCity.Text);
+                    customerRecords = customerService.GetCustomers(tbxName.Text, tbxPhoneNo.Text, tbxTag.Text, txtWebsite.Text, txbCity.Text);
 
                     bgHelper.Foreground(() =>
                     {
-                        dataGridCustomers.DataSource = CustomerRecords;
+                        dataGridCustomers.DataSource = customerRecords;
                     });
                 }
                 catch (Exception ex)
@@ -103,7 +103,7 @@ namespace NetEmail.View
         {
             try
             {
-                EditCustomer f2 = new EditCustomer(CustomerRecords[e.RowIndex]);
+                EditCustomer f2 = new EditCustomer(customerRecords[e.RowIndex]);
                 f2.ShowDialog();
 
                 RefreshCustomersTable();
@@ -165,7 +165,7 @@ namespace NetEmail.View
 
                 if (confirmResult == DialogResult.Yes)
                 {
-                    CustomerBusiness.Instance.DeleteAll();
+                    customerService.DeleteAll();
 
                     RefreshCustomersTable();
                 }

@@ -1,30 +1,23 @@
 ﻿using Backgrounder;
-using NetEmail.Business;
-using NetEmail.DTO;
-using NetEmail.Entity;
+using BusniessLayer;
+using Models.DTO;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace NetEmail.View
 {
     public partial class Campaigns : Form
     {
-        BackgroundHelper bgHelper;
-        List<CampaignDTO> CampaignRecords = new List<CampaignDTO>();
-
+        private readonly BackgroundHelper bgHelper;
+        List<CampaignDTO> campaignRecords = new List<CampaignDTO>();
+        private readonly CampaignService campaignService;
         public Campaigns()
         {
             try
             {
                 InitializeComponent();
-
+                campaignService = new CampaignService();
                 bgHelper = new BackgroundHelper();
 
                 RefreshCampaigns();
@@ -42,14 +35,15 @@ namespace NetEmail.View
             {
                 try
                 {
-                    CampaignRecords = CampaignBusiness.Instance.GetCampaigns();
+                    campaignRecords = campaignService.GetCampaigns();
 
                     bgHelper.Foreground(() =>
                     {
                         try
                         {
-                            dataGridCampaigns.DataSource = CampaignRecords;
+                            dataGridCampaigns.DataSource = campaignRecords;
                             dataGridCampaigns.Columns["TemplateId"].Visible = false;
+                            dataGridCampaigns.Columns["Name"].Visible = false;
                         }
                         catch (Exception ex)
                         {
@@ -73,7 +67,7 @@ namespace NetEmail.View
             {
                 CampaignsEdit form = new CampaignsEdit(new CampaignDTO()
                 {
-                    Name = "New Campaign"
+                    Name = "New"
                 });
                 form.ShowDialog();
 
@@ -90,7 +84,7 @@ namespace NetEmail.View
         {
             try
             {
-                CampaignsEdit form = new CampaignsEdit(CampaignRecords[e.RowIndex]);
+                CampaignsEdit form = new CampaignsEdit(campaignRecords[e.RowIndex]);
                 form.ShowDialog();
 
                 RefreshCampaigns();

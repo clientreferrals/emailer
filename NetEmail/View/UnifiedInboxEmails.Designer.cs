@@ -40,6 +40,8 @@ namespace DirectEmailResults.View
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
+            this.ComposeButton = new System.Windows.Forms.Button();
+            this.emailTextBox = new System.Windows.Forms.TextBox();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridEmails)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -130,6 +132,8 @@ namespace DirectEmailResults.View
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.emailTextBox);
+            this.groupBox3.Controls.Add(this.ComposeButton);
             this.groupBox3.Controls.Add(this.replyButton);
             this.groupBox3.Controls.Add(this.label2);
             this.groupBox3.Controls.Add(this.webBrowser1);
@@ -156,6 +160,23 @@ namespace DirectEmailResults.View
             this.webBrowser1.Name = "webBrowser1";
             this.webBrowser1.Size = new System.Drawing.Size(586, 302);
             this.webBrowser1.TabIndex = 1;
+            // 
+            // ComposeButton
+            // 
+            this.ComposeButton.Location = new System.Drawing.Point(370, 14);
+            this.ComposeButton.Name = "ComposeButton";
+            this.ComposeButton.Size = new System.Drawing.Size(95, 23);
+            this.ComposeButton.TabIndex = 22;
+            this.ComposeButton.Text = "Compose";
+            this.ComposeButton.UseVisualStyleBackColor = true;
+            this.ComposeButton.Click += new System.EventHandler(this.ComposeButton_Click);
+            // 
+            // emailTextBox
+            // 
+            this.emailTextBox.Location = new System.Drawing.Point(166, 16);
+            this.emailTextBox.Name = "emailTextBox";
+            this.emailTextBox.Size = new System.Drawing.Size(187, 20);
+            this.emailTextBox.TabIndex = 23;
             // 
             // UnifiedInboxEmails
             // 
@@ -192,5 +213,7 @@ namespace DirectEmailResults.View
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.WebBrowser webBrowser1;
+        private System.Windows.Forms.TextBox emailTextBox;
+        private System.Windows.Forms.Button ComposeButton;
     }
 }

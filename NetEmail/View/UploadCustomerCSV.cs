@@ -1,5 +1,5 @@
 ﻿using Backgrounder;
-using NetMail.Business;
+using BusniessLayer;
 using NetMail.Utility;
 using System;
 using System.Data;
@@ -9,13 +9,14 @@ namespace NetEmail.View
 {
     public partial class UploadCustomerCSV : Form
     {
-        BackgroundHelper bgHelper;
-
+        private readonly BackgroundHelper bgHelper;
+        private readonly CustomerService customerService;
         public UploadCustomerCSV()
         {
             try
             {
-                InitializeComponent();
+                InitializeComponent(); 
+                customerService = new CustomerService();
 
                 bgHelper = new BackgroundHelper();
             }
@@ -79,7 +80,7 @@ namespace NetEmail.View
                         {
                             foreach (DataRow row in dtCustomers.Rows)
                             {
-                                CustomerBusiness.Instance.Save(
+                                customerService.Save(
                                     id: 0,
                                     name: row["Name"].ToString(),
                                     phoneNo: row["phoneNo"].ToString(),
@@ -88,7 +89,7 @@ namespace NetEmail.View
                                     website: row["Website"].ToString(),
                                     state: row["State"].ToString(),
                                     city: row["City"].ToString()
-                                ); 
+                                );
                                 i++;
 
                                 bgHelper.Foreground(() =>

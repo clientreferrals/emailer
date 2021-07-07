@@ -72,11 +72,8 @@
     <Reference Include="BouncyCastle.Crypto, Version=1.8.10.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
       <HintPath>..\packages\Portable.BouncyCastle.1.8.10\lib\net40\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="MimeKit, Version=2.13.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
@@ -91,15 +88,7 @@
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.SQLite, Version=1.0.110.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.SQLite.Core.1.0.110.0\lib\net45\System.Data.SQLite.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Data.SQLite.EF6, Version=1.0.110.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.110.0\lib\net45\System.Data.SQLite.EF6.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Data.SQLite.Linq, Version=1.0.110.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.110.0\lib\net45\System.Data.SQLite.Linq.dll</HintPath>
-    </Reference>
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -112,26 +101,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Business\BlackListEmailBusiness.cs" />
-    <Compile Include="Business\CustomerBusiness.cs" />
-    <Compile Include="Business\EmailSettingsBusiness.cs" />
-    <Compile Include="Business\SettingsBusiness.cs" />
-    <Compile Include="Business\CampaignBusiness.cs" />
-    <Compile Include="Business\EmailQueueBusiness.cs" />
-    <Compile Include="Business\TemplateBusiness.cs" />
-    <Compile Include="DTO\BlackListEmailDto.cs" />
-    <Compile Include="DTO\CampaignCustomerDTO.cs" />
-    <Compile Include="DTO\CampaignDTO.cs" />
-    <Compile Include="DTO\EmailDTO.cs" />
-    <Compile Include="DTO\EmailQueueItem.cs" />
-    <Compile Include="DTO\ViewEmailDto.cs" />
-    <Compile Include="Entity\BlackListEmails.cs" />
-    <Compile Include="Entity\CampaignCustomer.cs" />
-    <Compile Include="Entity\Campaign.cs" />
-    <Compile Include="Entity\EmailQueueLog.cs" />
-    <Compile Include="Entity\Template.cs" />
-    <Compile Include="Entity\Customer.cs" />
-    <Compile Include="Entity\Email.cs" />
     <Compile Include="View\CampaignsEdit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -150,8 +119,6 @@
     <Compile Include="View\Dashboard.Designer.cs">
       <DependentUpon>Dashboard.cs</DependentUpon>
     </Compile>
-    <Compile Include="Entity\NetEmailContext.cs" />
-    <Compile Include="Entity\Setting.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View\EditCustomer.cs">
@@ -178,6 +145,12 @@
     <Compile Include="View\EditTemplate.Designer.cs">
       <DependentUpon>EditTemplate.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\FailedEmailAccounts.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\FailedEmailAccounts.Designer.cs">
+      <DependentUpon>FailedEmailAccounts.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\Settings.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -190,11 +163,11 @@
     <Compile Include="View\Campaigns.Designer.cs">
       <DependentUpon>Campaigns.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\EmailQueueLog.cs">
+    <Compile Include="View\EmailQueueLogViews.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\EmailQueueLog.Designer.cs">
-      <DependentUpon>EmailQueueLog.cs</DependentUpon>
+    <Compile Include="View\EmailQueueLogViews.Designer.cs">
+      <DependentUpon>EmailQueueLogViews.cs</DependentUpon>
     </Compile>
     <Compile Include="View\BalckListEmails.cs">
       <SubType>Form</SubType>
@@ -251,14 +224,17 @@
     <EmbeddedResource Include="View\EditTemplate.resx">
       <DependentUpon>EditTemplate.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="View\FailedEmailAccounts.resx">
+      <DependentUpon>FailedEmailAccounts.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\Settings.resx">
       <DependentUpon>Settings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\Campaigns.resx">
       <DependentUpon>Campaigns.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\EmailQueueLog.resx">
-      <DependentUpon>EmailQueueLog.cs</DependentUpon>
+    <EmbeddedResource Include="View\EmailQueueLogViews.resx">
+      <DependentUpon>EmailQueueLogViews.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\BalckListEmails.resx">
       <DependentUpon>BalckListEmails.cs</DependentUpon>
@@ -276,9 +252,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="DirectEmailResults_TemporaryKey.pfx" />
-    <Compile Include="NetEmail.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -315,6 +288,18 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BusniessLayer\BusniessLayer.csproj">
+      <Project>{29E5E006-B6CF-429A-BB43-EEDBBB46E045}</Project>
+      <Name>BusniessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj">
+      <Project>{5c0a6465-e8a7-4720-850b-1068b6da3fb4}</Project>
+      <Name>DataAccessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Models\Models.csproj">
+      <Project>{e2c7cb01-9e9a-4ff9-b8b2-005f454028bd}</Project>
+      <Name>Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NetMail.Utility\DirectEmailResults.Utility.csproj">
       <Project>{f409496e-e8d7-4da2-849f-bcd6b9e19952}</Project>
       <Name>DirectEmailResults.Utility</Name>
@@ -328,11 +313,4 @@
     </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\System.Data.SQLite.Core.1.0.110.0\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.110.0\build\net45\System.Data.SQLite.Core.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>Bu proje bu bilgisayarda olmayan NuGet paketlerine başvuru yapıyor. Bunları indirmek için NuGet Paket Geri Yükleme'yi kullanın. Daha fazla bilgi için, bkz. http://go.microsoft.com/fwlink/?LinkID=322105. Eksik dosya: {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.110.0\build\net45\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.110.0\build\net45\System.Data.SQLite.Core.targets'))" />
-  </Target>
 </Project>

@@ -1,8 +1,7 @@
 ﻿using Backgrounder;
+using BusniessLayer;
 using DirectEmailResults.View;
-using NetEmail.Business;
-using NetEmail.DTO;
-using NetMail.Business;
+using Models.DTO;
 using NetMail.Utility;
 using System;
 using System.Collections.Generic;
@@ -20,14 +19,20 @@ namespace NetEmail.View
         bool IsQueueActive = false;
         List<EmailDTO> Emails = new List<EmailDTO>();
         Random myRandom = new Random();
-
+        private readonly EmailSettingService emailSettingService;
+        private readonly EmailQueueLogService emailQueueLogService;
+        private readonly ApplicationSettingServices applicationSettingServices;
+        private readonly CampaignService campaignService;
         public Dashboard()
         {
             try
             {
-           
-                InitializeComponent();
 
+                InitializeComponent();
+                emailSettingService = new EmailSettingService();
+                emailQueueLogService = new EmailQueueLogService();
+                applicationSettingServices = new ApplicationSettingServices();
+                campaignService = new CampaignService();
                 bgHelper = new BackgroundHelper();
                 stopProcessingToolStripMenuItem.Enabled = false;
 
@@ -46,12 +51,12 @@ namespace NetEmail.View
             {
                 try
                 {
-                    Emails = EmailSettingsBusiness.Instance.GetEmails();
+                    Emails = emailSettingService.GetEmails();
                 }
                 catch (Exception ex)
                 {
                     string inner = ex.InnerException == null ? "Inner exception is null" : ex.InnerException.ToString();
-                    MessageBox.Show(ex.Message + " Inner Exception."+ inner);
+                    MessageBox.Show(ex.Message + " Inner Exception." + inner);
                 }
 
             });
@@ -63,7 +68,7 @@ namespace NetEmail.View
             {
                 try
                 {
-                    QueueItems = EmailQueueBusiness.Instance.GetEmailQueueItems();
+                    QueueItems = emailQueueLogService.GetEmailQueueItems();
 
                     bgHelper.Foreground(() =>
                     {
@@ -152,7 +157,7 @@ namespace NetEmail.View
             {
                 startProcessingToolStripMenuItem.Enabled = false;
                 stopProcessingToolStripMenuItem.Enabled = true;
-                QueueItems = EmailQueueBusiness.Instance.GetEmailQueueItems();
+                QueueItems = emailQueueLogService.GetEmailQueueItems();
                 lblTotal.Text = QueueItems.Count.ToString();
                 lblRemaining.Text = QueueItems.Count.ToString();
                 lblProcessed.Text = "0";
@@ -160,8 +165,8 @@ namespace NetEmail.View
                 prgQueue.Maximum = QueueItems.Count;
                 prgQueue.Value = 0;
                 IsQueueActive = true;
-                int waitFromTimeBetweenMails = Convert.ToInt32(SettingsBusiness.Instance.GetValue("WaitFromTime"));
-                int waitToTimeBetweenMails = Convert.ToInt32(SettingsBusiness.Instance.GetValue("WaitToTime"));
+                int waitFromTimeBetweenMails = Convert.ToInt32(applicationSettingServices.GetValue("WaitFromTime"));
+                int waitToTimeBetweenMails = Convert.ToInt32(applicationSettingServices.GetValue("WaitToTime"));
 
                 bgHelper.Background(() =>
                 {
@@ -173,7 +178,7 @@ namespace NetEmail.View
                         int index = 0;
                         foreach (EmailQueueItem item in QueueItems)
                         {
-                            if(index == availableEmails.Count)
+                            if (index == availableEmails.Count)
                             {
                                 index = 0;
                             }
@@ -181,27 +186,27 @@ namespace NetEmail.View
 
                             if (Emails.Count == 0)
                             {
-                                EmailQueueBusiness.Instance.SaveEmailQueueLog(item, "", "", "No emails defined in settings. Please define emails in settings.");
+                                emailQueueLogService.SaveEmailQueueLog(item, "", "", "No emails defined in settings. Please define emails in settings.");
                                 return;
-                            } 
+                            }
                             if (availableEmails.Count < 1)
                             {
-                                EmailQueueBusiness.Instance.SaveEmailQueueLog(item, "", "", "Sent limit reached for all email addresses. Please increase email limits in settings and restart the program.");
+                                emailQueueLogService.SaveEmailQueueLog(item, "", "", "Sent limit reached for all email addresses. Please increase email limits in settings and restart the program.");
                                 return;
                             }
                             bool isEmailSend = false;
                             while (isEmailSend == false)
                             {
-                                if(index == availableEmails.Count)
+                                isEmailSend = SendMail(item, availableEmails[index]).Success;
+                                if (index == availableEmails.Count)
                                 {
                                     isEmailSend = true;
-                                    index = 0 ;
+                                    index = 0;
                                 }
                                 else
-                                { 
+                                {
                                     index++;
                                 }
-                                isEmailSend = SendMail(item, availableEmails[index]).Success;
                             }
                             bgHelper.Foreground(() =>
                             {
@@ -231,7 +236,7 @@ namespace NetEmail.View
         private Response<bool> SendMail(EmailQueueItem item, EmailDTO emailAccount)
         {
             try
-            { 
+            {
 
                 if (item.CustomerEmail.Contains("@fake.com") == false)
                 {
@@ -242,19 +247,18 @@ namespace NetEmail.View
                     emailAccount.Port,
                     emailAccount.Address,
                     emailAccount.Password,
-                    emailAccount.FromAddress,
                     emailAccount.FromAlias)
                     .Send(new List<string>() { item.CustomerEmail }, title, message);
 
                     if (sendResult.Success == false)
                     {
-                        EmailQueueBusiness.Instance.SaveEmailQueueLog(item, emailAccount.FromAddress, "", sendResult.Message);
-                        
+                        emailQueueLogService.SaveEmailQueueLog(item, emailAccount.Address, "", sendResult.Message);
+
                     }
                 }
 
-                CampaignBusiness.Instance.SetAsSent(item.CampaignCustomerId);
-                EmailQueueBusiness.Instance.SaveEmailQueueLog(item, emailAccount.FromAddress, item.TemplateContent, "");
+                campaignService.SetAsSent(item.CampaignCustomerId);
+                emailQueueLogService.SaveEmailQueueLog(item, emailAccount.Address, item.TemplateContent, "");
                 emailAccount.RemainingLimit -= 1;
 
                 return new Response<bool>(true);
@@ -282,7 +286,7 @@ namespace NetEmail.View
         {
             try
             {
-                EmailQueueLog form = new EmailQueueLog();
+                EmailQueueLogViews form = new EmailQueueLogViews();
                 form.ShowDialog();
             }
             catch (Exception ex)
@@ -335,7 +339,20 @@ namespace NetEmail.View
             try
             {
                 BalckListEmails form = new BalckListEmails();
-                form.ShowDialog(); 
+                form.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                FailedEmailAccounts form = new FailedEmailAccounts();
+                form.ShowDialog();
             }
             catch (Exception ex)
             {

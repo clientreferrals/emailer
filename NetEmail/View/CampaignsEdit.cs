@@ -1,15 +1,11 @@
 ﻿using Backgrounder;
-using NetEmail.Business;
-using NetEmail.DTO;
-using NetEmail.Entity;
+using BusniessLayer;
+using DataAccessLayer.DataBase;
+using Models.DTO;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace NetEmail.View
@@ -17,17 +13,21 @@ namespace NetEmail.View
     public partial class CampaignsEdit : Form
     {
         BackgroundHelper bgHelper;
-        List<Template> Templates = new List<Template>();
-        CampaignDTO CurrentCampaign = new CampaignDTO();
-        List<CampaignCustomerDTO> CurrentCustomers = new List<CampaignCustomerDTO>();
+        List<EmailTemplate> templates = new List<EmailTemplate>();
+        CampaignDTO currentCampaign = new CampaignDTO();
+        List<CampaignCustomerDTO> currentCustomers = new List<CampaignCustomerDTO>();
+        private readonly EmailTemplateService emailTemplateService;
+        private readonly CampaignService campaignService;
 
         public CampaignsEdit(CampaignDTO campaign)
         {
             try
             {
-                CurrentCampaign = campaign;
+                currentCampaign = campaign;
 
                 InitializeComponent();
+                emailTemplateService = new EmailTemplateService();
+                campaignService = new CampaignService();
 
                 bgHelper = new BackgroundHelper();
 
@@ -39,12 +39,12 @@ namespace NetEmail.View
                 {
                     try
                     {
-                        Templates = TemplateBusiness.Instance.GetTemplates();
+                        templates = emailTemplateService.GetTemplates();
                         RefreshCampaign();
 
                         bgHelper.Foreground(() =>
                     {
-                        lbxTemplates.DataSource = Templates;
+                        lbxTemplates.DataSource = templates;
                     });
                     }
                     catch (Exception ex)
@@ -63,26 +63,26 @@ namespace NetEmail.View
         {
             try
             {
-                if (CurrentCampaign.Id > 0)
+                if (currentCampaign.Id > 0)
                 {
                     bgHelper.Background(() =>
                     {
                         try
                         {
-                            CurrentCampaign = CampaignBusiness.Instance.GetCampaign(CurrentCampaign.Id);
-                            CurrentCustomers = CampaignBusiness.Instance.GetCampaignCustomers(CurrentCampaign.Id);
+                            currentCampaign = campaignService.GetCampaign(currentCampaign.Id);
+                            currentCustomers = campaignService.GetCampaignCustomers(currentCampaign.Id);
 
                             bgHelper.Foreground(() =>
                             {
-                                lblStatus.Text = CurrentCampaign.IsActive ? "Active" : "Passive";
-                                tbxName.Text = CurrentCampaign.Name;
-                                tbxMailSubject.Text = CurrentCampaign.MailSubject;
-                                lbxTemplates.SelectedItem = Templates.Where(t => t.Id == CurrentCampaign.TemplateId).FirstOrDefault();
-                                lblTotal.Text = CurrentCampaign.TotalCount.ToString();
-                                lblWaiting.Text = CurrentCampaign.PendingCount.ToString();
-                                lblSent.Text = CurrentCampaign.SentCount.ToString();
+                                lblStatus.Text = currentCampaign.IsActive ? "Active" : "Passive";
+                                tbxName.Text = currentCampaign.Name;
+                                tbxMailSubject.Text = currentCampaign.MailSubject;
+                                lbxTemplates.SelectedItem = templates.Where(t => t.Id == currentCampaign.TemplateId).FirstOrDefault();
+                                lblTotal.Text = currentCampaign.TotalCount.ToString();
+                                lblWaiting.Text = currentCampaign.PendingCount.ToString();
+                                lblSent.Text = currentCampaign.SentCount.ToString();
 
-                                if (CurrentCampaign.IsActive == true)
+                                if (currentCampaign.IsActive == true)
                                 {
                                     btnStartCampaign.Text = "Stop Campaign";
                                 }
@@ -120,17 +120,17 @@ namespace NetEmail.View
 
         private void RefreshCustomers()
         {
-            if (CurrentCampaign.Id > 0)
+            if (currentCampaign.Id > 0)
             {
                 bgHelper.Background(() =>
                 {
                     try
                     {
-                        CurrentCustomers = CampaignBusiness.Instance.GetCampaignCustomers(CurrentCampaign.Id);
+                        currentCustomers = campaignService.GetCampaignCustomers(currentCampaign.Id);
 
                         bgHelper.Foreground(() =>
                         {
-                            gridCustomers.DataSource = CurrentCustomers;
+                            gridCustomers.DataSource = currentCustomers;
                         });
                     }
                     catch (Exception ex)
@@ -169,11 +169,11 @@ namespace NetEmail.View
                     return;
                 }
 
-                Template selectedTemplate = (Template)lbxTemplates.SelectedItem;
+                EmailTemplate selectedTemplate = (EmailTemplate)lbxTemplates.SelectedItem;
 
                 try
                 {
-                    CampaignBusiness.Instance.SaveCampaign(CurrentCampaign.Id, tbxName.Text, selectedTemplate.Id, tbxMailSubject.Text, CurrentCustomers.Select(s => s.Id).ToList());
+                    campaignService.SaveCampaign(currentCampaign.Id, tbxName.Text, selectedTemplate.Id, tbxMailSubject.Text, currentCustomers.Select(s => s.Id).ToList());
                 }
                 catch (Exception ex)
                 {
@@ -196,13 +196,13 @@ namespace NetEmail.View
             {
                 bgHelper.Background(() =>
                 {
-                    if (CurrentCampaign.IsActive == true)
+                    if (currentCampaign.IsActive == true)
                     {
-                        CampaignBusiness.Instance.StopCampaign(CurrentCampaign.Id);
+                        campaignService.StopCampaign(currentCampaign.Id);
                     }
                     else
                     {
-                        CampaignBusiness.Instance.StartCampaign(CurrentCampaign.Id);
+                        campaignService.StartCampaign(currentCampaign.Id);
                     }
 
                     RefreshCampaign();
@@ -229,11 +229,11 @@ namespace NetEmail.View
                 {
                     try
                     {
-                        if (form.IsCustomersSelected == true && form.CustomerRecords != null && form.CustomerRecords.Count > 0)
+                        if (form.IsCustomersSelected == true && form.customerRecords != null && form.customerRecords.Count > 0)
                         {
-                            CampaignDTO campaign = CampaignBusiness.Instance.SaveCampaign(CurrentCampaign.Id, CurrentCampaign.Name, CurrentCampaign.TemplateId, tbxMailSubject.Text, form.CustomerRecords.Select(c => c.Id).ToList());
+                            CampaignDTO campaign = campaignService.SaveCampaign(currentCampaign.Id, currentCampaign.Name, currentCampaign.TemplateId, tbxMailSubject.Text, form.customerRecords.Select(c => c.Id).ToList());
 
-                            CurrentCampaign = campaign;
+                            currentCampaign = campaign;
                         }
 
                         bgHelper.Foreground(() =>
@@ -276,7 +276,7 @@ namespace NetEmail.View
                 {
                     try
                     {
-                        CampaignBusiness.Instance.DeleteAllCampaignCustomers(CurrentCampaign.Id);
+                        campaignService.DeleteAllCampaignCustomers(currentCampaign.Id);
 
                         RefreshCampaign();
 
@@ -306,7 +306,7 @@ namespace NetEmail.View
                 {
                     try
                     {
-                        CampaignBusiness.Instance.DeleteCampaign(CurrentCampaign.Id);
+                        campaignService.DeleteCampaign(currentCampaign.Id);
 
                         bgHelper.Foreground(() =>
                         {

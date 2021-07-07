@@ -11,17 +11,15 @@ namespace NetMail.Utility
         private string host;
         private int port;
         private string mailAddress;
-        private string password;
-        private string fromAddress;
+        private string password; 
         private string fromAlias;
 
-        public EmailHelper SetCredentials(string _host, int _port, string _mailAddress, string _password, string _fromAddress, string _fromAlias)
+        public EmailHelper SetCredentials(string _host, int _port, string _mailAddress, string _password,  string _fromAlias)
         {
             host = _host;
             port = _port;
             mailAddress = _mailAddress;
-            password = _password;
-            fromAddress = _fromAddress;
+            password = _password; 
             fromAlias = _fromAlias;
 
             return this;
@@ -41,12 +39,15 @@ namespace NetMail.Utility
                     Credentials = new NetworkCredential(mailAddress, password)
                 };
 
-                MailAddress from = new MailAddress(fromAddress, fromAlias);
-                MailMessage mail = new MailMessage();
-                mail.From = from;
-                mail.Subject = subject;
-                mail.Body = message + "<footer> <p> Call Referrals<br>1500 Chestnut St, Suite #1626, Philadelphia, PA 19102</p></footer> ";
-                mail.IsBodyHtml = true;
+                MailAddress from = new MailAddress(mailAddress, fromAlias);
+                string body = message + "<footer> <p> Call Referrals<br>1500 Chestnut St, Suite #1626, Philadelphia, PA 19102</p></footer>";
+                MailMessage mail = new MailMessage
+                {
+                    From = from,
+                    Subject = subject,
+                    Body = body,
+                    IsBodyHtml = true
+                };
 
                 recepients.ForEach(r => mail.To.Add(r));
 

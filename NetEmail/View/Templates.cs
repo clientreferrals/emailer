@@ -1,29 +1,23 @@
 ﻿using Backgrounder;
-using NetEmail.Business;
-using NetEmail.Entity;
+using BusniessLayer;
+using DataAccessLayer.DataBase;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace NetEmail.View
 {
     public partial class Templates : Form
     {
-        BackgroundHelper bgHelper;
-        List<Template> TemplateRecords = new List<Template>();
-
+        private readonly BackgroundHelper bgHelper;
+        List<EmailTemplate> TemplateRecords = new List<EmailTemplate>();
+        private readonly EmailTemplateService emailTemplateService;
         public Templates()
         {
             try
             {
                 InitializeComponent();
-
+                emailTemplateService = new EmailTemplateService();
                 bgHelper = new BackgroundHelper();
 
                 RefreshTemplates();
@@ -41,12 +35,12 @@ namespace NetEmail.View
             {
                 try
                 {
-                    TemplateRecords = TemplateBusiness.Instance.GetTemplates();
+                    TemplateRecords = emailTemplateService.GetTemplates();
 
                     bgHelper.Foreground(() =>
                     {
                         dataGridTemplates.DataSource = TemplateRecords;
-                        dataGridTemplates.Columns["Content"].Visible = false;
+                        dataGridTemplates.Columns["TemplateContent"].Visible = false;
                     });
                 }
                 catch (Exception ex)
@@ -62,7 +56,7 @@ namespace NetEmail.View
         {
             try
             {
-                EditTemplate form = new EditTemplate(new Template());
+                EditTemplate form = new EditTemplate(new EmailTemplate());
                 form.ShowDialog();
 
                 RefreshTemplates();

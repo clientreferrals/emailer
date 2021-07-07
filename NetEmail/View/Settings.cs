@@ -1,6 +1,6 @@
 ﻿using Backgrounder;
-using NetEmail.DTO;
-using NetMail.Business;
+using BusniessLayer;
+using Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,9 +10,12 @@ namespace NetEmail.View
 {
     public partial class Settings : Form
     {
-        BackgroundHelper bgHelper;
-        List<EmailDTO> EmailRecords = new List<EmailDTO>();
+        private readonly BackgroundHelper bgHelper;
+        private List<EmailDTO> EmailRecords = new List<EmailDTO>();
         private DataTable datatable;
+
+        private readonly EmailSettingService emailSettingService;
+        private readonly ApplicationSettingServices applicationSettingServices;
         public Settings()
         {
             try
@@ -20,9 +23,10 @@ namespace NetEmail.View
                 InitializeComponent();
 
                 bgHelper = new BackgroundHelper();
-
-                tbxFromWaitTime.Text = SettingsBusiness.Instance.GetValue("WaitFromTime");
-                tbxToWaitTime.Text = SettingsBusiness.Instance.GetValue("WaitToTime");
+                emailSettingService = new EmailSettingService();
+                applicationSettingServices = new ApplicationSettingServices();
+                tbxFromWaitTime.Text = applicationSettingServices.GetValue("WaitFromTime");
+                tbxToWaitTime.Text = applicationSettingServices.GetValue("WaitToTime");
                 RefreshEmailsTable();
             }
             catch (Exception ex)
@@ -53,8 +57,8 @@ namespace NetEmail.View
                     MessageBox.Show("Please enter the To seconds");
                     return;
                 }
-                SettingsBusiness.Instance.Set("WaitFromTime", waitFromTime.ToString());
-                SettingsBusiness.Instance.Set("WaitToTime", waitToTime.ToString());
+                applicationSettingServices.AddUpdate("WaitFromTime", waitFromTime.ToString());
+                applicationSettingServices.AddUpdate("WaitToTime", waitToTime.ToString());
 
                 this.Close();
             }
@@ -71,35 +75,34 @@ namespace NetEmail.View
             {
                 try
                 {
-                    datatable = (DataTable)tableEmails.DataSource;
-                    if (datatable == null)
-                    {
-                        datatable = new DataTable();
-                        datatable.Columns.Add(new DataColumn("ID"));
-                        datatable.Columns.Add(new DataColumn("Address"));
-                        datatable.Columns.Add(new DataColumn("FromAlias"));
-
-                    }
-                    // for refresh button
-                    if (datatable.Rows.Count > 0)
-                    {
-                        datatable.Rows.Clear();
-                    }
-
-                    EmailRecords = EmailSettingsBusiness.Instance.GetEmails();
+                    EmailRecords = emailSettingService.GetEmails();
 
                     bgHelper.Foreground(() =>
                     {
+                        datatable = (DataTable)tableEmails.DataSource;
+                        if (datatable == null)
+                        {
+                            datatable = new DataTable();
+                            datatable.Columns.Add(new DataColumn("ID"));
+                            datatable.Columns.Add(new DataColumn("Address"));
+                            datatable.Columns.Add(new DataColumn("FromAlias"));
+
+                        }
+                        // for refresh button
+                        if (datatable.Rows.Count > 0)
+                        {
+                            datatable.Rows.Clear();
+                        }
 
                         foreach (var email in EmailRecords)
                         {
                             DataRow row = this.datatable.NewRow();
                             row["ID"] = email.Id.ToString();
                             row["Address"] = email.Address;
-                            row["FromAlias"] = email.FromAddress;
+                            row["FromAlias"] = email.FromAlias;
                             datatable.Rows.Add(row);
                         }
-                        tableEmails.DataSource = datatable; 
+                        tableEmails.DataSource = datatable;
                         if (tableEmails.Rows.Count > 0)
                         {
                             tableEmails.Columns[0].Width = 50;
@@ -108,6 +111,7 @@ namespace NetEmail.View
                         }
                     });
                 }
+
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);

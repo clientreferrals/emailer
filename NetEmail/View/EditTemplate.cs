@@ -1,6 +1,6 @@
 ﻿using Backgrounder;
-using NetEmail.Business;
-using NetEmail.Entity;
+using BusniessLayer;
+using DataAccessLayer.DataBase;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -9,15 +9,15 @@ namespace NetEmail.View
 {
     public partial class EditTemplate : Form
     {
-        Template templateRecord;
-        BackgroundHelper bgHelper;
-
-        public EditTemplate(Template t)
+        private readonly EmailTemplate templateRecord;
+        private readonly BackgroundHelper bgHelper;
+        private readonly EmailTemplateService emailTemplateService;
+        public EditTemplate(EmailTemplate t)
         {
             try
             {
                 InitializeComponent();
-
+                emailTemplateService = new EmailTemplateService();
                 bgHelper = new BackgroundHelper();
 
                 templateRecord = t;
@@ -25,7 +25,7 @@ namespace NetEmail.View
                 string editorUrl = AppDomain.CurrentDomain.BaseDirectory + "Files\\Editor\\Editor.html";
                 webBrowser1.Navigate(editorUrl);
 
-                tbxName.Text = templateRecord.Name;
+                tbxName.Text = templateRecord.TemplateName;
                 webBrowser1.DocumentCompleted += WebBrowser1_DocumentCompleted;
             }
             catch (Exception ex)
@@ -54,7 +54,7 @@ namespace NetEmail.View
             {
                 try
                 {
-                    webBrowser1.Document.InvokeScript("setContent", new String[] { templateRecord.Content });
+                    webBrowser1.Document.InvokeScript("setContent", new String[] { templateRecord.TemplateContent });
                 }
                 catch (Exception ex)
                 {
@@ -78,7 +78,7 @@ namespace NetEmail.View
         {
             try
             {
-                TemplateBusiness.Instance.Save(templateRecord.Id, tbxName.Text, GetElementByClassName("note-editable").InnerHtml);
+                emailTemplateService.Save(templateRecord.Id, tbxName.Text, GetElementByClassName("note-editable").InnerHtml);
                 this.Close();
             }
             catch (Exception ex)
@@ -109,7 +109,7 @@ namespace NetEmail.View
 
                 if (confirmResult == DialogResult.Yes)
                 {
-                    TemplateBusiness.Instance.Delete(templateRecord.Id);
+                    emailTemplateService.Delete(templateRecord.Id);
                     this.Close();
                 }
             }
@@ -118,8 +118,6 @@ namespace NetEmail.View
                 MessageBox.Show(ex.Message);
             }
 
-        }
-
-
+        } 
     }
 }

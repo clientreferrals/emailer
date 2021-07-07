@@ -50,6 +50,7 @@
             this.showRemainingLimitsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.unifiedInboxButton = new System.Windows.Forms.Button();
             this.blackEmailsButton = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -103,7 +104,7 @@
             this.groupBox1.Controls.Add(this.groupBox4);
             this.groupBox1.Controls.Add(this.groupBox3);
             this.groupBox1.Controls.Add(this.groupBox2);
-            this.groupBox1.Location = new System.Drawing.Point(12, 281);
+            this.groupBox1.Location = new System.Drawing.Point(13, 326);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(427, 138);
             this.groupBox1.TabIndex = 4;
@@ -186,7 +187,7 @@
             this.emailQueueToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(458, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(472, 24);
             this.menuStrip1.TabIndex = 5;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -257,11 +258,22 @@
             this.blackEmailsButton.UseVisualStyleBackColor = true;
             this.blackEmailsButton.Click += new System.EventHandler(this.blackEmailsButton_Click);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(131, 264);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(202, 57);
+            this.button1.TabIndex = 8;
+            this.button1.Text = "FAILED EMAIL ACCOUNTS";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(458, 431);
+            this.ClientSize = new System.Drawing.Size(472, 474);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.blackEmailsButton);
             this.Controls.Add(this.unifiedInboxButton);
             this.Controls.Add(this.groupBox1);
@@ -309,6 +321,7 @@
         private System.Windows.Forms.ToolStripMenuItem showRemainingLimitsToolStripMenuItem;
         private System.Windows.Forms.Button unifiedInboxButton;
         private System.Windows.Forms.Button blackEmailsButton;
+        private System.Windows.Forms.Button button1;
     }
 }
 

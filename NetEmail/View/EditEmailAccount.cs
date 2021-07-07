@@ -1,6 +1,6 @@
 ﻿using Backgrounder;
-using NetEmail.DTO;
-using NetMail.Business;
+using BusniessLayer;
+using Models.DTO;
 using NetMail.Utility;
 using System;
 using System.Windows.Forms;
@@ -11,6 +11,7 @@ namespace NetEmail.View
     {
         private readonly EmailDTO emailAccount;
         private readonly BackgroundHelper bgHelper;
+        private readonly EmailSettingService emailSettingService;
 
         public EditEmailAccount(EmailDTO emailAccount)
         {
@@ -18,8 +19,9 @@ namespace NetEmail.View
             {
                 InitializeComponent();
 
-                bgHelper = new BackgroundHelper();
+                emailSettingService = new EmailSettingService();
 
+                bgHelper = new BackgroundHelper();
 
                 if (emailAccount.Port == 0)
                 {
@@ -29,29 +31,29 @@ namespace NetEmail.View
                 {
                     emailAccount.Host = "smtp.gmail.com";
                 }
-                if (emailAccount.PopPort == 0)
+                if (emailAccount.IMAPPort == 0)
                 {
-                    emailAccount.PopPort = 993;
+                    emailAccount.IMAPPort = 993;
                 }
-                if (emailAccount.PopHost == null || emailAccount.PopHost != "imap.gmail.com")
+                if (emailAccount.IMAPHost == null || emailAccount.IMAPHost != "imap.gmail.com")
                 {
-                    emailAccount.PopHost = "imap.gmail.com";
+                    emailAccount.IMAPHost = "imap.gmail.com";
                 }
                 if (emailAccount.DailyLimit == 0)
                 {
                     tbxDailyLimit.Text = 500.ToString();
                 }
                 else
-                { 
+                {
                     tbxDailyLimit.Text = emailAccount.DailyLimit.ToString();
                 }
                 tbxAddress.Text = emailAccount.Address;
                 tbxFromAlias.Text = emailAccount.FromAlias;
                 tbxPassword.Text = emailAccount.Password;
                 tbxPort.Text = emailAccount.Port.ToString();
-                tbxHostAddress.Text = emailAccount.Host; 
-                popHostAddressTbx.Text = emailAccount.PopHost;
-                popPortNoTbx.Text = emailAccount.PopPort.ToString();
+                tbxHostAddress.Text = emailAccount.Host;
+                popHostAddressTbx.Text = emailAccount.IMAPHost;
+                popPortNoTbx.Text = emailAccount.IMAPPort.ToString();
 
                 this.emailAccount = emailAccount;
             }
@@ -77,7 +79,7 @@ namespace NetEmail.View
                 int.TryParse(tbxPort.Text, out port);
                 int.TryParse(tbxDailyLimit.Text, out dailyLimit);
 
-                EmailSettingsBusiness.Instance.Save(
+                emailSettingService.Save(
                     emailAccount.Id,
                     tbxHostAddress.Text,
                     port,
@@ -120,7 +122,6 @@ namespace NetEmail.View
                                                 Int32.Parse(tbxPort.Text),
                                                 tbxAddress.Text,
                                                 tbxPassword.Text,
-                                                tbxHostAddress.Text,
                                                 tbxFromAlias.Text
                                                 )
                                                 .Send(new System.Collections.Generic.List<string>() { f2.ReturnValue }, "Test email", "This is a test email.");
@@ -165,7 +166,7 @@ namespace NetEmail.View
 
                 if (confirmResult == DialogResult.Yes)
                 {
-                    EmailSettingsBusiness.Instance.Delete(emailAccount.Id);
+                    emailSettingService.Delete(emailAccount.Id);
                     this.Close();
                 }
             }
