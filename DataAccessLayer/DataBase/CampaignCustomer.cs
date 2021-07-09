@@ -21,7 +21,7 @@ namespace DataAccessLayer.DataBase
         public System.DateTime CreatedDateTime { get; set; }
         public Nullable<System.DateTime> EditedDateTime { get; set; }
     
-        public virtual Customer Customer { get; set; }
         public virtual Campaign Campaign { get; set; }
+        public virtual Customer Customer { get; set; }
     }
 }

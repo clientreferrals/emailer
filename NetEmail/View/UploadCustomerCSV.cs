@@ -15,7 +15,7 @@ namespace NetEmail.View
         {
             try
             {
-                InitializeComponent(); 
+                InitializeComponent();
                 customerService = new CustomerService();
 
                 bgHelper = new BackgroundHelper();
@@ -38,6 +38,7 @@ namespace NetEmail.View
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.Filter = "|*.csv";
+
                 DialogResult result = openFileDialog.ShowDialog();
 
                 if (result == DialogResult.OK)
@@ -66,7 +67,8 @@ namespace NetEmail.View
                 {
                     try
                     {
-                        DataTable dtCustomers = FileHelper.Instance.GetDataTableFromCSVFile(tbxPath.Text, ";");
+                        DataTable dtCustomers = FileHelper.Instance.GetDataTableFromCSVFile(tbxPath.Text, ",");
+
 
                         bgHelper.Foreground(() =>
                         {
@@ -82,8 +84,8 @@ namespace NetEmail.View
                             {
                                 customerService.Save(
                                     id: 0,
-                                    name: row["Name"].ToString(),
-                                    phoneNo: row["phoneNo"].ToString(),
+                                    name: row["Company"].ToString(),
+                                    phoneNo: row["Phone"].ToString(),
                                     email: row["Email"].ToString(),
                                     tags: tbxTag.Text,
                                     website: row["Website"].ToString(),
@@ -96,7 +98,7 @@ namespace NetEmail.View
                                 {
                                     progressBar1.Value = i;
                                 });
-                            };
+                            }
                         }
 
                         bgHelper.Foreground(() =>

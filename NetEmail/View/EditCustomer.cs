@@ -1,6 +1,7 @@
 ﻿
 using BusniessLayer;
 using DataAccessLayer.DataBase;
+using Models.DTO;
 using System;
 using System.Windows.Forms;
 
@@ -8,9 +9,9 @@ namespace NetEmail.View
 {
     public partial class EditCustomer : Form
     {
-        readonly Customer CustomerRecord = null;
+        readonly CustomerDto CustomerRecord = null;
         private readonly CustomerService customerService;
-        public EditCustomer(Customer customer)
+        public EditCustomer(CustomerDto customer)
         {
             try
             {

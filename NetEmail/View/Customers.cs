@@ -1,6 +1,7 @@
 ﻿using Backgrounder;
 using BusniessLayer;
 using DataAccessLayer.DataBase;
+using Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -16,7 +17,7 @@ namespace NetEmail.View
     public partial class Customers : Form
     {
         private readonly BackgroundHelper bgHelper;
-        public List<Customer> customerRecords = new List<Customer>();
+        public List<CustomerDto> customerRecords = new List<CustomerDto>();
         CustomersWindowType currentWindowType = CustomersWindowType.LIST;
         public bool IsCustomersSelected = false;
         private readonly CustomerService customerService;
@@ -87,7 +88,7 @@ namespace NetEmail.View
         {
             try
             {
-                EditCustomer f2 = new EditCustomer(new Customer());
+                EditCustomer f2 = new EditCustomer(new CustomerDto());
                 f2.ShowDialog();
 
                 RefreshCustomersTable();

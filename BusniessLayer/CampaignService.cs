@@ -81,6 +81,7 @@ namespace BusniessLayer
 
         public CampaignDTO SaveCampaign(int id, string name, int templateId, string mailSubject, List<int> customerIds)
         {
+            int campaignId = 0;
             if (id == 0)
             {
                 using (var db = new DirectEmailerEntities())
@@ -97,23 +98,15 @@ namespace BusniessLayer
                     db.Campaigns.Add(record);
                     db.SaveChanges();
 
-                    int nextCustomerId = 0;
-                    if (db.CampaignCustomers.Count() > 0)
-                    {
-                        nextCustomerId = db.CampaignCustomers.Max(x => x.Id);
-                    }
-
+                    campaignId = record.Id;
                     foreach (int customerId in customerIds)
-                    {
-                        nextCustomerId += 1;
+                    { 
                         CampaignCustomer newRecord = new CampaignCustomer()
-                        {
-                            Id = nextCustomerId,
+                        { 
                             CampaignId = record.Id,
                             CustomerId = customerId,
                             IsSent = false, 
-                            CreatedDateTime = DateTime.Now, 
-                            
+                            CreatedDateTime = DateTime.Now,  
                         };
 
                         db.CampaignCustomers.Add(newRecord);
@@ -121,15 +114,16 @@ namespace BusniessLayer
 
                     db.SaveChanges();
 
-                    return GetCampaign(record.Id);
+                   
                 }
+                
             }
             else
             {
                 using (var db = new DirectEmailerEntities())
                 {
                     var campaignRecord = db.Campaigns.Where(x => x.Id == id).FirstOrDefault();
-
+                    campaignId = campaignRecord.Id;
                     campaignRecord.Name = name;
                     campaignRecord.TemplateId = templateId;
                     campaignRecord.MailSubject = mailSubject;
@@ -156,19 +150,11 @@ namespace BusniessLayer
                     }
 
                     if (customersToAdd.Count > 0)
-                    {
-                        int nextCampaignCustomerId = 0;
-                        if (db.CampaignCustomers.Count() > 0)
-                        {
-                            nextCampaignCustomerId = db.CampaignCustomers.Max(x => x.Id);
-                        }
-
+                    { 
                         foreach (int newCustomerId in customersToAdd)
-                        {
-                            nextCampaignCustomerId += 1;
+                        { 
                             CampaignCustomer newRecord = new CampaignCustomer()
-                            {
-                                Id = nextCampaignCustomerId,
+                            { 
                                 CampaignId = id,
                                 CustomerId = newCustomerId,
                                 IsSent = false, 
@@ -178,11 +164,11 @@ namespace BusniessLayer
                         }
                         
                         db.SaveChanges();
-                    }
-
-                    return GetCampaign(campaignRecord.Id);
+                    } 
                 }
+                
             }
+            return GetCampaign(campaignId);
         }
 
         public bool DeleteCampaign(int id)

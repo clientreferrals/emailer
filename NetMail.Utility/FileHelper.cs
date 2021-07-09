@@ -1,10 +1,7 @@
 ﻿using Microsoft.VisualBasic.FileIO;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.OleDb;
 
 namespace NetMail.Utility
 {
@@ -43,6 +40,6 @@ namespace NetMail.Utility
                 }
             }
             return csvData;
-        }
+        } 
     }
 }

@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.DataBase;
+using Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace BusniessLayer
     {
         #region Public Methods
 
-        public List<Customer> GetCustomers(string name, string phoneNo, string tag, string website, string city)
+        public List<CustomerDto> GetCustomers(string name, string phoneNo, string tag, string website, string city)
         {
             using (var db = new DirectEmailerEntities())
             {
@@ -21,7 +22,20 @@ namespace BusniessLayer
                 if (string.IsNullOrEmpty(city) == false) query = query.Where(q => q.City.Contains(city));
                 if (string.IsNullOrEmpty(tag) == false) query = query.Where(q => q.Tags.Contains(tag + "|"));
 
-                var result = query.ToList();
+                var result = query.Select(
+                    x=> new CustomerDto()
+                    {
+                        Id = x.Id, 
+                        Email = x.Email, 
+                        Name = x.Name, 
+                        City = x.City, 
+                        PhoneNo = x.PhoneNo, 
+                        Website = x.Website, 
+                        Tags = x.Tags, 
+                        State = x.State, 
+                        CreatedDateTime = x.CreatedDateTime, 
+                        EditedDateTime = x.EditedDateTime,
+                    }).ToList();
 
                 return result;
 
@@ -33,12 +47,11 @@ namespace BusniessLayer
             if (string.IsNullOrEmpty(tags)) throw new Exception("Please enter a tag for customer: " + name);
 
             if (tags.Last() != '|') tags += '|';
-
-            if (id == 0)
+            using (var db = new DirectEmailerEntities())
             {
-                using (var db = new DirectEmailerEntities())
+                id = db.Customers.Where(x => x.Email == email).Select(x => x.Id).FirstOrDefault();
+                if (id == 0)
                 {
-
                     Customer record = new Customer()
                     {
                         Name = name,
@@ -47,7 +60,7 @@ namespace BusniessLayer
                         Email = email,
                         Website = website,
                         State = state,
-                        City = city, 
+                        City = city,
                         CreatedDateTime = DateTime.Now
                     };
 
@@ -55,12 +68,11 @@ namespace BusniessLayer
                     db.SaveChanges();
 
                     return record;
+
                 }
-            }
-            else
-            {
-                using (var db = new DirectEmailerEntities())
+                else
                 {
+
                     var record = db.Customers.Where(x => x.Id == id).FirstOrDefault();
 
                     record.Name = name;
@@ -71,8 +83,9 @@ namespace BusniessLayer
                     record.State = state;
                     record.City = city;
                     record.EditedDateTime = DateTime.Now;
-                    db.SaveChanges(); 
+                    db.SaveChanges();
                     return record;
+
                 }
             }
         }
@@ -98,7 +111,7 @@ namespace BusniessLayer
 
                 return true;
             }
-        } 
+        }
         #endregion
     }
 }
