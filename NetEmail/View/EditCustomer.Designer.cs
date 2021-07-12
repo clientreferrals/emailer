@@ -30,6 +30,12 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditCustomer));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txbState = new System.Windows.Forms.TextBox();
+            this.txbCity = new System.Windows.Forms.TextBox();
+            this.txbWebsite = new System.Windows.Forms.TextBox();
+            this.stateLabel = new System.Windows.Forms.Label();
+            this.cityLabel = new System.Windows.Forms.Label();
+            this.websiteLbl = new System.Windows.Forms.Label();
             this.tbxTags = new System.Windows.Forms.TextBox();
             this.tbxEmail = new System.Windows.Forms.TextBox();
             this.tbxPhoneNo = new System.Windows.Forms.TextBox();
@@ -41,12 +47,6 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
-            this.txbState = new System.Windows.Forms.TextBox();
-            this.txbCity = new System.Windows.Forms.TextBox();
-            this.txbWebsite = new System.Windows.Forms.TextBox();
-            this.stateLabel = new System.Windows.Forms.Label();
-            this.cityLabel = new System.Windows.Forms.Label();
-            this.websiteLbl = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -71,7 +71,55 @@
             this.groupBox1.Size = new System.Drawing.Size(419, 225);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Customer Info";
+            this.groupBox1.Text = "Contacts Info";
+            // 
+            // txbState
+            // 
+            this.txbState.Location = new System.Drawing.Point(100, 184);
+            this.txbState.Name = "txbState";
+            this.txbState.Size = new System.Drawing.Size(313, 20);
+            this.txbState.TabIndex = 8;
+            // 
+            // txbCity
+            // 
+            this.txbCity.Location = new System.Drawing.Point(100, 157);
+            this.txbCity.Name = "txbCity";
+            this.txbCity.Size = new System.Drawing.Size(313, 20);
+            this.txbCity.TabIndex = 6;
+            // 
+            // txbWebsite
+            // 
+            this.txbWebsite.Location = new System.Drawing.Point(100, 131);
+            this.txbWebsite.Name = "txbWebsite";
+            this.txbWebsite.Size = new System.Drawing.Size(313, 20);
+            this.txbWebsite.TabIndex = 5;
+            // 
+            // stateLabel
+            // 
+            this.stateLabel.AutoSize = true;
+            this.stateLabel.Location = new System.Drawing.Point(7, 186);
+            this.stateLabel.Name = "stateLabel";
+            this.stateLabel.Size = new System.Drawing.Size(32, 13);
+            this.stateLabel.TabIndex = 100;
+            this.stateLabel.Text = "State";
+            // 
+            // cityLabel
+            // 
+            this.cityLabel.AutoSize = true;
+            this.cityLabel.Location = new System.Drawing.Point(6, 158);
+            this.cityLabel.Name = "cityLabel";
+            this.cityLabel.Size = new System.Drawing.Size(24, 13);
+            this.cityLabel.TabIndex = 101;
+            this.cityLabel.Text = "City";
+            // 
+            // websiteLbl
+            // 
+            this.websiteLbl.AutoSize = true;
+            this.websiteLbl.Location = new System.Drawing.Point(7, 133);
+            this.websiteLbl.Name = "websiteLbl";
+            this.websiteLbl.Size = new System.Drawing.Size(46, 13);
+            this.websiteLbl.TabIndex = 102;
+            this.websiteLbl.Text = "Website";
             // 
             // tbxTags
             // 
@@ -167,54 +215,6 @@
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
-            // txbState
-            // 
-            this.txbState.Location = new System.Drawing.Point(100, 184);
-            this.txbState.Name = "txbState";
-            this.txbState.Size = new System.Drawing.Size(313, 20);
-            this.txbState.TabIndex = 8;
-            // 
-            // txbCity
-            // 
-            this.txbCity.Location = new System.Drawing.Point(100, 157);
-            this.txbCity.Name = "txbCity";
-            this.txbCity.Size = new System.Drawing.Size(313, 20);
-            this.txbCity.TabIndex = 6;
-            // 
-            // txbWebsite
-            // 
-            this.txbWebsite.Location = new System.Drawing.Point(100, 131);
-            this.txbWebsite.Name = "txbWebsite";
-            this.txbWebsite.Size = new System.Drawing.Size(313, 20);
-            this.txbWebsite.TabIndex = 5;
-            // 
-            // stateLabel
-            // 
-            this.stateLabel.AutoSize = true;
-            this.stateLabel.Location = new System.Drawing.Point(7, 186);
-            this.stateLabel.Name = "stateLabel";
-            this.stateLabel.Size = new System.Drawing.Size(32, 13);
-            this.stateLabel.TabIndex = 100;
-            this.stateLabel.Text = "State";
-            // 
-            // cityLabel
-            // 
-            this.cityLabel.AutoSize = true;
-            this.cityLabel.Location = new System.Drawing.Point(6, 158);
-            this.cityLabel.Name = "cityLabel";
-            this.cityLabel.Size = new System.Drawing.Size(24, 13);
-            this.cityLabel.TabIndex = 101;
-            this.cityLabel.Text = "City";
-            // 
-            // websiteLbl
-            // 
-            this.websiteLbl.AutoSize = true;
-            this.websiteLbl.Location = new System.Drawing.Point(7, 133);
-            this.websiteLbl.Name = "websiteLbl";
-            this.websiteLbl.Size = new System.Drawing.Size(46, 13);
-            this.websiteLbl.TabIndex = 102;
-            this.websiteLbl.Text = "Website";
-            // 
             // EditCustomer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -227,7 +227,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "EditCustomer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Edit Customer";
+            this.Text = "Edit Contacts";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

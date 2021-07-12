@@ -30,6 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Customers));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cityLabel = new System.Windows.Forms.Label();
+            this.txbCity = new System.Windows.Forms.TextBox();
+            this.txtWebsite = new System.Windows.Forms.TextBox();
+            this.websiteLbl = new System.Windows.Forms.Label();
             this.btnApply = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.tbxTag = new System.Windows.Forms.TextBox();
@@ -44,10 +48,6 @@
             this.dataGridCustomers = new System.Windows.Forms.DataGridView();
             this.btnAddCsv = new System.Windows.Forms.Button();
             this.btnAddNew = new System.Windows.Forms.Button();
-            this.cityLabel = new System.Windows.Forms.Label();
-            this.txbCity = new System.Windows.Forms.TextBox();
-            this.txtWebsite = new System.Windows.Forms.TextBox();
-            this.websiteLbl = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridCustomers)).BeginInit();
@@ -72,6 +72,38 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filters";
+            // 
+            // cityLabel
+            // 
+            this.cityLabel.AutoSize = true;
+            this.cityLabel.Location = new System.Drawing.Point(203, 67);
+            this.cityLabel.Name = "cityLabel";
+            this.cityLabel.Size = new System.Drawing.Size(24, 13);
+            this.cityLabel.TabIndex = 10;
+            this.cityLabel.Text = "City";
+            // 
+            // txbCity
+            // 
+            this.txbCity.Location = new System.Drawing.Point(206, 83);
+            this.txbCity.Name = "txbCity";
+            this.txbCity.Size = new System.Drawing.Size(177, 20);
+            this.txbCity.TabIndex = 5;
+            // 
+            // txtWebsite
+            // 
+            this.txtWebsite.Location = new System.Drawing.Point(10, 84);
+            this.txtWebsite.Name = "txtWebsite";
+            this.txtWebsite.Size = new System.Drawing.Size(177, 20);
+            this.txtWebsite.TabIndex = 4;
+            // 
+            // websiteLbl
+            // 
+            this.websiteLbl.AutoSize = true;
+            this.websiteLbl.Location = new System.Drawing.Point(7, 67);
+            this.websiteLbl.Name = "websiteLbl";
+            this.websiteLbl.Size = new System.Drawing.Size(46, 13);
+            this.websiteLbl.TabIndex = 7;
+            this.websiteLbl.Text = "Website";
             // 
             // btnApply
             // 
@@ -205,38 +237,6 @@
             this.btnAddNew.UseVisualStyleBackColor = true;
             this.btnAddNew.Click += new System.EventHandler(this.btnAddNew_Click);
             // 
-            // cityLabel
-            // 
-            this.cityLabel.AutoSize = true;
-            this.cityLabel.Location = new System.Drawing.Point(203, 67);
-            this.cityLabel.Name = "cityLabel";
-            this.cityLabel.Size = new System.Drawing.Size(24, 13);
-            this.cityLabel.TabIndex = 10;
-            this.cityLabel.Text = "City";
-            // 
-            // txbCity
-            // 
-            this.txbCity.Location = new System.Drawing.Point(206, 83);
-            this.txbCity.Name = "txbCity";
-            this.txbCity.Size = new System.Drawing.Size(177, 20);
-            this.txbCity.TabIndex = 5;
-            // 
-            // txtWebsite
-            // 
-            this.txtWebsite.Location = new System.Drawing.Point(10, 84);
-            this.txtWebsite.Name = "txtWebsite";
-            this.txtWebsite.Size = new System.Drawing.Size(177, 20);
-            this.txtWebsite.TabIndex = 4;
-            // 
-            // websiteLbl
-            // 
-            this.websiteLbl.AutoSize = true;
-            this.websiteLbl.Location = new System.Drawing.Point(7, 67);
-            this.websiteLbl.Name = "websiteLbl";
-            this.websiteLbl.Size = new System.Drawing.Size(46, 13);
-            this.websiteLbl.TabIndex = 7;
-            this.websiteLbl.Text = "Website";
-            // 
             // Customers
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -247,7 +247,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Customers";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Customers";
+            this.Text = "Contacts";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
