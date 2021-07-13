@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Net.Mail;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -29,6 +28,7 @@ namespace DirectEmailResults.View
 
         private ViewEmailDto _currentInboxEmail;
         private string _templateContent = "";
+        private string viewEmailBody = "";
         private readonly BackgroundHelper bgHelper;
         public UnifiedInboxEmails()
         {
@@ -50,7 +50,11 @@ namespace DirectEmailResults.View
             string editorUrl = AppDomain.CurrentDomain.BaseDirectory + "Files\\Editor\\Editor.html";
             webBrowser1.Navigate(editorUrl);
 
-            webBrowser1.DocumentCompleted += webBrowser1_DocumentCompleted;
+            webBrowser1.DocumentCompleted += webBrowser1_DocumentCompleted; 
+
+            viewEmailWebBrowser.Navigate(editorUrl);
+
+            viewEmailWebBrowser.DocumentCompleted += viewEmailWebBrowser_DocumentCompleted;
             perEmailCountTextBox.Text = perEmailCount.ToString();
             fromDateTimePicker.MinDate = DateTime.Now.AddYears(-10);
             fromDateTimePicker.MaxDate = DateTime.Now;
@@ -59,49 +63,46 @@ namespace DirectEmailResults.View
 
             ShowHideReplySection(false);
         }
-        private void RefreshEmailsTable()
+        #region Feild Methods
+        private void perEmailCountTextBox_TextChanged(object sender, EventArgs e)
         {
-            try
+            if (perEmailCountTextBox.Text == "")
             {
-                emailRecords = emailSettingService.GetEmails();
-                unReadEmails = new List<ViewEmailDto>();
-                totalEmailNumber = 0;
-                downloadLable.Text = "";
-                CreateGridView();
-                DownloadEmails();
+                perEmailCountTextBox.Text = "0";
             }
-            catch (Exception ex)
+            perEmailCount = int.Parse(perEmailCountTextBox.Text);
+            if (perEmailCount > 500)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Value should not be greater than 500");
+                perEmailCount = 500;
+                perEmailCountTextBox.Text = perEmailCount.ToString();
             }
         }
-        private void CreateGridView()
-        {
-            datatable = (DataTable)dataGridEmails.DataSource;
-            if (datatable == null)
-            {
-                datatable = new DataTable();
-                datatable.Columns.Add(new DataColumn("Subject"));
-                datatable.Columns.Add(new DataColumn("DateOfEmail"));
 
-            }
-            // for refresh button
-            if (datatable.Rows.Count > 0)
+        private void perEmailCountTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
+            (e.KeyChar != '.'))
             {
-                datatable.Rows.Clear();
+                e.Handled = true;
             }
-            dataGridEmails.DataSource = datatable;
+
+            // only allow one decimal point
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            {
+                e.Handled = true;
+            }
         }
 
-        private void dataGridCustomers_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGridEmails_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             try
             {
                 _currentInboxEmail = unReadEmails[e.RowIndex];
-                viewUserEmailRichTextBox.Text = RemoveHTML(_currentInboxEmail.Body);
+                viewEmailBody = _currentInboxEmail.Body;
                 fromEmailTextBox.Text = _currentInboxEmail.CurrentUserEmail.Address;
                 userEmailTextBox.Text = _currentInboxEmail.FromEmailAddress;
-
+                SetViewContent();
                 ShowHideReplySection(true);
                 using (ImapClient client = new ImapClient(_currentInboxEmail.CurrentUserEmail.IMAPHost,
                     _currentInboxEmail.CurrentUserEmail.IMAPPort, true))
@@ -118,137 +119,11 @@ namespace DirectEmailResults.View
             }
 
         }
-        private string RemoveHTML(string source)
-        {
-            var pattern = @"</?\w+((\s+\w+(\s*=\s*(?:"".*?""|'.*?'|[^'"">\s]+))?)+\s*|\s*)/?>";
-            return Regex.Replace(source, pattern, string.Empty);
-        }
         private void refreshEmails_Click(object sender, EventArgs e)
         {
             RefreshEmailsTable();
         }
 
-        private void DownloadEmails()
-        {
-
-
-            bgHelper.Background(() =>
-            {
-                bgHelper.Foreground(() =>
-                {
-
-                    this.downloadEmailButton.Enabled = false;
-                    this.dataGridEmails.Enabled = false;
-                    this.perEmailCountTextBox.Enabled = false;
-                    this.fromDateTimePicker.Enabled = false;
-                    this.toDateTimePicker.Enabled = false;
-                    downloadLable.Text = "Downloading Emails please wait....";
-                });
-                foreach (var item in emailRecords)
-                {
-                    try
-                    {
-                        using (ImapClient client = new ImapClient(item.IMAPHost, item.IMAPPort, true))
-                        {
-                            // Login
-                            client.Login(item.Address, item.Password, AuthMethod.Auto);
-                            SearchCondition searchFrom = SearchCondition.SentSince(fromDateTimePicker.Value);
-                            SearchCondition searchTo = SearchCondition.SentBefore(toDateTimePicker.Value.AddDays(1));
-
-                            IEnumerable<uint> uids = client.Search(searchFrom.And(searchTo));
-                            List<uint> newList = uids.Skip(0).Take(perEmailCount).ToList();
-                            foreach (var uid in newList)
-                            {
-                                MailMessage mailMessage = client.GetMessage(uid);
-                                if (blackListEmailRecords.Where(x => x.EmailAddress == mailMessage.From.Address).Any())
-                                {
-                                    client.DeleteMessage(uid);
-                                }
-                                else
-                                {
-                                    ViewEmailDto _currentEmail = new ViewEmailDto
-                                    {
-                                        CurrentCompleteEmail = mailMessage,
-                                        DateOfEmail = mailMessage.Date(),
-                                        Subject = mailMessage.Subject,
-                                        FromEmailAddress = mailMessage.From.Address.ToString(),
-                                        Body = mailMessage.Body,
-                                        CurrentUserEmail = item,
-                                        UID = uid, 
-                                    };
-                                    unReadEmails.Add(_currentEmail);
-                                    bgHelper.Foreground(() =>
-                                        {
-                                            // add to Grid View  
-                                            AddNewRow(_currentEmail);
-                                        });
-                                }
-                            }
-                        }
-
-                    }
-                    catch (Exception ex)
-                    {
-                        //MessageBox.Show(ex.ToString(), "Error while downloading emails for " + item.Address,
-                        //    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-                bgHelper.Foreground(() =>
-                {
-                    dataGridEmails.Enabled = true;
-                    downloadEmailButton.Enabled = true;
-
-                    perEmailCountTextBox.Enabled = true;
-                    fromDateTimePicker.Enabled = true;
-                    toDateTimePicker.Enabled = true;
-
-                    dataGridEmails.ReadOnly = false;
-                    downloadLable.Text = "Download Completed";
-                    totalLabel.Text = unReadEmails.Count().ToString();
-                    datatable.Rows.Clear();
-
-                    unReadEmails = unReadEmails.OrderByDescending(x => x.DateOfEmail).ToList();
-                    foreach (var email in unReadEmails)
-                    {
-                        DataRow row = this.datatable.NewRow();
-                        row["Subject"] = email.Subject;
-                        row["DateOfEmail"] = email.DateOfEmail;
-                        datatable.Rows.Add(row);
-                    }
-                    dataGridEmails.DataSource = datatable;
-                });
-            });
-
-        }
-        private void AddNewRow(ViewEmailDto currentEmail)
-        {
-            DataRow row = this.datatable.NewRow();
-            row["Subject"] = currentEmail.Subject;
-            row["DateOfEmail"] = currentEmail.DateOfEmail;
-            datatable.Rows.Add(row);
-            if (datatable.Rows.Count > 0)
-            {
-                dataGridEmails.Columns[0].Width = 350;
-                dataGridEmails.Columns[1].Width = 140;
-            }
-            totalEmailNumber += 1;
-            totalLabel.Text = totalEmailNumber.ToString();
-        }
-
-
-        private HtmlElement GetElementByClassName(string className)
-        {
-            var elements = webBrowser1.Document.GetElementsByTagName("div");
-            foreach (HtmlElement div in elements)
-            {
-                if (div.GetAttribute("className") == className)
-                {
-                    return div;
-                }
-            }
-
-            return null;
-        }
         private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
             try
@@ -260,22 +135,17 @@ namespace DirectEmailResults.View
                 MessageBox.Show(ex.Message);
             }
         }
-        private void SetContent()
+        private void viewEmailWebBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
-            bgHelper.Foreground(() =>
+            try
             {
-                try
-                {
-                    webBrowser1.Document.InvokeScript("setContent", new String[] { _templateContent });
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-
-            });
+                Task.Delay(1000).ContinueWith(t => SetViewContent());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
-
         private void replyButton_Click(object sender, EventArgs e)
         {
             if (!IsValidEmail(emailTextBox.Text))
@@ -295,6 +165,54 @@ namespace DirectEmailResults.View
             emailTextBox.Enabled = false;
             SendMail();
 
+        }
+
+        #endregion
+
+        #region Private Methods
+        private void SetContent()
+        {
+            bgHelper.Foreground(() =>
+            {
+                try
+                {
+                    webBrowser1.Document.InvokeScript("setContent", new String[] { _templateContent });
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+            });
+        }
+
+        private void SetViewContent()
+        {
+            bgHelper.Foreground(() =>
+            {
+                try
+                {
+                    viewEmailWebBrowser.Document.InvokeScript("setContent", new String[] { viewEmailBody });
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+            });
+        }
+        private HtmlElement GetElementByClassName(string className)
+        {
+            var elements = webBrowser1.Document.GetElementsByTagName("div");
+            foreach (HtmlElement div in elements)
+            {
+                if (div.GetAttribute("className") == className)
+                {
+                    return div;
+                }
+            }
+
+            return null;
         }
         private Response<bool> SendMail()
         {
@@ -331,12 +249,172 @@ namespace DirectEmailResults.View
 
         }
 
+        private void DownloadEmails()
+        {
+
+
+            bgHelper.Background(() =>
+            {
+                bgHelper.Foreground(() =>
+                {
+
+                    this.downloadEmailButton.Enabled = false;
+                    this.dataGridEmails.Enabled = false;
+                    this.perEmailCountTextBox.Enabled = false;
+                    this.fromDateTimePicker.Enabled = false;
+                    this.toDateTimePicker.Enabled = false;
+                    downloadLable.Text = "Downloading Emails please wait....";
+                });
+                foreach (var item in emailRecords)
+                {
+                    try
+                    {
+                        using (ImapClient client = new ImapClient(item.IMAPHost, item.IMAPPort, true))
+                        {
+                            // Login
+                            client.Login(item.Address, item.Password, AuthMethod.Auto);
+                            SearchCondition searchFrom = SearchCondition.SentSince(fromDateTimePicker.Value);
+                            SearchCondition searchTo = SearchCondition.SentBefore(toDateTimePicker.Value.AddDays(1));
+
+                            IEnumerable<uint> uids = client.Search(searchFrom.And(searchTo));
+                            List<uint> newList = uids.Skip(0).Take(perEmailCount).ToList();
+                            int srNo = 1;
+                            foreach (var uid in newList)
+                            {
+                                MailMessage mailMessage = client.GetMessage(uid);
+                                if (blackListEmailRecords.Where(x => x.EmailAddress == mailMessage.From.Address).Any())
+                                {
+                                    client.DeleteMessage(uid);
+                                }
+                                else
+                                {
+                                    ViewEmailDto _currentEmail = new ViewEmailDto
+                                    {
+                                        SrNo = srNo,
+                                        CurrentCompleteEmail = mailMessage,
+                                        DateOfEmail = mailMessage.Date(),
+                                        Subject = mailMessage.Subject,
+                                        FromEmailAddress = mailMessage.From.Address.ToString(),
+                                        Body = mailMessage.Body,
+                                        CurrentUserEmail = item,
+                                        UID = uid,
+                                    };
+                                    srNo++;
+                                    unReadEmails.Add(_currentEmail);
+                                    bgHelper.Foreground(() =>
+                                    {
+                                        // add to Grid View  
+                                        AddNewRow(_currentEmail);
+                                    });
+                                }
+                            }
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        //MessageBox.Show(ex.ToString(), "Error while downloading emails for " + item.Address,
+                        //    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                bgHelper.Foreground(() =>
+                {
+                    dataGridEmails.Enabled = true;
+                    downloadEmailButton.Enabled = true;
+
+                    perEmailCountTextBox.Enabled = true;
+                    fromDateTimePicker.Enabled = true;
+                    toDateTimePicker.Enabled = true;
+
+                    dataGridEmails.ReadOnly = false;
+                    downloadLable.Text = "Download Completed";
+                    totalLabel.Text = unReadEmails.Count().ToString();
+                    datatable.Rows.Clear();
+
+                    unReadEmails = unReadEmails.OrderByDescending(x => x.DateOfEmail).ToList();
+                    int srNo = 1;
+                    foreach (var email in unReadEmails)
+                    {
+                        DataRow row = this.datatable.NewRow();
+                        row["SrNo"] = srNo;
+                        row["Subject"] = email.Subject;
+                        row["DateOfEmail"] = email.DateOfEmail;
+                        datatable.Rows.Add(row);
+                        srNo++;
+                    }
+                    dataGridEmails.DataSource = datatable;
+                });
+            });
+
+        }
+        private void AddNewRow(ViewEmailDto currentEmail)
+        {
+            DataRow row = this.datatable.NewRow();
+            row["SrNo"] = currentEmail.SrNo;
+            row["Subject"] = currentEmail.Subject;
+            row["DateOfEmail"] = currentEmail.DateOfEmail;
+            datatable.Rows.Add(row);
+            if (datatable.Rows.Count > 0)
+            {
+                dataGridEmails.Columns[0].Width = 30;
+                dataGridEmails.Columns[1].Width = 350;
+                dataGridEmails.Columns[2].Width = 140;
+            }
+            totalEmailNumber += 1;
+            totalLabel.Text = totalEmailNumber.ToString();
+        }
+        private void RefreshEmailsTable()
+        {
+            try
+            {
+                emailRecords = emailSettingService.GetEmails();
+                unReadEmails = new List<ViewEmailDto>();
+                totalEmailNumber = 0;
+                downloadLable.Text = "";
+                CreateGridView();
+                DownloadEmails();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        private void CreateGridView()
+        {
+            datatable = (DataTable)dataGridEmails.DataSource;
+            if (datatable == null)
+            {
+                datatable = new DataTable();
+                datatable.Columns.Add(new DataColumn("SrNo"));
+                datatable.Columns.Add(new DataColumn("Subject"));
+                datatable.Columns.Add(new DataColumn("DateOfEmail"));
+
+            }
+            // for refresh button
+            if (datatable.Rows.Count > 0)
+            {
+                datatable.Rows.Clear();
+            }
+            dataGridEmails.DataSource = datatable;
+        }
+
         private void ShowHideReplySection(bool condition)
         {
             groupBox1.Visible = condition;
             groupBox3.Visible = condition;
         }
-
+        bool IsValidEmail(string email)
+        {
+            try
+            {
+                var addr = new MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
+        }
         private void ComposeButton_Click(object sender, EventArgs e)
         {
             if (!IsValidEmail(emailTextBox.Text))
@@ -378,47 +456,8 @@ namespace DirectEmailResults.View
             emailTextBox.Enabled = true;
 
         }
-        bool IsValidEmail(string email)
-        {
-            try
-            {
-                var addr = new MailAddress(email);
-                return addr.Address == email;
-            }
-            catch
-            {
-                return false;
-            }
-        }
 
-        private void perEmailCountTextBox_TextChanged(object sender, EventArgs e)
-        {
-            if (perEmailCountTextBox.Text == "")
-            {
-                perEmailCountTextBox.Text = "0";
-            }
-            perEmailCount = int.Parse(perEmailCountTextBox.Text);
-            if (perEmailCount > 500)
-            {
-                MessageBox.Show("Value should not be greater than 500");
-                perEmailCount = 500;
-                perEmailCountTextBox.Text = perEmailCount.ToString();
-            }
-        }
+        #endregion
 
-        private void perEmailCountTextBox_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
-            (e.KeyChar != '.'))
-            {
-                e.Handled = true;
-            }
-
-            // only allow one decimal point
-            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
-            {
-                e.Handled = true;
-            }
-        }
     }//end of class 
 }//end of namespace 

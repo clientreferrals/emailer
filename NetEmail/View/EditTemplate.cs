@@ -2,6 +2,7 @@
 using BusniessLayer;
 using DataAccessLayer.DataBase;
 using System;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -118,6 +119,8 @@ namespace NetEmail.View
                 MessageBox.Show(ex.Message);
             }
 
-        } 
+        }
+ 
+       
     }
 }

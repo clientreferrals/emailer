@@ -6,6 +6,7 @@ namespace Models.DTO
 {
     public class ViewEmailDto
     {
+        public int SrNo { get; set; }
         public MailMessage CurrentCompleteEmail { get; set; }
         public EmailDTO CurrentUserEmail { get; set; }
         public uint UID { get; set; } 

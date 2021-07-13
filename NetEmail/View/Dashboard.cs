@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -17,7 +18,7 @@ namespace NetEmail.View
         BackgroundHelper bgHelper;
         List<EmailQueueItem> QueueItems = new List<EmailQueueItem>();
         bool IsQueueActive = false;
-        List<EmailDTO> Emails = new List<EmailDTO>();
+        List<EmailDTO> ourEmailList = new List<EmailDTO>();
         Random myRandom = new Random();
         private readonly EmailSettingService emailSettingService;
         private readonly EmailQueueLogService emailQueueLogService;
@@ -55,7 +56,7 @@ namespace NetEmail.View
             {
                 try
                 {
-                    Emails = emailSettingService.GetEmails();
+                    ourEmailList = emailSettingService.GetEmails();
                 }
                 catch (Exception ex)
                 {
@@ -179,17 +180,13 @@ namespace NetEmail.View
                     {
 
 
-                        List<EmailDTO> availableEmails = Emails.Where(x => x.RemainingLimit > 0).ToList();
-                        int index = 0;
+                        List<EmailDTO> availableEmails = ourEmailList.Where(x => x.RemainingLimit > 0).ToList();
+                        
                         foreach (EmailQueueItem item in QueueItems)
                         {
-                            if (index == availableEmails.Count)
-                            {
-                                index = 0;
-                            }
                             if (IsQueueActive == false) break;
 
-                            if (Emails.Count == 0)
+                            if (ourEmailList.Count == 0)
                             {
                                 emailQueueLogService.SaveEmailQueueLog(item, "", "", "No emails defined in settings. Please define emails in settings.", false);
                                 return;
@@ -200,15 +197,22 @@ namespace NetEmail.View
                                 return;
                             }
                             bool isEmailSend = false;
+                            int index = 0;
                             while (isEmailSend == false)
                             {
-                                int alreadySentCount = ourEmailListMaxPerDayService.GetSentCount(availableEmails[index].Id);
+                                availableEmails = availableEmails.OrderByDescending(x => x.RemainingLimit).ToList();
+                                var fromEmailAccount = availableEmails.FirstOrDefault();
+                                int alreadySentCount = ourEmailListMaxPerDayService.GetSentCount(fromEmailAccount.Id);
                                 if (maxSendsPerDay > alreadySentCount)
                                 {
-                                    isEmailSend = SendMail(item, availableEmails[index]).Success;
+                                    isEmailSend = SendMail(item, fromEmailAccount).Success;
                                     if (isEmailSend)
                                     {
-                                        ourEmailListMaxPerDayService.AddUpdate(availableEmails[index].Id);
+                                        ourEmailListMaxPerDayService.AddUpdate(fromEmailAccount.Id);
+                                        // for cycling 
+                                        availableEmails.Where(x => x.Id == fromEmailAccount.Id).FirstOrDefault().RemainingLimit = availableEmails.Where(x => x.Id == fromEmailAccount.Id).FirstOrDefault().RemainingLimit - 1;
+                                        ourEmailList.Where(x => x.Id == fromEmailAccount.Id).FirstOrDefault().RemainingLimit = ourEmailList.Where(x => x.Id == fromEmailAccount.Id).FirstOrDefault().RemainingLimit -1;
+                                        
                                         bgHelper.Foreground(() =>
                                         {
                                             lblRemaining.Text = (Convert.ToInt32(lblRemaining.Text) - 1).ToString();
@@ -216,6 +220,19 @@ namespace NetEmail.View
                                             prgQueue.Value += 1;
                                         });
                                     }
+                                    else
+                                    {
+                                        // Just for cycling 
+                                        availableEmails.Where(x => x.Id == fromEmailAccount.Id).FirstOrDefault().RemainingLimit = availableEmails.Where(x => x.Id == fromEmailAccount.Id).FirstOrDefault().RemainingLimit - 1;
+                                        ourEmailList.Where(x => x.Id == fromEmailAccount.Id).FirstOrDefault().RemainingLimit = ourEmailList.Where(x => x.Id == fromEmailAccount.Id).FirstOrDefault().RemainingLimit - 1;
+                                    }
+
+                                }
+                                else
+                                {
+                                    // Just for cycling 
+                                    availableEmails.Where(x => x.Id == fromEmailAccount.Id).FirstOrDefault().RemainingLimit = availableEmails.Where(x => x.Id == fromEmailAccount.Id).FirstOrDefault().RemainingLimit - 1;
+                                    ourEmailList.Where(x => x.Id == fromEmailAccount.Id).FirstOrDefault().RemainingLimit = ourEmailList.Where(x => x.Id == fromEmailAccount.Id).FirstOrDefault().RemainingLimit - 1;
                                 }
                                 if (index == availableEmails.Count - 1)
                                 {
@@ -228,10 +245,15 @@ namespace NetEmail.View
                                 }
                             }
 
-
                             int threadSleepTime = myRandom.Next(waitFromTimeBetweenMails, waitToTimeBetweenMails);
                             Thread.Sleep(TimeSpan.FromSeconds(threadSleepTime));
                         }
+                        bgHelper.Foreground(() =>
+                        {
+                            IsQueueActive = false;
+                            startProcessingToolStripMenuItem.Enabled = true;
+                            stopProcessingToolStripMenuItem.Enabled = false;
+                        });
                     }
                     catch (Exception ex)
                     {
@@ -255,8 +277,10 @@ namespace NetEmail.View
 
                 if (item.CustomerEmail.Contains("@fake.com") == false)
                 {
-                    string title = item.MailSubject.Replace("@Name@", item.CustomerName);
-                    string message = item.TemplateContent.Replace("@Name@", item.CustomerName);
+                    Random rnd = new Random();
+                    string title = spintax(rnd, item.MailSubject.Replace("@Name@", item.CustomerName));
+                    string message = spintax(rnd, item.TemplateContent.Replace("@Name@", item.CustomerName)); 
+                     
 
                     Response<bool> sendResult = EmailHelper.Instance.SetCredentials(emailAccount.Host,
                     emailAccount.Port,
@@ -274,8 +298,6 @@ namespace NetEmail.View
 
                 campaignService.SetAsSent(item.CampaignCustomerId);
                 emailQueueLogService.SaveEmailQueueLog(item, emailAccount.Address, item.TemplateContent, "", true);
-                emailAccount.RemainingLimit -= 1;
-
                 return new Response<bool>(true);
             }
             catch (Exception ex)
@@ -285,6 +307,23 @@ namespace NetEmail.View
 
         }
 
+        string spintax(Random rnd, string str)
+        {
+            // Loop over string until all patterns exhausted.
+            string pattern = "{[^{}]*}";
+            Match m = Regex.Match(str, pattern);
+            while (m.Success)
+            {
+                // Get random choice and replace pattern match.
+                string seg = str.Substring(m.Index + 1, m.Length - 2);
+                string[] choices = seg.Split('|');
+                str = str.Substring(0, m.Index) + choices[rnd.Next(choices.Length)] + str.Substring(m.Index + m.Length);
+                m = Regex.Match(str, pattern);
+            }
+
+            // Return the modified string.
+            return str;
+        }
         private void stopProcessingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             IsQueueActive = false;
@@ -320,9 +359,9 @@ namespace NetEmail.View
                 sb.Append("Remaining email sending quota limits for this session are as follows:");
                 sb.Append(Environment.NewLine);
                 sb.Append(Environment.NewLine);
-                foreach (var email in Emails)
+                foreach (var email in ourEmailList)
                 {
-                    sb.AppendFormat(" >>> {0}: {1}{2}", email.Address, email.RemainingLimit, Environment.NewLine);
+                    sb.AppendFormat(" >>> {0}: {1}{2}", email.Address, email.DailyLimit, Environment.NewLine);
                 }
 
                 MessageBox.Show(sb.ToString());

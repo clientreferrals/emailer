@@ -28,7 +28,7 @@ namespace BusniessLayer
                 entity.EditedDateTime = DateTime.Now;
                 entity.SentCount += 1;
 
-                db.SaveChanges();
+                db.SaveChanges(); 
                 return true;
 
             }

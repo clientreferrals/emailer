@@ -40,12 +40,17 @@ namespace NetEmail.View
                     try
                     {
                         templates = emailTemplateService.GetTemplates();
+                        List<ViewTemplateDto> viewTemplateDtos = templates.Select(x => new ViewTemplateDto()
+                        {
+                            Id = x.Id, 
+                            TemplateName = x.TemplateName
+                        }).ToList();
                         RefreshCampaign();
 
                         bgHelper.Foreground(() =>
-                    {
-                        lbxTemplates.DataSource = templates;
-                    });
+                        {
+                            lbxTemplates.DataSource = viewTemplateDtos;
+                        });
                     }
                     catch (Exception ex)
                     {
@@ -169,7 +174,9 @@ namespace NetEmail.View
                     return;
                 }
 
-                EmailTemplate selectedTemplate = (EmailTemplate)lbxTemplates.SelectedItem;
+                ViewTemplateDto selectedViewTemplate = (ViewTemplateDto)lbxTemplates.SelectedItem;
+
+                EmailTemplate selectedTemplate = templates.Where(x => x.Id == selectedViewTemplate.Id).FirstOrDefault();
 
                 try
                 {

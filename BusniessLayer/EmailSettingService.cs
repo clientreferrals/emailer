@@ -17,17 +17,17 @@ namespace BusniessLayer
                 return (from e in db.OurEmailLists
                         select new EmailDTO
                         {
-                            Address = e.EmailAddress, 
-                            DailyLimit = e.DailyLimit, 
+                            Address = e.EmailAddress,
+                            DailyLimit = e.DailyLimit,
                             FromAlias = e.FromAlias,
                             Host = e.Host,
                             Id = e.Id,
                             Password = e.Password,
                             Port = e.Port,
-                            RemainingLimit = e.DailyLimit,
                             IMAPHost = e.IMAPHost,
-                            IMAPPort = e.IMAPPort,  
-                            SentCount = e.SentCount
+                            IMAPPort = e.IMAPPort,
+                            SentCount = e.SentCount,
+                            RemainingLimit = e.DailyLimit - db.OurEmailListMaxPerDays.Where(x => x.EmailId == e.Id).Select(x => x.SentCount).FirstOrDefault() 
                         }).ToList();
             }
         }

@@ -38,17 +38,17 @@ namespace DirectEmailResults.View
             this.downloadEmailButton = new System.Windows.Forms.Button();
             this.dataGridEmails = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.viewUserEmailRichTextBox = new System.Windows.Forms.RichTextBox();
+            this.userEmailTextBox = new System.Windows.Forms.TextBox();
+            this.fromEmailTextBox = new System.Windows.Forms.TextBox();
+            this.userEmailAddressLabel = new System.Windows.Forms.Label();
+            this.fromEmailAddress = new System.Windows.Forms.Label();
             this.replyButton = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.emailTextBox = new System.Windows.Forms.TextBox();
             this.ComposeButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
-            this.fromEmailAddress = new System.Windows.Forms.Label();
-            this.userEmailAddressLabel = new System.Windows.Forms.Label();
-            this.fromEmailTextBox = new System.Windows.Forms.TextBox();
-            this.userEmailTextBox = new System.Windows.Forms.TextBox();
+            this.viewEmailWebBrowser = new System.Windows.Forms.WebBrowser();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridEmails)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -66,7 +66,7 @@ namespace DirectEmailResults.View
             this.groupBox2.Controls.Add(this.dataGridEmails);
             this.groupBox2.Location = new System.Drawing.Point(12, 4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(553, 643);
+            this.groupBox2.Size = new System.Drawing.Size(559, 695);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Unified Email Inbox";
@@ -130,36 +130,59 @@ namespace DirectEmailResults.View
             this.dataGridEmails.Location = new System.Drawing.Point(6, 90);
             this.dataGridEmails.Name = "dataGridEmails";
             this.dataGridEmails.ReadOnly = true;
-            this.dataGridEmails.Size = new System.Drawing.Size(533, 547);
+            this.dataGridEmails.Size = new System.Drawing.Size(547, 599);
             this.dataGridEmails.TabIndex = 2;
-            this.dataGridEmails.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridCustomers_CellDoubleClick);
+            this.dataGridEmails.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridEmails_CellClick);
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.viewEmailWebBrowser);
             this.groupBox1.Controls.Add(this.userEmailTextBox);
             this.groupBox1.Controls.Add(this.fromEmailTextBox);
             this.groupBox1.Controls.Add(this.userEmailAddressLabel);
             this.groupBox1.Controls.Add(this.fromEmailAddress);
-            this.groupBox1.Controls.Add(this.viewUserEmailRichTextBox);
             this.groupBox1.Location = new System.Drawing.Point(577, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(601, 272);
+            this.groupBox1.Size = new System.Drawing.Size(695, 331);
             this.groupBox1.TabIndex = 19;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "User Email";
             // 
-            // viewUserEmailRichTextBox
+            // userEmailTextBox
             // 
-            this.viewUserEmailRichTextBox.Location = new System.Drawing.Point(4, 45);
-            this.viewUserEmailRichTextBox.Name = "viewUserEmailRichTextBox";
-            this.viewUserEmailRichTextBox.ReadOnly = true;
-            this.viewUserEmailRichTextBox.Size = new System.Drawing.Size(591, 221);
-            this.viewUserEmailRichTextBox.TabIndex = 20;
-            this.viewUserEmailRichTextBox.Text = "";
+            this.userEmailTextBox.Location = new System.Drawing.Point(452, 18);
+            this.userEmailTextBox.Name = "userEmailTextBox";
+            this.userEmailTextBox.Size = new System.Drawing.Size(224, 20);
+            this.userEmailTextBox.TabIndex = 24;
+            // 
+            // fromEmailTextBox
+            // 
+            this.fromEmailTextBox.Location = new System.Drawing.Point(112, 18);
+            this.fromEmailTextBox.Name = "fromEmailTextBox";
+            this.fromEmailTextBox.Size = new System.Drawing.Size(230, 20);
+            this.fromEmailTextBox.TabIndex = 23;
+            // 
+            // userEmailAddressLabel
+            // 
+            this.userEmailAddressLabel.AutoSize = true;
+            this.userEmailAddressLabel.Location = new System.Drawing.Point(348, 21);
+            this.userEmailAddressLabel.Name = "userEmailAddressLabel";
+            this.userEmailAddressLabel.Size = new System.Drawing.Size(98, 13);
+            this.userEmailAddressLabel.TabIndex = 22;
+            this.userEmailAddressLabel.Text = "User Email Address";
+            // 
+            // fromEmailAddress
+            // 
+            this.fromEmailAddress.AutoSize = true;
+            this.fromEmailAddress.Location = new System.Drawing.Point(6, 20);
+            this.fromEmailAddress.Name = "fromEmailAddress";
+            this.fromEmailAddress.Size = new System.Drawing.Size(99, 13);
+            this.fromEmailAddress.TabIndex = 21;
+            this.fromEmailAddress.Text = "From Email Address";
             // 
             // replyButton
             // 
-            this.replyButton.Location = new System.Drawing.Point(500, 14);
+            this.replyButton.Location = new System.Drawing.Point(572, 16);
             this.replyButton.Name = "replyButton";
             this.replyButton.Size = new System.Drawing.Size(95, 23);
             this.replyButton.TabIndex = 17;
@@ -174,9 +197,9 @@ namespace DirectEmailResults.View
             this.groupBox3.Controls.Add(this.replyButton);
             this.groupBox3.Controls.Add(this.label2);
             this.groupBox3.Controls.Add(this.webBrowser1);
-            this.groupBox3.Location = new System.Drawing.Point(577, 290);
+            this.groupBox3.Location = new System.Drawing.Point(577, 349);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(601, 357);
+            this.groupBox3.Size = new System.Drawing.Size(695, 344);
             this.groupBox3.TabIndex = 18;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Reply to user";
@@ -185,12 +208,12 @@ namespace DirectEmailResults.View
             // 
             this.emailTextBox.Location = new System.Drawing.Point(166, 16);
             this.emailTextBox.Name = "emailTextBox";
-            this.emailTextBox.Size = new System.Drawing.Size(187, 20);
+            this.emailTextBox.Size = new System.Drawing.Size(247, 20);
             this.emailTextBox.TabIndex = 23;
             // 
             // ComposeButton
             // 
-            this.ComposeButton.Location = new System.Drawing.Point(370, 14);
+            this.ComposeButton.Location = new System.Drawing.Point(419, 14);
             this.ComposeButton.Name = "ComposeButton";
             this.ComposeButton.Size = new System.Drawing.Size(95, 23);
             this.ComposeButton.TabIndex = 22;
@@ -209,49 +232,25 @@ namespace DirectEmailResults.View
             // 
             // webBrowser1
             // 
-            this.webBrowser1.Location = new System.Drawing.Point(9, 49);
+            this.webBrowser1.Location = new System.Drawing.Point(9, 43);
             this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(586, 302);
+            this.webBrowser1.Size = new System.Drawing.Size(658, 295);
             this.webBrowser1.TabIndex = 1;
             // 
-            // fromEmailAddress
+            // viewEmailWebBrowser
             // 
-            this.fromEmailAddress.AutoSize = true;
-            this.fromEmailAddress.Location = new System.Drawing.Point(6, 20);
-            this.fromEmailAddress.Name = "fromEmailAddress";
-            this.fromEmailAddress.Size = new System.Drawing.Size(99, 13);
-            this.fromEmailAddress.TabIndex = 21;
-            this.fromEmailAddress.Text = "From Email Address";
-            // 
-            // userEmailAddressLabel
-            // 
-            this.userEmailAddressLabel.AutoSize = true;
-            this.userEmailAddressLabel.Location = new System.Drawing.Point(315, 20);
-            this.userEmailAddressLabel.Name = "userEmailAddressLabel";
-            this.userEmailAddressLabel.Size = new System.Drawing.Size(98, 13);
-            this.userEmailAddressLabel.TabIndex = 22;
-            this.userEmailAddressLabel.Text = "User Email Address";
-            // 
-            // fromEmailTextBox
-            // 
-            this.fromEmailTextBox.Location = new System.Drawing.Point(112, 18);
-            this.fromEmailTextBox.Name = "fromEmailTextBox";
-            this.fromEmailTextBox.Size = new System.Drawing.Size(197, 20);
-            this.fromEmailTextBox.TabIndex = 23;
-            // 
-            // userEmailTextBox
-            // 
-            this.userEmailTextBox.Location = new System.Drawing.Point(419, 18);
-            this.userEmailTextBox.Name = "userEmailTextBox";
-            this.userEmailTextBox.Size = new System.Drawing.Size(176, 20);
-            this.userEmailTextBox.TabIndex = 24;
+            this.viewEmailWebBrowser.Location = new System.Drawing.Point(9, 46);
+            this.viewEmailWebBrowser.MinimumSize = new System.Drawing.Size(20, 20);
+            this.viewEmailWebBrowser.Name = "viewEmailWebBrowser";
+            this.viewEmailWebBrowser.Size = new System.Drawing.Size(680, 269);
+            this.viewEmailWebBrowser.TabIndex = 24;
             // 
             // UnifiedInboxEmails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1184, 659);
+            this.ClientSize = new System.Drawing.Size(1284, 711);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -277,7 +276,6 @@ namespace DirectEmailResults.View
         private System.Windows.Forms.Button downloadEmailButton;
         private System.Windows.Forms.Label totalLabel;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.RichTextBox viewUserEmailRichTextBox;
         private System.Windows.Forms.Button replyButton;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label2;
@@ -291,5 +289,6 @@ namespace DirectEmailResults.View
         private System.Windows.Forms.Label fromEmailAddress;
         private System.Windows.Forms.TextBox userEmailTextBox;
         private System.Windows.Forms.TextBox fromEmailTextBox;
+        private System.Windows.Forms.WebBrowser viewEmailWebBrowser;
     }
 }
