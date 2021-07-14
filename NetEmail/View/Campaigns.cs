@@ -71,8 +71,14 @@ namespace NetEmail.View
                     Name = ""
                 });
                 form.ShowDialog();
-
-                RefreshCampaigns();
+                if (form.IsClosePreviousAlso)
+                {
+                    this.Close();
+                }
+                else
+                { 
+                    RefreshCampaigns();
+                }
             }
             catch (Exception ex)
             {
@@ -86,9 +92,15 @@ namespace NetEmail.View
             try
             {
                 CampaignsEdit form = new CampaignsEdit(campaignRecords[e.RowIndex]);
-                form.ShowDialog();
-
-                RefreshCampaigns();
+                form.ShowDialog(); 
+                if (form.IsClosePreviousAlso)
+                {
+                    this.Close();
+                }
+                else
+                {
+                    RefreshCampaigns();
+                }
             }
             catch (Exception ex)
             {

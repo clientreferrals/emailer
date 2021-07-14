@@ -18,14 +18,15 @@ namespace NetEmail.View
         List<CampaignCustomerDTO> currentCustomers = new List<CampaignCustomerDTO>();
         private readonly EmailTemplateService emailTemplateService;
         private readonly CampaignService campaignService;
-
+        public bool IsClosePreviousAlso = false;
         public CampaignsEdit(CampaignDTO campaign)
         {
             try
             {
-                currentCampaign = campaign;
-
                 InitializeComponent();
+
+                currentCampaign = campaign;
+                IsClosePreviousAlso = false;
                 emailTemplateService = new EmailTemplateService();
                 campaignService = new CampaignService();
 
@@ -179,8 +180,10 @@ namespace NetEmail.View
                     else
                     {
                         campaignService.StartCampaign(currentCampaign.Id);
+                        IsClosePreviousAlso = true;
                         bgHelper.Foreground(() =>
                         {
+
                             this.Close();
                         });
                     }
