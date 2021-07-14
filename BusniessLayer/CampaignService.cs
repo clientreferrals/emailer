@@ -197,7 +197,10 @@ namespace BusniessLayer
             using (var db = new DirectEmailerEntities())
             {
                 var record = db.Campaigns.Where(x => x.Id == id).FirstOrDefault();
-
+                if(record == null)
+                {
+                    return false;
+                }
                 record.IsActive = true;
                 record.EditedDateTime = DateTime.Now;
                 db.SaveChanges();

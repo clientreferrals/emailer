@@ -199,6 +199,11 @@ namespace NetEmail.View
 
         private void btnStartCampaign_Click(object sender, EventArgs e)
         {
+            if(currentCampaign.Id == 0)
+            {
+                MessageBox.Show("Unable to find the Campaign, please add users");
+                return;
+            }
             try
             {
                 bgHelper.Background(() =>
