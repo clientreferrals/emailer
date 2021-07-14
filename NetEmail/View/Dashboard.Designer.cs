@@ -244,7 +244,7 @@
             this.unifiedInboxButton.Name = "unifiedInboxButton";
             this.unifiedInboxButton.Size = new System.Drawing.Size(202, 57);
             this.unifiedInboxButton.TabIndex = 6;
-            this.unifiedInboxButton.Text = "Unified Inbox";
+            this.unifiedInboxButton.Text = "Inbox";
             this.unifiedInboxButton.UseVisualStyleBackColor = true;
             this.unifiedInboxButton.Click += new System.EventHandler(this.unifiedInboxButton_Click);
             // 

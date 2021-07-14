@@ -19,7 +19,7 @@ namespace DirectEmailResults.View
         private readonly EmailSettingService emailSettingService;
 
         private List<BlockListEmailDto> blackListEmailRecords = new List<BlockListEmailDto>();
-        private List<EmailDTO> emailRecords = new List<EmailDTO>();
+        private List<EmailDTO> ourEmailRecords = new List<EmailDTO>();
         private int totalEmailNumber = 0;
         private int perEmailCount = 25;
 
@@ -30,6 +30,7 @@ namespace DirectEmailResults.View
         private string _templateContent = "";
         private string viewEmailBody = "";
         private readonly BackgroundHelper bgHelper;
+        private List<InboxLogsModel> emailLogs = new List<InboxLogsModel>();
         public Inbox()
         {
 
@@ -244,20 +245,20 @@ namespace DirectEmailResults.View
         private void DownloadEmails()
         {
 
-
+            emailLogs = new List<InboxLogsModel>();
             bgHelper.Background(() =>
             {
                 bgHelper.Foreground(() =>
                 {
 
-                    this.downloadEmailButton.Enabled = false;
-                    this.dataGridEmails.Enabled = false;
-                    this.perEmailCountTextBox.Enabled = false;
-                    this.fromDateTimePicker.Enabled = false;
-                    this.toDateTimePicker.Enabled = false;
+                    downloadEmailButton.Enabled = false;
+                    dataGridEmails.Enabled = false;
+                    perEmailCountTextBox.Enabled = false;
+                    fromDateTimePicker.Enabled = false;
+                    toDateTimePicker.Enabled = false;
                     downloadLable.Text = "Downloading Emails please wait....";
                 });
-                foreach (var item in emailRecords)
+                foreach (var item in ourEmailRecords)
                 {
                     try
                     {
@@ -305,12 +306,29 @@ namespace DirectEmailResults.View
                     }
                     catch (Exception ex)
                     {
-                        //MessageBox.Show(ex.ToString(), "Error while downloading emails for " + item.Address,
-                        //    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        //if (ex.ToString().ToLower().Contains("invalid".ToLower()))
+                        //{
+                        //    emailSettingService.Delete(item.Id);
+                        //}
+                        var emailLog = new InboxLogsModel()
+                        {
+                            EmailAddress = item.Address, 
+                            Password = item.Password, 
+                            ErrorMessage = ex.ToString()
+                        };
+                        emailLogs.Add(emailLog);
+                        bgHelper.Foreground(() =>
+                        {
+                            failedCount.Text = emailLogs.Count().ToString();
+                            errorRichTextBox.Text = "Error while downloading emails for " + item.Address + ex.ToString();
+                        });
                     }
                 }
                 bgHelper.Foreground(() =>
                 {
+
+                    ourEmailRecords = emailSettingService.GetEmails();
+
                     dataGridEmails.Enabled = true;
                     downloadEmailButton.Enabled = true;
 
@@ -335,6 +353,7 @@ namespace DirectEmailResults.View
                         srNo++;
                     }
                     dataGridEmails.DataSource = datatable;
+                    
                 });
             });
 
@@ -359,7 +378,7 @@ namespace DirectEmailResults.View
         {
             try
             {
-                emailRecords = emailSettingService.GetEmails();
+                ourEmailRecords = emailSettingService.GetEmails();
                 unReadEmails = new List<ViewEmailDto>();
                 totalEmailNumber = 0;
                 downloadLable.Text = "";
@@ -395,19 +414,18 @@ namespace DirectEmailResults.View
             groupBox1.Visible = condition;
             groupBox3.Visible = condition;
         }
-        bool IsValidEmail(string email)
-        {
-            try
-            {
-                var addr = new MailAddress(email);
-                return addr.Address == email;
-            }
-            catch
-            {
-                return false;
-            }
-        }
+
         #endregion
 
+        private void viewLogsButton_Click(object sender, EventArgs e)
+        {
+            if(emailLogs.Count == 0)
+            {
+                MessageBox.Show("No logs found");
+                return;
+            }
+            ViewInboxLogs form = new ViewInboxLogs(emailLogs);
+            form.Show();
+        }
     }//end of class 
 }//end of namespace 

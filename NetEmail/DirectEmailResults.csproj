@@ -185,6 +185,12 @@
     <Compile Include="View\UploadCustomerCSV.Designer.cs">
       <DependentUpon>UploadCustomerCSV.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\ViewInboxLogs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\ViewInboxLogs.Designer.cs">
+      <DependentUpon>ViewInboxLogs.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="View\CampaignsEdit.resx">
       <DependentUpon>CampaignsEdit.cs</DependentUpon>
     </EmbeddedResource>
@@ -243,6 +249,9 @@
     <Content Include="Files\sample_customers_csv_file.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="View\ViewInboxLogs.resx">
+      <DependentUpon>ViewInboxLogs.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="DirectEmailResults_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

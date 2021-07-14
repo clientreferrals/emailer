@@ -30,6 +30,8 @@ namespace DirectEmailResults.View
         private void InitializeComponent()
         {
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.viewLogsButton = new System.Windows.Forms.Button();
+            this.errorRichTextBox = new System.Windows.Forms.RichTextBox();
             this.toDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.fromDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.perEmailCountTextBox = new System.Windows.Forms.TextBox();
@@ -47,6 +49,7 @@ namespace DirectEmailResults.View
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
+            this.failedCount = new System.Windows.Forms.Label();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridEmails)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -55,6 +58,9 @@ namespace DirectEmailResults.View
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.failedCount);
+            this.groupBox2.Controls.Add(this.viewLogsButton);
+            this.groupBox2.Controls.Add(this.errorRichTextBox);
             this.groupBox2.Controls.Add(this.toDateTimePicker);
             this.groupBox2.Controls.Add(this.fromDateTimePicker);
             this.groupBox2.Controls.Add(this.perEmailCountTextBox);
@@ -68,6 +74,25 @@ namespace DirectEmailResults.View
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Inbox";
+            // 
+            // viewLogsButton
+            // 
+            this.viewLogsButton.Location = new System.Drawing.Point(418, 99);
+            this.viewLogsButton.Name = "viewLogsButton";
+            this.viewLogsButton.Size = new System.Drawing.Size(135, 23);
+            this.viewLogsButton.TabIndex = 6;
+            this.viewLogsButton.Text = "View Logs";
+            this.viewLogsButton.UseVisualStyleBackColor = true;
+            this.viewLogsButton.Click += new System.EventHandler(this.viewLogsButton_Click);
+            // 
+            // errorRichTextBox
+            // 
+            this.errorRichTextBox.Location = new System.Drawing.Point(6, 88);
+            this.errorRichTextBox.Name = "errorRichTextBox";
+            this.errorRichTextBox.ReadOnly = true;
+            this.errorRichTextBox.Size = new System.Drawing.Size(406, 44);
+            this.errorRichTextBox.TabIndex = 5;
+            this.errorRichTextBox.Text = "";
             // 
             // toDateTimePicker
             // 
@@ -85,7 +110,7 @@ namespace DirectEmailResults.View
             // 
             // perEmailCountTextBox
             // 
-            this.perEmailCountTextBox.Location = new System.Drawing.Point(376, 21);
+            this.perEmailCountTextBox.Location = new System.Drawing.Point(231, 21);
             this.perEmailCountTextBox.Name = "perEmailCountTextBox";
             this.perEmailCountTextBox.Size = new System.Drawing.Size(100, 20);
             this.perEmailCountTextBox.TabIndex = 1;
@@ -114,7 +139,7 @@ namespace DirectEmailResults.View
             // 
             this.downloadEmailButton.Location = new System.Drawing.Point(418, 61);
             this.downloadEmailButton.Name = "downloadEmailButton";
-            this.downloadEmailButton.Size = new System.Drawing.Size(121, 23);
+            this.downloadEmailButton.Size = new System.Drawing.Size(135, 23);
             this.downloadEmailButton.TabIndex = 4;
             this.downloadEmailButton.Text = "Download";
             this.downloadEmailButton.UseVisualStyleBackColor = true;
@@ -125,10 +150,10 @@ namespace DirectEmailResults.View
             this.dataGridEmails.AllowUserToAddRows = false;
             this.dataGridEmails.AllowUserToDeleteRows = false;
             this.dataGridEmails.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridEmails.Location = new System.Drawing.Point(6, 90);
+            this.dataGridEmails.Location = new System.Drawing.Point(6, 138);
             this.dataGridEmails.Name = "dataGridEmails";
             this.dataGridEmails.ReadOnly = true;
-            this.dataGridEmails.Size = new System.Drawing.Size(547, 599);
+            this.dataGridEmails.Size = new System.Drawing.Size(547, 551);
             this.dataGridEmails.TabIndex = 2;
             this.dataGridEmails.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridEmails_CellClick);
             // 
@@ -225,6 +250,15 @@ namespace DirectEmailResults.View
             this.webBrowser1.Size = new System.Drawing.Size(658, 295);
             this.webBrowser1.TabIndex = 1;
             // 
+            // failedCount
+            // 
+            this.failedCount.AutoSize = true;
+            this.failedCount.Location = new System.Drawing.Point(399, 24);
+            this.failedCount.Name = "failedCount";
+            this.failedCount.Size = new System.Drawing.Size(13, 13);
+            this.failedCount.TabIndex = 7;
+            this.failedCount.Text = "0";
+            // 
             // Inbox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -267,5 +301,8 @@ namespace DirectEmailResults.View
         private System.Windows.Forms.TextBox userEmailTextBox;
         private System.Windows.Forms.TextBox fromEmailTextBox;
         private System.Windows.Forms.WebBrowser viewEmailWebBrowser;
+        private System.Windows.Forms.RichTextBox errorRichTextBox;
+        private System.Windows.Forms.Button viewLogsButton;
+        private System.Windows.Forms.Label failedCount;
     }
 }

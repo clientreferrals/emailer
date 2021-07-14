@@ -50,6 +50,7 @@
     <Compile Include="DTO\EmailForLogs.cs" />
     <Compile Include="DTO\EmailLogs.cs" />
     <Compile Include="DTO\EmailQueueItem.cs" />
+    <Compile Include="DTO\InboxLogsModel.cs" />
     <Compile Include="DTO\ViewEmailDto.cs" />
     <Compile Include="DTO\ViewTemplateDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
