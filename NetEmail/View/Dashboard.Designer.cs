@@ -51,18 +51,20 @@
             this.unifiedInboxButton = new System.Windows.Forms.Button();
             this.blackEmailsButton = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // btnCustomers
             // 
-            this.btnCustomers.Location = new System.Drawing.Point(13, 52);
+            this.btnCustomers.Location = new System.Drawing.Point(12, 176);
             this.btnCustomers.Name = "btnCustomers";
-            this.btnCustomers.Size = new System.Drawing.Size(202, 57);
+            this.btnCustomers.Size = new System.Drawing.Size(160, 60);
             this.btnCustomers.TabIndex = 0;
             this.btnCustomers.Text = "Contacts";
             this.btnCustomers.UseVisualStyleBackColor = true;
@@ -70,9 +72,9 @@
             // 
             // btnCampaigns
             // 
-            this.btnCampaigns.Location = new System.Drawing.Point(13, 125);
+            this.btnCampaigns.Location = new System.Drawing.Point(384, 176);
             this.btnCampaigns.Name = "btnCampaigns";
-            this.btnCampaigns.Size = new System.Drawing.Size(202, 57);
+            this.btnCampaigns.Size = new System.Drawing.Size(160, 60);
             this.btnCampaigns.TabIndex = 1;
             this.btnCampaigns.Text = "Campaings";
             this.btnCampaigns.UseVisualStyleBackColor = true;
@@ -80,9 +82,9 @@
             // 
             // btnSettings
             // 
-            this.btnSettings.Location = new System.Drawing.Point(237, 125);
+            this.btnSettings.Location = new System.Drawing.Point(384, 242);
             this.btnSettings.Name = "btnSettings";
-            this.btnSettings.Size = new System.Drawing.Size(202, 57);
+            this.btnSettings.Size = new System.Drawing.Size(160, 60);
             this.btnSettings.TabIndex = 2;
             this.btnSettings.Text = "Settings";
             this.btnSettings.UseVisualStyleBackColor = true;
@@ -90,9 +92,9 @@
             // 
             // btnTemplates
             // 
-            this.btnTemplates.Location = new System.Drawing.Point(237, 52);
+            this.btnTemplates.Location = new System.Drawing.Point(200, 176);
             this.btnTemplates.Name = "btnTemplates";
-            this.btnTemplates.Size = new System.Drawing.Size(202, 57);
+            this.btnTemplates.Size = new System.Drawing.Size(160, 60);
             this.btnTemplates.TabIndex = 3;
             this.btnTemplates.Text = "Templates";
             this.btnTemplates.UseVisualStyleBackColor = true;
@@ -104,9 +106,9 @@
             this.groupBox1.Controls.Add(this.groupBox4);
             this.groupBox1.Controls.Add(this.groupBox3);
             this.groupBox1.Controls.Add(this.groupBox2);
-            this.groupBox1.Location = new System.Drawing.Point(13, 326);
+            this.groupBox1.Location = new System.Drawing.Point(12, 383);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(427, 138);
+            this.groupBox1.Size = new System.Drawing.Size(532, 138);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Email Queue";
@@ -115,15 +117,15 @@
             // 
             this.prgQueue.Location = new System.Drawing.Point(7, 107);
             this.prgQueue.Name = "prgQueue";
-            this.prgQueue.Size = new System.Drawing.Size(414, 23);
+            this.prgQueue.Size = new System.Drawing.Size(519, 23);
             this.prgQueue.TabIndex = 3;
             // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.lblRemaining);
-            this.groupBox4.Location = new System.Drawing.Point(311, 20);
+            this.groupBox4.Location = new System.Drawing.Point(372, 21);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(110, 76);
+            this.groupBox4.Size = new System.Drawing.Size(120, 80);
             this.groupBox4.TabIndex = 1;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Remaining";
@@ -134,7 +136,7 @@
             this.lblRemaining.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.lblRemaining.Location = new System.Drawing.Point(3, 16);
             this.lblRemaining.Name = "lblRemaining";
-            this.lblRemaining.Size = new System.Drawing.Size(104, 57);
+            this.lblRemaining.Size = new System.Drawing.Size(114, 61);
             this.lblRemaining.TabIndex = 1;
             this.lblRemaining.Text = "0";
             this.lblRemaining.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -142,9 +144,9 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.lblProcessed);
-            this.groupBox3.Location = new System.Drawing.Point(153, 20);
+            this.groupBox3.Location = new System.Drawing.Point(188, 21);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(110, 76);
+            this.groupBox3.Size = new System.Drawing.Size(120, 80);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Processed";
@@ -155,7 +157,7 @@
             this.lblProcessed.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.lblProcessed.Location = new System.Drawing.Point(3, 16);
             this.lblProcessed.Name = "lblProcessed";
-            this.lblProcessed.Size = new System.Drawing.Size(104, 57);
+            this.lblProcessed.Size = new System.Drawing.Size(114, 61);
             this.lblProcessed.TabIndex = 1;
             this.lblProcessed.Text = "0";
             this.lblProcessed.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -165,7 +167,7 @@
             this.groupBox2.Controls.Add(this.lblTotal);
             this.groupBox2.Location = new System.Drawing.Point(7, 20);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(110, 76);
+            this.groupBox2.Size = new System.Drawing.Size(120, 80);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Total";
@@ -176,7 +178,7 @@
             this.lblTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.lblTotal.Location = new System.Drawing.Point(3, 16);
             this.lblTotal.Name = "lblTotal";
-            this.lblTotal.Size = new System.Drawing.Size(104, 57);
+            this.lblTotal.Size = new System.Drawing.Size(114, 61);
             this.lblTotal.TabIndex = 0;
             this.lblTotal.Text = "0";
             this.lblTotal.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -187,7 +189,7 @@
             this.emailQueueToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(472, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(584, 24);
             this.menuStrip1.TabIndex = 5;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -240,9 +242,9 @@
             // 
             // unifiedInboxButton
             // 
-            this.unifiedInboxButton.Location = new System.Drawing.Point(237, 200);
+            this.unifiedInboxButton.Location = new System.Drawing.Point(12, 242);
             this.unifiedInboxButton.Name = "unifiedInboxButton";
-            this.unifiedInboxButton.Size = new System.Drawing.Size(202, 57);
+            this.unifiedInboxButton.Size = new System.Drawing.Size(160, 60);
             this.unifiedInboxButton.TabIndex = 6;
             this.unifiedInboxButton.Text = "Inbox";
             this.unifiedInboxButton.UseVisualStyleBackColor = true;
@@ -250,9 +252,9 @@
             // 
             // blackEmailsButton
             // 
-            this.blackEmailsButton.Location = new System.Drawing.Point(13, 200);
+            this.blackEmailsButton.Location = new System.Drawing.Point(11, 308);
             this.blackEmailsButton.Name = "blackEmailsButton";
-            this.blackEmailsButton.Size = new System.Drawing.Size(202, 57);
+            this.blackEmailsButton.Size = new System.Drawing.Size(160, 60);
             this.blackEmailsButton.TabIndex = 7;
             this.blackEmailsButton.Text = "Block Emails";
             this.blackEmailsButton.UseVisualStyleBackColor = true;
@@ -260,19 +262,29 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(131, 264);
+            this.button1.Location = new System.Drawing.Point(200, 242);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(202, 57);
+            this.button1.Size = new System.Drawing.Size(160, 60);
             this.button1.TabIndex = 8;
             this.button1.Text = "FAILED EMAIL ACCOUNTS";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(146, 27);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(273, 143);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 9;
+            this.pictureBox1.TabStop = false;
+            // 
             // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(472, 474);
+            this.ClientSize = new System.Drawing.Size(584, 561);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.blackEmailsButton);
             this.Controls.Add(this.unifiedInboxButton);
@@ -293,6 +305,7 @@
             this.groupBox2.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -322,6 +335,7 @@
         private System.Windows.Forms.Button unifiedInboxButton;
         private System.Windows.Forms.Button blackEmailsButton;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 

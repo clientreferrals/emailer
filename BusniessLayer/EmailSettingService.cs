@@ -27,7 +27,8 @@ namespace BusniessLayer
                             IMAPHost = e.IMAPHost,
                             IMAPPort = e.IMAPPort,
                             SentCount = e.SentCount,
-                            RemainingLimit = e.DailyLimit - db.OurEmailListMaxPerDays.Where(x => x.EmailId == e.Id).Select(x => x.SentCount).FirstOrDefault() 
+                            TodaySent = db.OurEmailListMaxPerDays.Where(x => x.EmailId == e.Id).Select(x => x.SentCount).FirstOrDefault(),
+                            RemainingLimit = e.DailyLimit - db.OurEmailListMaxPerDays.Where(x => x.EmailId == e.Id).Select(x => x.SentCount).FirstOrDefault()
                         }).ToList();
             }
         }
@@ -37,19 +38,19 @@ namespace BusniessLayer
             if (id == 0)
             {
                 using (var db = new DirectEmailerEntities())
-                { 
+                {
                     OurEmailList record = new OurEmailList()
-                    { 
+                    {
                         Host = host,
                         Port = port,
                         EmailAddress = address,
-                        Password = password, 
+                        Password = password,
                         FromAlias = fromAlias,
                         DailyLimit = dailyLimit,
                         IMAPHost = popHost,
-                        IMAPPort= popPort, 
+                        IMAPPort = popPort,
                         CreatedDateTime = DateTime.Now
-                    }; 
+                    };
                     db.OurEmailLists.Add(record);
                     db.SaveChanges();
 
@@ -65,11 +66,11 @@ namespace BusniessLayer
                     record.Host = host;
                     record.Port = port;
                     record.EmailAddress = address;
-                    record.Password = password; 
+                    record.Password = password;
                     record.FromAlias = fromAlias;
                     record.DailyLimit = dailyLimit;
                     record.IMAPHost = popHost;
-                    record.IMAPPort= popPort;
+                    record.IMAPPort = popPort;
                     record.EditedDateTime = DateTime.Now;
 
                     db.SaveChanges();

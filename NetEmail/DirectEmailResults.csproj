@@ -246,6 +246,9 @@
     <EmbeddedResource Include="View\UploadCustomerCSV.resx">
       <DependentUpon>UploadCustomerCSV.cs</DependentUpon>
     </EmbeddedResource>
+    <Content Include="Files\InboxEmailerLogo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Files\sample_customers_csv_file.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

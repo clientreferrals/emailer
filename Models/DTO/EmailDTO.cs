@@ -11,11 +11,13 @@
 
         public string Address { get; set; }
 
-        public string Password { get; set; } 
+        public string Password { get; set; }
         public string FromAlias { get; set; }
 
-        public int DailyLimit { get; set; } 
-        public int RemainingLimit { get; set; } 
+        public int DailyLimit { get; set; }
+        public int RemainingLimit { get; set; }
+
+        public int TodaySent { get; set; }
         public string IMAPHost { get; set; }
 
         public int IMAPPort { get; set; }

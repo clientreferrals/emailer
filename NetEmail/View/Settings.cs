@@ -11,10 +11,11 @@ namespace NetEmail.View
     public partial class Settings : Form
     {
         private readonly BackgroundHelper bgHelper;
-        private List<EmailDTO> EmailRecords = new List<EmailDTO>();
+        private List<EmailDTO> ourEmailRecords = new List<EmailDTO>();
         private DataTable datatable;
 
         private readonly EmailSettingService emailSettingService;
+        private readonly OurEmailListMaxPerDayService ourEmailListMaxPerDayService;
         private readonly ApplicationSettingServices applicationSettingServices;
         public Settings()
         {
@@ -24,6 +25,7 @@ namespace NetEmail.View
 
                 bgHelper = new BackgroundHelper();
                 emailSettingService = new EmailSettingService();
+                ourEmailListMaxPerDayService = new OurEmailListMaxPerDayService();
                 applicationSettingServices = new ApplicationSettingServices();
                 tbxFromWaitTime.Text = applicationSettingServices.GetValue("WaitFromTime");
                 tbxToWaitTime.Text = applicationSettingServices.GetValue("WaitToTime");
@@ -79,8 +81,9 @@ namespace NetEmail.View
             {
                 try
                 {
-                    EmailRecords = emailSettingService.GetEmails();
-
+                    ourEmailListMaxPerDayService.ResetCount();
+                    ourEmailRecords = emailSettingService.GetEmails();
+                    
                     bgHelper.Foreground(() =>
                     {
                         datatable = (DataTable)tableEmails.DataSource;
@@ -88,7 +91,8 @@ namespace NetEmail.View
                         {
                             datatable = new DataTable();
                             datatable.Columns.Add(new DataColumn("ID"));
-                            datatable.Columns.Add(new DataColumn("SentCount"));
+                            datatable.Columns.Add(new DataColumn("TodaySentCount"));
+                            datatable.Columns.Add(new DataColumn("TotalSentCount"));
                             datatable.Columns.Add(new DataColumn("Address"));
                             datatable.Columns.Add(new DataColumn("FromAlias"));
 
@@ -99,11 +103,12 @@ namespace NetEmail.View
                             datatable.Rows.Clear();
                         }
 
-                        foreach (var email in EmailRecords)
+                        foreach (var email in ourEmailRecords)
                         {
                             DataRow row = this.datatable.NewRow();
                             row["ID"] = email.Id.ToString();
-                            row["SentCount"] = email.SentCount.ToString();
+                            row["TodaySentCount"] = email.TodaySent.ToString();
+                            row["TotalSentCount"] = email.SentCount.ToString();
                             row["Address"] = email.Address;
                             row["FromAlias"] = email.FromAlias;
                             datatable.Rows.Add(row);
@@ -113,8 +118,9 @@ namespace NetEmail.View
                         {
                             tableEmails.Columns[0].Width = 50;
                             tableEmails.Columns[1].Width = 50;
-                            tableEmails.Columns[2].Width = 200;
+                            tableEmails.Columns[2].Width = 50;
                             tableEmails.Columns[3].Width = 200;
+                            tableEmails.Columns[4].Width = 200;
                         }
                     });
                 }
@@ -151,7 +157,7 @@ namespace NetEmail.View
         {
             try
             {
-                var emailRecord = EmailRecords[e.RowIndex];
+                var emailRecord = ourEmailRecords[e.RowIndex];
 
                 EditEmailAccount f2 = new EditEmailAccount(emailRecord);
                 f2.ShowDialog();
