@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Net.Mail;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -57,7 +58,7 @@ namespace DirectEmailResults.View
 
             unReadEmails = new List<ViewEmailDto>();
             totalEmailNumber = 0;
-            downloadLable.Text = "";
+            downloadLablel.Text = "";
 
 
             bgHelper = new BackgroundHelper();
@@ -111,29 +112,7 @@ namespace DirectEmailResults.View
 
         private void dataGridEmails_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            try
-            { 
-                ShowHideReplySection(false);
-                _currentInboxEmail = unReadEmails[e.RowIndex];
-                viewEmailBody = _currentInboxEmail.Body;
-                fromEmailTextBox.Text = _currentInboxEmail.CurrentUserEmail.Address;
-                userEmailTextBox.Text = _currentInboxEmail.FromEmailAddress;
-                SetViewContent();
-                ShowHideReplySection(true);
-                using (ImapClient client = new ImapClient(_currentInboxEmail.CurrentUserEmail.IMAPHost,
-                    _currentInboxEmail.CurrentUserEmail.IMAPPort, true))
-                {
-                    // Login
-                    client.Login(_currentInboxEmail.CurrentUserEmail.Address, _currentInboxEmail.CurrentUserEmail.Password, AuthMethod.Auto);
-
-                    client.RemoveMessageFlags(_currentInboxEmail.UID, null, MessageFlag.Seen);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
+            ReadAndViewEmail(e.RowIndex); 
         }
         private void refreshEmails_Click(object sender, EventArgs e)
         {
@@ -174,6 +153,35 @@ namespace DirectEmailResults.View
             replyButton.Enabled = false;
             SendMail();
 
+        }
+        private void viewEmailButton_Click(object sender, EventArgs e)
+        {
+            int rowNumber = int.Parse(rowNoTextBox.Text);
+            if (rowNumber-1 < unReadEmails.Count)
+            {
+                ReadAndViewEmail(rowNumber - 1);
+
+            }
+            else
+            {
+                MessageBox.Show("Invalid row number.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+        }
+
+        private void rowNoTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
+          (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+
+            // only allow one decimal point
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            {
+                e.Handled = true;
+            }
         }
 
         #endregion
@@ -226,9 +234,7 @@ namespace DirectEmailResults.View
         private Response<bool> SendMail()
         {
             try
-            {
-                 
-
+            { 
                 Response<bool> sendResult = EmailHelper.Instance.SetCredentials(_currentInboxEmail.CurrentUserEmail.Host,
                 _currentInboxEmail.CurrentUserEmail.Port,
                 _currentInboxEmail.CurrentUserEmail.Address,
@@ -273,7 +279,7 @@ namespace DirectEmailResults.View
                     perEmailCountTextBox.Enabled = false;
                     fromDateTimePicker.Enabled = false;
                     toDateTimePicker.Enabled = false;
-                    downloadLable.Text = "Downloading Emails please wait....";
+                    downloadLablel.Text = "Downloading....";
                 });
                 foreach (var item in ourEmailRecords)
                 {
@@ -316,6 +322,7 @@ namespace DirectEmailResults.View
                                         // add to Grid View  
                                         AddNewRow(_currentEmail);
                                     });
+                                    Thread.Sleep(2000);
                                 }
                             }
                         }
@@ -354,7 +361,7 @@ namespace DirectEmailResults.View
                     toDateTimePicker.Enabled = true;
 
                     dataGridEmails.ReadOnly = false;
-                    downloadLable.Text = "Download Completed";
+                    downloadLablel.Text = "Completed";
                     totalLabel.Text = unReadEmails.Count().ToString();
                     datatable.Rows.Clear();
 
@@ -398,7 +405,7 @@ namespace DirectEmailResults.View
                 ourEmailRecords = emailSettingService.GetEmails();
                 unReadEmails = new List<ViewEmailDto>();
                 totalEmailNumber = 0;
-                downloadLable.Text = "";
+                downloadLablel.Text = "";
                 CreateGridView();
                 DownloadEmails();
             }
@@ -444,5 +451,34 @@ namespace DirectEmailResults.View
             ViewInboxLogs form = new ViewInboxLogs(emailLogs);
             form.Show();
         }
+
+        
+        private void ReadAndViewEmail(int index)
+        {
+            try
+            {
+                ShowHideReplySection(false);
+                _currentInboxEmail = unReadEmails[index];
+                viewEmailBody = _currentInboxEmail.Body;
+                fromEmailTextBox.Text = _currentInboxEmail.CurrentUserEmail.Address;
+                userEmailTextBox.Text = _currentInboxEmail.FromEmailAddress;
+                SetViewContent();
+                ShowHideReplySection(true);
+                using (ImapClient client = new ImapClient(_currentInboxEmail.CurrentUserEmail.IMAPHost,
+                    _currentInboxEmail.CurrentUserEmail.IMAPPort, true))
+                {
+                    // Login
+                    client.Login(_currentInboxEmail.CurrentUserEmail.Address, _currentInboxEmail.CurrentUserEmail.Password, AuthMethod.Auto);
+
+                    client.RemoveMessageFlags(_currentInboxEmail.UID, null, MessageFlag.Seen);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+      
     }//end of class 
 }//end of namespace 
