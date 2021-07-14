@@ -31,12 +31,26 @@ namespace DirectEmailResults.View
         private string viewEmailBody = "";
         private readonly BackgroundHelper bgHelper;
         private List<InboxLogsModel> emailLogs = new List<InboxLogsModel>();
+        List<string> bccEmailsList = new List<string>();
+
+        private readonly ApplicationSettingServices applicationSettingServices;
         public Inbox()
         {
 
             InitializeComponent();
             blockListEmailService = new BlockListEmailService();
             emailSettingService = new EmailSettingService();
+            applicationSettingServices = new ApplicationSettingServices();
+
+            string bccEmail = applicationSettingServices.GetValue("BccEmails");
+            string[] bccEmailAddress = bccEmail.Split(',');
+            for (int i = 0; i < bccEmailAddress.Length; i++)
+            {
+                if(!bccEmailsList.Any(x=>x == bccEmailAddress[i]))
+                { 
+                    bccEmailsList.Add(bccEmailAddress[i]);
+                }
+            }
 
             blackListEmailRecords = blockListEmailService.GetBlackListEmails();
             CreateGridView();
@@ -213,12 +227,14 @@ namespace DirectEmailResults.View
         {
             try
             {
+                 
+
                 Response<bool> sendResult = EmailHelper.Instance.SetCredentials(_currentInboxEmail.CurrentUserEmail.Host,
                 _currentInboxEmail.CurrentUserEmail.Port,
                 _currentInboxEmail.CurrentUserEmail.Address,
                 _currentInboxEmail.CurrentUserEmail.Password,
                 _currentInboxEmail.CurrentUserEmail.FromAlias)
-                .ReplyTo(_templateContent, _currentInboxEmail.CurrentCompleteEmail);
+                .ReplyTo(_templateContent, _currentInboxEmail.CurrentCompleteEmail, bccEmailsList);
 
                 replyButton.Enabled = true;
 

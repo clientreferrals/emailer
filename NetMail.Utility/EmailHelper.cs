@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
-using System.Text.RegularExpressions;
 
 namespace NetMail.Utility
 {
@@ -11,15 +10,15 @@ namespace NetMail.Utility
         private string host;
         private int port;
         private string mailAddress;
-        private string password; 
+        private string password;
         private string fromAlias;
 
-        public EmailHelper SetCredentials(string _host, int _port, string _mailAddress, string _password,  string _fromAlias)
+        public EmailHelper SetCredentials(string _host, int _port, string _mailAddress, string _password, string _fromAlias)
         {
             host = _host;
             port = _port;
             mailAddress = _mailAddress;
-            password = _password; 
+            password = _password;
             fromAlias = _fromAlias;
 
             return this;
@@ -35,7 +34,7 @@ namespace NetMail.Utility
                     Port = port,
                     UseDefaultCredentials = false,
                     DeliveryMethod = SmtpDeliveryMethod.Network,
-                    EnableSsl = true, 
+                    EnableSsl = true,
                     Credentials = new NetworkCredential(mailAddress, password)
                 };
 
@@ -61,7 +60,7 @@ namespace NetMail.Utility
             }
         }
 
-        public Response<bool> ReplyTo(string message, MailMessage source)
+        public Response<bool> ReplyTo(string message, MailMessage source, List<string> bccEmails)
         {
             try
             {
@@ -74,9 +73,9 @@ namespace NetMail.Utility
                     EnableSsl = true,
                     Credentials = new NetworkCredential(mailAddress, password)
                 };
-                 
+
                 MailMessage replyMessage = new MailMessage(new MailAddress(mailAddress, "Sender"), source.From);
-              
+
                 // Get message id and add 'In-Reply-To' header
                 string id = source.Headers["Message-ID"];
                 replyMessage.Headers.Add("In-Reply-To", id);
@@ -95,10 +94,13 @@ namespace NetMail.Utility
 
                 replyMessage.Subject += source.Subject;
 
-
+                foreach (var item in bccEmails)
+                {
+                    replyMessage.Bcc.Add(item);
+                } 
                 replyMessage.Body = message.ToString();
                 replyMessage.IsBodyHtml = true;
-                
+
 
                 client.Send(replyMessage);
 

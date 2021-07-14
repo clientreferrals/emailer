@@ -41,6 +41,8 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.maxEmailTextBox = new System.Windows.Forms.TextBox();
             this.MaxSendsPerDay = new System.Windows.Forms.Label();
+            this.bccEmailsTextBox = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tableEmails)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -110,15 +112,15 @@
             // 
             // tbxFromWaitTime
             // 
-            this.tbxFromWaitTime.Location = new System.Drawing.Point(121, 19);
+            this.tbxFromWaitTime.Location = new System.Drawing.Point(86, 19);
             this.tbxFromWaitTime.Name = "tbxFromWaitTime";
-            this.tbxFromWaitTime.Size = new System.Drawing.Size(133, 20);
+            this.tbxFromWaitTime.Size = new System.Drawing.Size(60, 20);
             this.tbxFromWaitTime.TabIndex = 1;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(273, 20);
+            this.label3.Location = new System.Drawing.Point(167, 20);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(63, 13);
             this.label3.TabIndex = 4;
@@ -126,13 +128,15 @@
             // 
             // tbxToWaitTime
             // 
-            this.tbxToWaitTime.Location = new System.Drawing.Point(344, 17);
+            this.tbxToWaitTime.Location = new System.Drawing.Point(236, 19);
             this.tbxToWaitTime.Name = "tbxToWaitTime";
-            this.tbxToWaitTime.Size = new System.Drawing.Size(163, 20);
+            this.tbxToWaitTime.Size = new System.Drawing.Size(60, 20);
             this.tbxToWaitTime.TabIndex = 2;
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.bccEmailsTextBox);
+            this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.maxEmailTextBox);
             this.groupBox1.Controls.Add(this.MaxSendsPerDay);
             this.groupBox1.Controls.Add(this.tbxToWaitTime);
@@ -148,19 +152,35 @@
             // 
             // maxEmailTextBox
             // 
-            this.maxEmailTextBox.Location = new System.Drawing.Point(121, 67);
+            this.maxEmailTextBox.Location = new System.Drawing.Point(428, 19);
             this.maxEmailTextBox.Name = "maxEmailTextBox";
-            this.maxEmailTextBox.Size = new System.Drawing.Size(133, 20);
-            this.maxEmailTextBox.TabIndex = 6;
+            this.maxEmailTextBox.Size = new System.Drawing.Size(77, 20);
+            this.maxEmailTextBox.TabIndex = 3;
             // 
             // MaxSendsPerDay
             // 
             this.MaxSendsPerDay.AutoSize = true;
-            this.MaxSendsPerDay.Location = new System.Drawing.Point(8, 67);
+            this.MaxSendsPerDay.Location = new System.Drawing.Point(315, 20);
             this.MaxSendsPerDay.Name = "MaxSendsPerDay";
             this.MaxSendsPerDay.Size = new System.Drawing.Size(107, 13);
             this.MaxSendsPerDay.TabIndex = 5;
             this.MaxSendsPerDay.Text = "Max Sends Per Day: ";
+            // 
+            // bccEmailsTextBox
+            // 
+            this.bccEmailsTextBox.Location = new System.Drawing.Point(41, 61);
+            this.bccEmailsTextBox.Name = "bccEmailsTextBox";
+            this.bccEmailsTextBox.Size = new System.Drawing.Size(464, 20);
+            this.bccEmailsTextBox.TabIndex = 4;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(7, 64);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(28, 13);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "BCC";
             // 
             // Settings
             // 
@@ -196,5 +216,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox maxEmailTextBox;
         private System.Windows.Forms.Label MaxSendsPerDay;
+        private System.Windows.Forms.TextBox bccEmailsTextBox;
+        private System.Windows.Forms.Label label2;
     }
 }

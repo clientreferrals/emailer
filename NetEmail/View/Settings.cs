@@ -30,7 +30,11 @@ namespace NetEmail.View
                 tbxFromWaitTime.Text = applicationSettingServices.GetValue("WaitFromTime");
                 tbxToWaitTime.Text = applicationSettingServices.GetValue("WaitToTime");
                 maxEmailTextBox.Text = applicationSettingServices.GetValue("MaxSendsPerDay");
-                
+                bccEmailsTextBox.Text = applicationSettingServices.GetValue("BccEmails");
+                if(bccEmailsTextBox.Text == "0")
+                {
+                    bccEmailsTextBox.Text = "";
+                }
                 RefreshEmailsTable();
             }
             catch (Exception ex)
@@ -49,6 +53,7 @@ namespace NetEmail.View
         {
             try
             {
+
                 int.TryParse(tbxFromWaitTime.Text, out int waitFromTime);
                 int.TryParse(tbxToWaitTime.Text, out int waitToTime); 
                 int.TryParse(maxEmailTextBox.Text, out int maxSendsPerDay);
@@ -62,9 +67,27 @@ namespace NetEmail.View
                     MessageBox.Show("Please enter the To seconds");
                     return;
                 }
+                string bccEmail = bccEmailsTextBox.Text;
+
+                if (!string.IsNullOrEmpty(bccEmail.Trim()))
+                { 
+                    string[] bccEmailAddress = bccEmail.Split(',');
+                    for (int i = 0; i < bccEmailAddress.Length; i++)
+                    {
+                        if (!IsValidEmail(bccEmailAddress[i]))
+                        {
+                            MessageBox.Show("Invalid BCC emails", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                    }
+                }
                 applicationSettingServices.AddUpdate("WaitFromTime", waitFromTime.ToString());
                 applicationSettingServices.AddUpdate("WaitToTime", waitToTime.ToString());
                 applicationSettingServices.AddUpdate("MaxSendsPerDay", maxSendsPerDay.ToString());
+                if (!string.IsNullOrEmpty(bccEmail.Trim()))
+                {
+                    applicationSettingServices.AddUpdate("BccEmails", bccEmail); 
+                }
 
                 this.Close();
             }
@@ -171,6 +194,17 @@ namespace NetEmail.View
 
         }
 
-
+        bool IsValidEmail(string email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch  
+            {
+                return false;
+            }
+        }
     }
 }
