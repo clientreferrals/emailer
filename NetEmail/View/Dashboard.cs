@@ -378,7 +378,7 @@ namespace NetEmail.View
 
             try
             {
-                UnifiedInboxEmails form = new UnifiedInboxEmails();
+                Inbox form = new Inbox();
                 form.ShowDialog();
                 RefreshQueue();
             }

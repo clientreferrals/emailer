@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace DirectEmailResults.View
 {
-    public partial class UnifiedInboxEmails : Form
+    public partial class Inbox : Form
     {
         private readonly BlockListEmailService blockListEmailService;
         private readonly EmailSettingService emailSettingService;
@@ -30,7 +30,7 @@ namespace DirectEmailResults.View
         private string _templateContent = "";
         private string viewEmailBody = "";
         private readonly BackgroundHelper bgHelper;
-        public UnifiedInboxEmails()
+        public Inbox()
         {
 
             InitializeComponent();
@@ -50,7 +50,7 @@ namespace DirectEmailResults.View
             string editorUrl = AppDomain.CurrentDomain.BaseDirectory + "Files\\Editor\\Editor.html";
             webBrowser1.Navigate(editorUrl);
 
-            webBrowser1.DocumentCompleted += webBrowser1_DocumentCompleted; 
+            webBrowser1.DocumentCompleted += webBrowser1_DocumentCompleted;
 
             viewEmailWebBrowser.Navigate(editorUrl);
 
@@ -148,21 +148,14 @@ namespace DirectEmailResults.View
         }
         private void replyButton_Click(object sender, EventArgs e)
         {
-            if (!IsValidEmail(emailTextBox.Text))
-            {
-                MessageBox.Show("Please enter valid email address");
-                return;
-            }
+
             _templateContent = GetElementByClassName("note-editable").InnerHtml;
             if (string.IsNullOrEmpty(_templateContent) || _templateContent == "<br>")
             {
                 MessageBox.Show("Please enter the email body", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
-            ComposeButton.Enabled = false;
             replyButton.Enabled = false;
-            emailTextBox.Enabled = false;
             SendMail();
 
         }
@@ -224,9 +217,8 @@ namespace DirectEmailResults.View
                 _currentInboxEmail.CurrentUserEmail.Password,
                 _currentInboxEmail.CurrentUserEmail.FromAlias)
                 .ReplyTo(_templateContent, _currentInboxEmail.CurrentCompleteEmail);
-                ComposeButton.Enabled = true;
+
                 replyButton.Enabled = true;
-                emailTextBox.Enabled = true;
 
                 if (sendResult.Success)
                 {
@@ -415,48 +407,6 @@ namespace DirectEmailResults.View
                 return false;
             }
         }
-        private void ComposeButton_Click(object sender, EventArgs e)
-        {
-            if (!IsValidEmail(emailTextBox.Text))
-            {
-                MessageBox.Show("Please enter valid email address");
-                return;
-            }
-            _templateContent = GetElementByClassName("note-editable").InnerHtml;
-            if (string.IsNullOrEmpty(_templateContent) || _templateContent == "<br>")
-            {
-                MessageBox.Show("Please enter the email body", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            ComposeButton.Enabled = false;
-            replyButton.Enabled = false;
-            emailTextBox.Enabled = false;
-            Response<bool> sendResult = EmailHelper.Instance.SetCredentials(_currentInboxEmail.CurrentUserEmail.Host,
-                  _currentInboxEmail.CurrentUserEmail.Port,
-                  _currentInboxEmail.CurrentUserEmail.Address,
-                  _currentInboxEmail.CurrentUserEmail.Password,
-                  _currentInboxEmail.CurrentUserEmail.FromAlias)
-                .Send(new List<string>() { emailTextBox.Text }, _currentInboxEmail.CurrentCompleteEmail.Subject, _templateContent);
-            if (sendResult.Success)
-            {
-                MessageBox.Show("Email send sucsessfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                _templateContent = "";
-                emailTextBox.Text = "";
-                SetContent();
-                ShowHideReplySection(false);
-            }
-            else
-            {
-                MessageBox.Show("Unable to send the email", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-            ComposeButton.Enabled = true;
-            replyButton.Enabled = true;
-            emailTextBox.Enabled = true;
-
-        }
-
         #endregion
 
     }//end of class 

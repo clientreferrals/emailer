@@ -3,6 +3,7 @@ using BusniessLayer;
 using Models.DTO;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace NetEmail.View
@@ -102,9 +103,32 @@ namespace NetEmail.View
             RefreshCampaigns();
         }
 
-        private void dataGridCampaigns_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
 
+        private void deleteButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DataGridViewRow[] selectedRows = dataGridCampaigns.SelectedRows
+            .OfType<DataGridViewRow>()
+            .Where(row => !row.IsNewRow)
+            .ToArray();
+                var confirmResult = MessageBox.Show("Are you sure to remove " + selectedRows.Length.ToString() + " from black list?", "Delete",
+                      MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (confirmResult == DialogResult.Yes)
+                {
+                    foreach (var row in selectedRows)
+                    {
+                        campaignService.DeleteCampaign(int.Parse(row.Cells[0].Value.ToString()));
+                    }
+
+                    RefreshCampaigns();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
