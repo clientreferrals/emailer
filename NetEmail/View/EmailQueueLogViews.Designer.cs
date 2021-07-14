@@ -77,14 +77,14 @@
             this.dataGridLogs.Size = new System.Drawing.Size(922, 456);
             this.dataGridLogs.TabIndex = 0;
             // 
-            // EmailQueueLog
+            // EmailQueueLogViews
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(960, 578);
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "EmailQueueLog";
+            this.Name = "EmailQueueLogViews";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Email Logs";
             this.groupBox1.ResumeLayout(false);

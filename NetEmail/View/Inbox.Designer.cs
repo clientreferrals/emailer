@@ -29,7 +29,9 @@ namespace DirectEmailResults.View
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Inbox));
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.failedCount = new System.Windows.Forms.Label();
             this.viewLogsButton = new System.Windows.Forms.Button();
             this.errorRichTextBox = new System.Windows.Forms.RichTextBox();
             this.toDateTimePicker = new System.Windows.Forms.DateTimePicker();
@@ -49,7 +51,6 @@ namespace DirectEmailResults.View
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
-            this.failedCount = new System.Windows.Forms.Label();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridEmails)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -74,6 +75,15 @@ namespace DirectEmailResults.View
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Inbox";
+            // 
+            // failedCount
+            // 
+            this.failedCount.AutoSize = true;
+            this.failedCount.Location = new System.Drawing.Point(399, 24);
+            this.failedCount.Name = "failedCount";
+            this.failedCount.Size = new System.Drawing.Size(13, 13);
+            this.failedCount.TabIndex = 7;
+            this.failedCount.Text = "0";
             // 
             // viewLogsButton
             // 
@@ -250,15 +260,6 @@ namespace DirectEmailResults.View
             this.webBrowser1.Size = new System.Drawing.Size(658, 295);
             this.webBrowser1.TabIndex = 1;
             // 
-            // failedCount
-            // 
-            this.failedCount.AutoSize = true;
-            this.failedCount.Location = new System.Drawing.Point(399, 24);
-            this.failedCount.Name = "failedCount";
-            this.failedCount.Size = new System.Drawing.Size(13, 13);
-            this.failedCount.TabIndex = 7;
-            this.failedCount.Text = "0";
-            // 
             // Inbox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -267,6 +268,7 @@ namespace DirectEmailResults.View
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Inbox";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Inbox";

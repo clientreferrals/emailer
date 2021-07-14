@@ -78,7 +78,22 @@ namespace NetEmail.View
 
                 int.TryParse(tbxPort.Text, out port);
                 int.TryParse(tbxDailyLimit.Text, out dailyLimit);
+                if (!IsValidEmail(tbxAddress.Text))
+                {
+                    MessageBox.Show("Please enter a valid email.");
+                    return;
+                }
+                if (string.IsNullOrEmpty(tbxPassword.Text.Trim()))
+                {
+                    MessageBox.Show("Please enter a password.");
 
+                    return;
+                }
+                if (string.IsNullOrEmpty(tbxFromAlias.Text.Trim()))
+                {
+                    MessageBox.Show("Please enter From Alias.");
+                    return;
+                }
                 emailSettingService.Save(
                     emailAccount.Id,
                     tbxHostAddress.Text,
@@ -176,6 +191,17 @@ namespace NetEmail.View
             }
         }
 
-
+        bool IsValidEmail(string email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }

@@ -29,6 +29,7 @@ namespace DirectEmailResults.View
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BalckListEmails));
             this.addEmailToBlackListButton = new System.Windows.Forms.Button();
             this.blackListEmailsDataGridView = new System.Windows.Forms.DataGridView();
             this.emailAddressTxb = new System.Windows.Forms.TextBox();
@@ -69,6 +70,7 @@ namespace DirectEmailResults.View
             this.Controls.Add(this.emailAddressTxb);
             this.Controls.Add(this.blackListEmailsDataGridView);
             this.Controls.Add(this.addEmailToBlackListButton);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "BalckListEmails";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Show New Emails";
