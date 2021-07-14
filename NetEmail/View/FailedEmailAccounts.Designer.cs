@@ -59,7 +59,6 @@ namespace DirectEmailResults.View
             this.logsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.logsDataGridView.Location = new System.Drawing.Point(280, 31);
             this.logsDataGridView.Name = "logsDataGridView";
-            this.logsDataGridView.ReadOnly = true;
             this.logsDataGridView.Size = new System.Drawing.Size(508, 407);
             this.logsDataGridView.TabIndex = 1;
             // 

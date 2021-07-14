@@ -98,7 +98,8 @@ namespace DirectEmailResults.View
         private void dataGridEmails_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             try
-            {
+            { 
+                ShowHideReplySection(false);
                 _currentInboxEmail = unReadEmails[e.RowIndex];
                 viewEmailBody = _currentInboxEmail.Body;
                 fromEmailTextBox.Text = _currentInboxEmail.CurrentUserEmail.Address;
