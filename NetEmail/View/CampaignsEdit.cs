@@ -40,17 +40,21 @@ namespace NetEmail.View
                     try
                     {
                         templates = emailTemplateService.GetTemplates();
+
                         List<ViewTemplateDto> viewTemplateDtos = templates.Select(x => new ViewTemplateDto()
                         {
-                            Id = x.Id, 
+                            Id = x.Id,
                             TemplateName = x.TemplateName
                         }).ToList();
-                        RefreshCampaign();
 
                         bgHelper.Foreground(() =>
                         {
+                            lbxTemplates.SelectedItem = templates.FirstOrDefault();
                             lbxTemplates.DataSource = viewTemplateDtos;
                         });
+                        RefreshCampaign();
+
+
                     }
                     catch (Exception ex)
                     {
@@ -82,7 +86,10 @@ namespace NetEmail.View
                                 lblStatus.Text = currentCampaign.IsActive ? "Active" : "Passive";
                                 tbxName.Text = currentCampaign.Name;
                                 tbxMailSubject.Text = currentCampaign.MailSubject;
-                                lbxTemplates.SelectedItem = templates.Where(t => t.Id == currentCampaign.TemplateId).FirstOrDefault();
+                                if (currentCampaign.TemplateId > 0)
+                                {
+                                    lbxTemplates.SelectedItem = templates.Where(t => t.Id == currentCampaign.TemplateId).FirstOrDefault(); 
+                                }
                                 lblTotal.Text = currentCampaign.TotalCount.ToString();
                                 lblWaiting.Text = currentCampaign.PendingCount.ToString();
                                 lblSent.Text = currentCampaign.SentCount.ToString();
@@ -152,54 +159,10 @@ namespace NetEmail.View
             this.Close();
         }
 
-        private void btnOK_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(tbxName.Text) == true)
-                {
-                    MessageBox.Show("Please enter a valid name for this campaign.");
-                    return;
-                }
-
-                if (string.IsNullOrEmpty(tbxMailSubject.Text) == true)
-                {
-                    MessageBox.Show("Please enter a valid mail subject for this campaign.");
-                    return;
-                }
-
-                if (lbxTemplates.SelectedItem == null)
-                {
-                    MessageBox.Show("Please select a template for this campaign.");
-                    return;
-                }
-
-                ViewTemplateDto selectedViewTemplate = (ViewTemplateDto)lbxTemplates.SelectedItem;
-
-                EmailTemplate selectedTemplate = templates.Where(x => x.Id == selectedViewTemplate.Id).FirstOrDefault();
-
-                try
-                {
-                    campaignService.SaveCampaign(currentCampaign.Id, tbxName.Text, selectedTemplate.Id, tbxMailSubject.Text, currentCustomers.Select(s => s.Id).ToList());
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-
-                this.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
-
-        }
 
         private void btnStartCampaign_Click(object sender, EventArgs e)
         {
-            if(currentCampaign.Id == 0)
+            if (currentCampaign.Id == 0)
             {
                 MessageBox.Show("Unable to find the Campaign, please add users");
                 return;
@@ -211,13 +174,17 @@ namespace NetEmail.View
                     if (currentCampaign.IsActive == true)
                     {
                         campaignService.StopCampaign(currentCampaign.Id);
+                        RefreshCampaign();
                     }
                     else
                     {
                         campaignService.StartCampaign(currentCampaign.Id);
+                        bgHelper.Foreground(() =>
+                        {
+                            this.Close();
+                        });
                     }
 
-                    RefreshCampaign();
                 });
 
             }
@@ -230,6 +197,29 @@ namespace NetEmail.View
 
         private void btnAddCustomer_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(tbxName.Text) == true)
+            {
+                MessageBox.Show("Please enter a valid name for this campaign.");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(tbxMailSubject.Text) == true)
+            {
+                MessageBox.Show("Please enter a valid mail subject for this campaign.");
+                return;
+            }
+
+            if (lbxTemplates.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a template for this campaign.");
+                return;
+            }
+            if(currentCampaign.TemplateId == 0)
+            {
+                ViewTemplateDto selectedViewTemplate = (ViewTemplateDto)lbxTemplates.SelectedItem;  
+                currentCampaign.TemplateId = templates.Where(x => x.Id == selectedViewTemplate.Id).Select(x => x.Id).FirstOrDefault();
+            }
+
             try
             {
                 Customers form = new Customers(CustomersWindowType.SELECT);
@@ -334,5 +324,7 @@ namespace NetEmail.View
                 });
             }
         }
+
+       
     }
 }

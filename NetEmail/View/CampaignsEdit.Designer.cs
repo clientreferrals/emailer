@@ -54,7 +54,6 @@
             this.btnDeleteCampaign = new System.Windows.Forms.Button();
             this.btnStartCampaign = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.btnOK = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridCustomers)).BeginInit();
@@ -90,7 +89,7 @@
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label7.Location = new System.Drawing.Point(10, 108);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(234, 13);
+            this.label7.Size = new System.Drawing.Size(146, 13);
             this.label7.TabIndex = 14;
             this.label7.Text = "You can use @Name@ tags.";
             // 
@@ -306,22 +305,11 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // btnOK
-            // 
-            this.btnOK.Location = new System.Drawing.Point(435, 548);
-            this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(75, 23);
-            this.btnOK.TabIndex = 5;
-            this.btnOK.Text = "OK";
-            this.btnOK.UseVisualStyleBackColor = true;
-            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
-            // 
             // CampaignsEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(603, 583);
-            this.Controls.Add(this.btnOK);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnStartCampaign);
             this.Controls.Add(this.btnDeleteCampaign);
@@ -355,7 +343,6 @@
         private System.Windows.Forms.Button btnDeleteCampaign;
         private System.Windows.Forms.Button btnStartCampaign;
         private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lblProcessing;
