@@ -18,6 +18,6 @@ namespace DataAccessLayer.DataBase
         public string TemplateName { get; set; }
         public string TemplateContent { get; set; }
         public System.DateTime CreatedDateTime { get; set; }
-        public Nullable<System.DateTime> EditedDateTime { get; set; } 
+        public Nullable<System.DateTime> EditedDateTime { get; set; }
     }
 }

@@ -26,13 +26,13 @@ namespace DataAccessLayer.DataBase
         }
     
         public DbSet<ApplicationSetting> ApplicationSettings { get; set; }
-        public DbSet<CampaignCustomer> CampaignCustomers { get; set; }
-        public DbSet<EmailTemplate> EmailTemplates { get; set; }
         public DbSet<BlockListEmail> BlockListEmails { get; set; }
-        public DbSet<OurEmailList> OurEmailLists { get; set; }
         public DbSet<Campaign> Campaigns { get; set; }
-        public DbSet<EmailQueueLog> EmailQueueLogs { get; set; }
-        public DbSet<OurEmailListMaxPerDay> OurEmailListMaxPerDays { get; set; }
+        public DbSet<CampaignCustomer> CampaignCustomers { get; set; }
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<EmailQueueLog> EmailQueueLogs { get; set; }
+        public DbSet<EmailTemplate> EmailTemplates { get; set; }
+        public DbSet<OurEmailList> OurEmailLists { get; set; }
+        public DbSet<OurEmailListMaxPerDay> OurEmailListMaxPerDays { get; set; }
     }
 }
