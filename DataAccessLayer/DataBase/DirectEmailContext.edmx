@@ -59,6 +59,7 @@
           <Property Name="City" Type="varchar" MaxLength="500" />
           <Property Name="State" Type="varchar" MaxLength="500" />
           <Property Name="Tags" Type="varchar" MaxLength="500" />
+          <Property Name="zipCode" Type="nvarchar" MaxLength="50" />
           <Property Name="CreatedDateTime" Type="datetime" Nullable="false" />
           <Property Name="EditedDateTime" Type="datetime" />
         </EntityType>
@@ -166,7 +167,6 @@
           <EntitySet Name="BlockListEmails" EntityType="DirectEmailerModel.BlockListEmail" />
           <EntitySet Name="Campaigns" EntityType="DirectEmailerModel.Campaign" />
           <EntitySet Name="CampaignCustomers" EntityType="DirectEmailerModel.CampaignCustomer" />
-          <EntitySet Name="Customers" EntityType="DirectEmailerModel.Customer" />
           <EntitySet Name="EmailQueueLogs" EntityType="DirectEmailerModel.EmailQueueLog" />
           <EntitySet Name="EmailTemplates" EntityType="DirectEmailerModel.EmailTemplate" />
           <EntitySet Name="OurEmailLists" EntityType="DirectEmailerModel.OurEmailList" />
@@ -175,6 +175,7 @@
             <End Role="Campaign" EntitySet="Campaigns" />
             <End Role="CampaignCustomer" EntitySet="CampaignCustomers" />
           </AssociationSet>
+          <EntitySet Name="Customers" EntityType="DirectEmailerModel.Customer" />
           <AssociationSet Name="FK_CampaignCustomer_Customer" Association="DirectEmailerModel.FK_CampaignCustomer_Customer">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="CampaignCustomer" EntitySet="CampaignCustomers" />
@@ -224,22 +225,6 @@
           <Property Name="EditedDateTime" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Campaign" Relationship="DirectEmailerModel.FK_CampaignCustomer_Campaign" FromRole="CampaignCustomer" ToRole="Campaign" />
           <NavigationProperty Name="Customer" Relationship="DirectEmailerModel.FK_CampaignCustomer_Customer" FromRole="CampaignCustomer" ToRole="Customer" />
-        </EntityType>
-        <EntityType Name="Customer">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="PhoneNo" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Website" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="City" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="State" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Tags" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="EditedDateTime" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="CampaignCustomers" Relationship="DirectEmailerModel.FK_CampaignCustomer_Customer" FromRole="Customer" ToRole="CampaignCustomer" />
         </EntityType>
         <EntityType Name="EmailQueueLog">
           <Key>
@@ -305,6 +290,23 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNo" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Website" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Tags" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="zipCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EditedDateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CampaignCustomers" Relationship="DirectEmailerModel.FK_CampaignCustomer_Customer" FromRole="Customer" ToRole="CampaignCustomer" />
+        </EntityType>
         <Association Name="FK_CampaignCustomer_Customer">
           <End Type="DirectEmailerModel.Customer" Role="Customer" Multiplicity="1" />
           <End Type="DirectEmailerModel.CampaignCustomer" Role="CampaignCustomer" Multiplicity="*" />
@@ -369,22 +371,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Customers">
-            <EntityTypeMapping TypeName="DirectEmailerModel.Customer">
-              <MappingFragment StoreEntitySet="Customer">
-                <ScalarProperty Name="EditedDateTime" ColumnName="EditedDateTime" />
-                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
-                <ScalarProperty Name="Tags" ColumnName="Tags" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="Website" ColumnName="Website" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="EmailQueueLogs">
             <EntityTypeMapping TypeName="DirectEmailerModel.EmailQueueLog">
               <MappingFragment StoreEntitySet="EmailQueueLog">
@@ -437,6 +423,23 @@
                 <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
                 <ScalarProperty Name="SentCount" ColumnName="SentCount" />
                 <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="DirectEmailerModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="EditedDateTime" ColumnName="EditedDateTime" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="zipCode" ColumnName="zipCode" />
+                <ScalarProperty Name="Tags" ColumnName="Tags" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

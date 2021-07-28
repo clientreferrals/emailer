@@ -62,7 +62,7 @@
             // 
             // btnCustomers
             // 
-            this.btnCustomers.Location = new System.Drawing.Point(12, 176);
+            this.btnCustomers.Location = new System.Drawing.Point(200, 176);
             this.btnCustomers.Name = "btnCustomers";
             this.btnCustomers.Size = new System.Drawing.Size(160, 60);
             this.btnCustomers.TabIndex = 0;
@@ -92,7 +92,7 @@
             // 
             // btnTemplates
             // 
-            this.btnTemplates.Location = new System.Drawing.Point(200, 176);
+            this.btnTemplates.Location = new System.Drawing.Point(11, 242);
             this.btnTemplates.Name = "btnTemplates";
             this.btnTemplates.Size = new System.Drawing.Size(160, 60);
             this.btnTemplates.TabIndex = 3;
@@ -242,7 +242,7 @@
             // 
             // unifiedInboxButton
             // 
-            this.unifiedInboxButton.Location = new System.Drawing.Point(12, 242);
+            this.unifiedInboxButton.Location = new System.Drawing.Point(11, 176);
             this.unifiedInboxButton.Name = "unifiedInboxButton";
             this.unifiedInboxButton.Size = new System.Drawing.Size(160, 60);
             this.unifiedInboxButton.TabIndex = 6;
@@ -256,7 +256,7 @@
             this.blackEmailsButton.Name = "blackEmailsButton";
             this.blackEmailsButton.Size = new System.Drawing.Size(160, 60);
             this.blackEmailsButton.TabIndex = 7;
-            this.blackEmailsButton.Text = "Block Emails";
+            this.blackEmailsButton.Text = "Blocked";
             this.blackEmailsButton.UseVisualStyleBackColor = true;
             this.blackEmailsButton.Click += new System.EventHandler(this.blackEmailsButton_Click);
             // 
@@ -266,7 +266,7 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(160, 60);
             this.button1.TabIndex = 8;
-            this.button1.Text = "FAILED EMAIL ACCOUNTS";
+            this.button1.Text = "Failed";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 

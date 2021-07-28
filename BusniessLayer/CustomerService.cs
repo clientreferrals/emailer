@@ -23,17 +23,18 @@ namespace BusniessLayer
                 if (string.IsNullOrEmpty(tag) == false) query = query.Where(q => q.Tags.Contains(tag + "|"));
 
                 var result = query.Select(
-                    x=> new CustomerDto()
+                    x => new CustomerDto()
                     {
-                        Id = x.Id, 
-                        Email = x.Email, 
-                        Name = x.Name, 
-                        City = x.City, 
-                        PhoneNo = x.PhoneNo, 
-                        Website = x.Website, 
-                        Tags = x.Tags, 
-                        State = x.State, 
-                        CreatedDateTime = x.CreatedDateTime, 
+                        Id = x.Id,
+                        Email = x.Email,
+                        Name = x.Name,
+                        City = x.City,
+                        PhoneNo = x.PhoneNo,
+                        Website = x.Website,
+                        Tags = x.Tags,
+                        State = x.State,
+                        ZipCode = x.zipCode,
+                        CreatedDateTime = x.CreatedDateTime,
                         EditedDateTime = x.EditedDateTime,
                     }).ToList();
 
@@ -42,17 +43,17 @@ namespace BusniessLayer
             }
         }
 
-        public Customer Save(int id, string name, string phoneNo, string tags, string email, string website, string state, string city)
+        public Customer Save(string name, string phoneNo, string tags, string email, string website, string state, string city, string zipCode)
         {
             if (string.IsNullOrEmpty(tags)) throw new Exception("Please enter a tag for customer: " + name);
 
             if (tags.Last() != '|') tags += '|';
             using (var db = new DirectEmailerEntities())
             {
-                id = db.Customers.Where(x => x.Email == email).Select(x => x.Id).FirstOrDefault();
-                if (id == 0)
+                var record = db.Customers.Where(x => x.Email == email).FirstOrDefault();
+                if (record == null)
                 {
-                    Customer record = new Customer()
+                    record = new Customer()
                     {
                         Name = name,
                         PhoneNo = phoneNo,
@@ -61,6 +62,7 @@ namespace BusniessLayer
                         Website = website,
                         State = state,
                         City = city,
+                        zipCode = zipCode,
                         CreatedDateTime = DateTime.Now
                     };
 
@@ -72,9 +74,6 @@ namespace BusniessLayer
                 }
                 else
                 {
-
-                    var record = db.Customers.Where(x => x.Id == id).FirstOrDefault();
-
                     record.Name = name;
                     record.PhoneNo = phoneNo;
                     record.Tags = tags;
@@ -83,6 +82,7 @@ namespace BusniessLayer
                     record.State = state;
                     record.City = city;
                     record.EditedDateTime = DateTime.Now;
+                    record.zipCode = zipCode; 
                     db.SaveChanges();
                     return record;
 

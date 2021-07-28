@@ -26,6 +26,7 @@ namespace NetEmail.View
                 txbWebsite.Text = CustomerRecord.Website;
                 txbState.Text = CustomerRecord.State;
                 txbCity.Text = CustomerRecord.City;
+                zipCodeTextBox.Text = CustomerRecord.ZipCode;
                 tbxName.Focus();
             }
             catch (Exception ex)
@@ -39,8 +40,8 @@ namespace NetEmail.View
         {
             try
             {
-                customerService.Save(CustomerRecord.Id, tbxName.Text.Trim(),
-                    tbxPhoneNo.Text.Trim(), tbxTags.Text.Trim(), tbxEmail.Text.Trim(), txbWebsite.Text.Trim(), txbState.Text.Trim(), txbCity.Text.Trim());
+                customerService.Save(tbxName.Text.Trim(),tbxPhoneNo.Text.Trim(), tbxTags.Text.Trim(), tbxEmail.Text.Trim(),
+                    txbWebsite.Text.Trim(), txbState.Text.Trim(), txbCity.Text.Trim(), zipCodeTextBox.Text.Trim());
 
                 this.Close();
             }

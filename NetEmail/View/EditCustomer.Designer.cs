@@ -47,11 +47,15 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
+            this.zipCodeTextBox = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.zipCodeTextBox);
+            this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.txbState);
             this.groupBox1.Controls.Add(this.txbCity);
             this.groupBox1.Controls.Add(this.txbWebsite);
@@ -68,7 +72,7 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(13, 13);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(419, 225);
+            this.groupBox1.Size = new System.Drawing.Size(419, 249);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Contacts Info";
@@ -187,7 +191,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(356, 245);
+            this.btnCancel.Location = new System.Drawing.Point(356, 269);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 9;
@@ -197,7 +201,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(275, 245);
+            this.btnOK.Location = new System.Drawing.Point(275, 269);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 8;
@@ -207,7 +211,7 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(12, 244);
+            this.btnDelete.Location = new System.Drawing.Point(12, 268);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 23);
             this.btnDelete.TabIndex = 10;
@@ -215,11 +219,27 @@
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
+            // zipCodeTextBox
+            // 
+            this.zipCodeTextBox.Location = new System.Drawing.Point(100, 210);
+            this.zipCodeTextBox.Name = "zipCodeTextBox";
+            this.zipCodeTextBox.Size = new System.Drawing.Size(313, 20);
+            this.zipCodeTextBox.TabIndex = 107;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(7, 212);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(50, 13);
+            this.label2.TabIndex = 108;
+            this.label2.Text = "Zip Code";
+            // 
             // EditCustomer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(444, 282);
+            this.ClientSize = new System.Drawing.Size(444, 303);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.btnCancel);
@@ -254,5 +274,7 @@
         private System.Windows.Forms.Label stateLabel;
         private System.Windows.Forms.Label cityLabel;
         private System.Windows.Forms.Label websiteLbl;
+        private System.Windows.Forms.TextBox zipCodeTextBox;
+        private System.Windows.Forms.Label label2;
     }
 }

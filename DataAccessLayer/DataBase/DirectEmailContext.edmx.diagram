@@ -9,12 +9,12 @@
         <EntityTypeShape EntityType="DirectEmailerModel.BlockListEmail" Width="1.5" PointX="4.75" PointY="4.75" />
         <EntityTypeShape EntityType="DirectEmailerModel.Campaign" Width="1.5" PointX="0.75" PointY="5.25" />
         <EntityTypeShape EntityType="DirectEmailerModel.CampaignCustomer" Width="1.5" PointX="3" PointY="1.25" />
-        <EntityTypeShape EntityType="DirectEmailerModel.Customer" Width="1.5" PointX="0.75" PointY="1" />
         <EntityTypeShape EntityType="DirectEmailerModel.EmailQueueLog" Width="1.5" PointX="5.75" PointY="0.75" />
         <EntityTypeShape EntityType="DirectEmailerModel.EmailTemplate" Width="1.5" PointX="6.75" PointY="4.75" />
         <EntityTypeShape EntityType="DirectEmailerModel.OurEmailList" Width="1.5" PointX="2.75" PointY="7.75" />
         <EntityTypeShape EntityType="DirectEmailerModel.OurEmailListMaxPerDay" Width="1.5" PointX="7.75" PointY="0.75" />
         <AssociationConnector Association="DirectEmailerModel.FK_CampaignCustomer_Campaign" />
+        <EntityTypeShape EntityType="DirectEmailerModel.Customer" Width="1.5" PointX="5.375" PointY="8" />
         <AssociationConnector Association="DirectEmailerModel.FK_CampaignCustomer_Customer" />
       </Diagram>
     </edmx:Diagrams>

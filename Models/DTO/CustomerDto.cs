@@ -12,6 +12,7 @@ namespace Models.DTO
         public string City { get; set; }
         public string State { get; set; }
         public string Tags { get; set; }
+        public string ZipCode { get; set; }
         public DateTime CreatedDateTime { get; set; }
         public DateTime? EditedDateTime { get; set; }
     }

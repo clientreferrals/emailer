@@ -27,6 +27,7 @@ namespace DataAccessLayer.DataBase
         public string City { get; set; }
         public string State { get; set; }
         public string Tags { get; set; }
+        public string zipCode { get; set; }
         public System.DateTime CreatedDateTime { get; set; }
         public Nullable<System.DateTime> EditedDateTime { get; set; }
     

@@ -82,16 +82,21 @@ namespace NetEmail.View
                         {
                             foreach (DataRow row in dtCustomers.Rows)
                             {
-                                customerService.Save(
-                                    id: 0,
-                                    name: row["Company"].ToString(),
-                                    phoneNo: row["Phone"].ToString(),
-                                    email: row["Email"].ToString(),
-                                    tags: tbxTag.Text,
-                                    website: row["Website"].ToString(),
-                                    state: row["State"].ToString(),
-                                    city: row["City"].ToString()
-                                );
+                                string _email = row["email"].ToString().Trim();
+                                if (!string.IsNullOrEmpty(_email))
+                                {
+                                    customerService.Save(
+                                       name: row["name"].ToString(),
+                                       phoneNo: row["phone"].ToString(),
+                                       email: _email,
+                                       tags: tbxTag.Text,
+                                       website: row["url"].ToString(),
+                                       state: row["state"].ToString(),
+                                       city: row["city"].ToString(),
+                                       zipCode: row["zipCode"].ToString()
+                                   );
+                                }
+
                                 i++;
 
                                 bgHelper.Foreground(() =>
