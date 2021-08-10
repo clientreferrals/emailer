@@ -54,6 +54,8 @@
     <Compile Include="EmailQueueLogService.cs" />
     <Compile Include="EmailSettingService.cs" />
     <Compile Include="EmailTemplateService.cs" />
+    <Compile Include="EmailValidationService.cs" />
+    <Compile Include="List.cs" />
     <Compile Include="OurEmailListMaxPerDayService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

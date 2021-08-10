@@ -35,5 +35,6 @@ namespace DataAccessLayer.DataBase
         public DbSet<OurEmailList> OurEmailLists { get; set; }
         public DbSet<OurEmailListMaxPerDay> OurEmailListMaxPerDays { get; set; }
         public DbSet<sysdiagram> sysdiagrams { get; set; }
+        public DbSet<NotAllowedEmail> NotAllowedEmails { get; set; }
     }
 }

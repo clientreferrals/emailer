@@ -11,7 +11,7 @@ namespace BusniessLayer
 
         public List<CampaignDTO> GetCampaigns()
         {
-            using (var db = new DirectEmailerEntities())
+            using (var db = new DirectEmailContext())
             {
                 List<CampaignDTO> result = (from c in db.Campaigns
                                             join t in db.EmailTemplates on c.TemplateId equals t.Id into ts
@@ -34,7 +34,7 @@ namespace BusniessLayer
 
         public CampaignDTO GetCampaign(int campaignId)
         {
-            using (var db = new DirectEmailerEntities())
+            using (var db = new DirectEmailContext())
             {
                 CampaignDTO result = (from c in db.Campaigns
                                       join t in db.EmailTemplates on c.TemplateId equals t.Id into ts
@@ -59,7 +59,7 @@ namespace BusniessLayer
 
         public List<CampaignCustomerDTO> GetCampaignCustomers(int campaignId)
         {
-            using (var db = new DirectEmailerEntities())
+            using (var db = new DirectEmailContext())
             {
                 List<CampaignCustomerDTO> result = (from cc in db.CampaignCustomers
                                                     join c in db.Customers on cc.CustomerId equals c.Id
@@ -84,7 +84,7 @@ namespace BusniessLayer
             int campaignId = 0;
             if (id == 0)
             {
-                using (var db = new DirectEmailerEntities())
+                using (var db = new DirectEmailContext())
                 {
                     Campaign record = new Campaign()
                     {
@@ -120,7 +120,7 @@ namespace BusniessLayer
             }
             else
             {
-                using (var db = new DirectEmailerEntities())
+                using (var db = new DirectEmailContext())
                 {
                     var campaignRecord = db.Campaigns.Where(x => x.Id == id).FirstOrDefault();
                     campaignId = campaignRecord.Id;
@@ -173,7 +173,7 @@ namespace BusniessLayer
 
         public bool DeleteCampaign(int id)
         {
-            using (var db = new DirectEmailerEntities())
+            using (var db = new DirectEmailContext())
             {
                 var record = db.Campaigns.Where(x => x.Id == id).FirstOrDefault();
 
@@ -194,7 +194,7 @@ namespace BusniessLayer
 
         public bool StartCampaign(int id)
         {
-            using (var db = new DirectEmailerEntities())
+            using (var db = new DirectEmailContext())
             {
                 var record = db.Campaigns.Where(x => x.Id == id).FirstOrDefault();
                 if(record == null)
@@ -211,7 +211,7 @@ namespace BusniessLayer
 
         public bool StopCampaign(int id)
         {
-            using (var db = new DirectEmailerEntities())
+            using (var db = new DirectEmailContext())
             {
                 var record = db.Campaigns.Where(x => x.Id == id).FirstOrDefault();
 
@@ -225,7 +225,7 @@ namespace BusniessLayer
 
         public bool DeleteCampaignCustomer(int id)
         {
-            using (var db = new DirectEmailerEntities())
+            using (var db = new DirectEmailContext())
             {
                 var record = db.CampaignCustomers.Where(x => x.Id == id).FirstOrDefault();
 
@@ -239,7 +239,7 @@ namespace BusniessLayer
 
         public bool DeleteAllCampaignCustomers(int campaignId)
         {
-            using (var db = new DirectEmailerEntities())
+            using (var db = new DirectEmailContext())
             {
                 var records = db.CampaignCustomers.Where(x => x.CampaignId == campaignId).ToList();
                 foreach (var item in records)
@@ -255,7 +255,7 @@ namespace BusniessLayer
 
         public bool SetAsSent(int campaignCustomerId)
         {
-            using (DirectEmailerEntities db = new DirectEmailerEntities())
+            using (var db = new DirectEmailContext())
             {
                 var record = db.CampaignCustomers.FirstOrDefault(c => c.Id == campaignCustomerId);
 

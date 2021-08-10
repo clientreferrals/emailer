@@ -42,14 +42,23 @@
             this.tbxName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.uploadResponseGB = new System.Windows.Forms.GroupBox();
+            this.failedCountLabel = new System.Windows.Forms.Label();
+            this.uploadedCountLabel = new System.Windows.Forms.Label();
+            this.viewFailedListButton = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.btnSelectCustomers = new System.Windows.Forms.Button();
             this.btnDeleteAll = new System.Windows.Forms.Button();
             this.btnDownloadSampleCSV = new System.Windows.Forms.Button();
             this.dataGridCustomers = new System.Windows.Forms.DataGridView();
             this.btnAddCsv = new System.Windows.Forms.Button();
             this.btnAddNew = new System.Windows.Forms.Button();
+            this.viewUploadedButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.uploadResponseGB.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridCustomers)).BeginInit();
             this.SuspendLayout();
             // 
@@ -165,6 +174,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.uploadResponseGB);
             this.groupBox2.Controls.Add(this.btnSelectCustomers);
             this.groupBox2.Controls.Add(this.btnDeleteAll);
             this.groupBox2.Controls.Add(this.btnDownloadSampleCSV);
@@ -173,14 +183,89 @@
             this.groupBox2.Controls.Add(this.btnAddNew);
             this.groupBox2.Location = new System.Drawing.Point(13, 154);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(608, 333);
+            this.groupBox2.Size = new System.Drawing.Size(608, 352);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Customers";
             // 
+            // uploadResponseGB
+            // 
+            this.uploadResponseGB.Controls.Add(this.viewUploadedButton);
+            this.uploadResponseGB.Controls.Add(this.failedCountLabel);
+            this.uploadResponseGB.Controls.Add(this.uploadedCountLabel);
+            this.uploadResponseGB.Controls.Add(this.viewFailedListButton);
+            this.uploadResponseGB.Controls.Add(this.label5);
+            this.uploadResponseGB.Controls.Add(this.label4);
+            this.uploadResponseGB.Controls.Add(this.groupBox4);
+            this.uploadResponseGB.Location = new System.Drawing.Point(169, 9);
+            this.uploadResponseGB.Name = "uploadResponseGB";
+            this.uploadResponseGB.Size = new System.Drawing.Size(351, 51);
+            this.uploadResponseGB.TabIndex = 13;
+            this.uploadResponseGB.TabStop = false;
+            this.uploadResponseGB.Text = "Upload Response";
+            // 
+            // failedCountLabel
+            // 
+            this.failedCountLabel.AutoSize = true;
+            this.failedCountLabel.ForeColor = System.Drawing.Color.Red;
+            this.failedCountLabel.Location = new System.Drawing.Point(191, 31);
+            this.failedCountLabel.Name = "failedCountLabel";
+            this.failedCountLabel.Size = new System.Drawing.Size(13, 13);
+            this.failedCountLabel.TabIndex = 18;
+            this.failedCountLabel.Text = "0";
+            // 
+            // uploadedCountLabel
+            // 
+            this.uploadedCountLabel.AutoSize = true;
+            this.uploadedCountLabel.ForeColor = System.Drawing.Color.Lime;
+            this.uploadedCountLabel.Location = new System.Drawing.Point(8, 32);
+            this.uploadedCountLabel.Name = "uploadedCountLabel";
+            this.uploadedCountLabel.Size = new System.Drawing.Size(13, 13);
+            this.uploadedCountLabel.TabIndex = 17;
+            this.uploadedCountLabel.Text = "0";
+            // 
+            // viewFailedListButton
+            // 
+            this.viewFailedListButton.Location = new System.Drawing.Point(262, 10);
+            this.viewFailedListButton.Name = "viewFailedListButton";
+            this.viewFailedListButton.Size = new System.Drawing.Size(89, 35);
+            this.viewFailedListButton.TabIndex = 16;
+            this.viewFailedListButton.Text = "View Failed";
+            this.viewFailedListButton.UseVisualStyleBackColor = true;
+            this.viewFailedListButton.Click += new System.EventHandler(this.viewFailedListButton_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.ForeColor = System.Drawing.Color.Red;
+            this.label5.Location = new System.Drawing.Point(190, 15);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(66, 13);
+            this.label5.TabIndex = 15;
+            this.label5.Text = "Failed Count";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.ForeColor = System.Drawing.Color.Lime;
+            this.label4.Location = new System.Drawing.Point(7, 16);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(84, 13);
+            this.label4.TabIndex = 14;
+            this.label4.Text = "Uploaded Count";
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Location = new System.Drawing.Point(199, 95);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(200, 100);
+            this.groupBox4.TabIndex = 0;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "groupBox4";
+            // 
             // btnSelectCustomers
             // 
-            this.btnSelectCustomers.Location = new System.Drawing.Point(462, 299);
+            this.btnSelectCustomers.Location = new System.Drawing.Point(462, 319);
             this.btnSelectCustomers.Name = "btnSelectCustomers";
             this.btnSelectCustomers.Size = new System.Drawing.Size(135, 23);
             this.btnSelectCustomers.TabIndex = 11;
@@ -190,7 +275,7 @@
             // 
             // btnDeleteAll
             // 
-            this.btnDeleteAll.Location = new System.Drawing.Point(6, 298);
+            this.btnDeleteAll.Location = new System.Drawing.Point(6, 318);
             this.btnDeleteAll.Name = "btnDeleteAll";
             this.btnDeleteAll.Size = new System.Drawing.Size(75, 23);
             this.btnDeleteAll.TabIndex = 12;
@@ -211,7 +296,7 @@
             // dataGridCustomers
             // 
             this.dataGridCustomers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridCustomers.Location = new System.Drawing.Point(6, 48);
+            this.dataGridCustomers.Location = new System.Drawing.Point(6, 68);
             this.dataGridCustomers.Name = "dataGridCustomers";
             this.dataGridCustomers.Size = new System.Drawing.Size(592, 244);
             this.dataGridCustomers.TabIndex = 2;
@@ -237,6 +322,16 @@
             this.btnAddNew.UseVisualStyleBackColor = true;
             this.btnAddNew.Click += new System.EventHandler(this.btnAddNew_Click);
             // 
+            // viewUploadedButton
+            // 
+            this.viewUploadedButton.Location = new System.Drawing.Point(95, 9);
+            this.viewUploadedButton.Name = "viewUploadedButton";
+            this.viewUploadedButton.Size = new System.Drawing.Size(89, 35);
+            this.viewUploadedButton.TabIndex = 19;
+            this.viewUploadedButton.Text = "View Uploaded";
+            this.viewUploadedButton.UseVisualStyleBackColor = true;
+            this.viewUploadedButton.Click += new System.EventHandler(this.viewUploadedButton_Click);
+            // 
             // Customers
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -251,6 +346,8 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
+            this.uploadResponseGB.ResumeLayout(false);
+            this.uploadResponseGB.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridCustomers)).EndInit();
             this.ResumeLayout(false);
 
@@ -277,5 +374,13 @@
         private System.Windows.Forms.TextBox txbCity;
         private System.Windows.Forms.TextBox txtWebsite;
         private System.Windows.Forms.Label websiteLbl;
+        private System.Windows.Forms.GroupBox uploadResponseGB;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Label failedCountLabel;
+        private System.Windows.Forms.Label uploadedCountLabel;
+        private System.Windows.Forms.Button viewFailedListButton;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button viewUploadedButton;
     }
 }

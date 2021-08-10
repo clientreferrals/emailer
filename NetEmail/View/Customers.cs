@@ -1,6 +1,6 @@
 ﻿using Backgrounder;
 using BusniessLayer;
-using DataAccessLayer.DataBase;
+using DirectEmailResults.View;
 using Models.DTO;
 using System;
 using System.Collections.Generic;
@@ -21,6 +21,8 @@ namespace NetEmail.View
         CustomersWindowType currentWindowType = CustomersWindowType.LIST;
         public bool IsCustomersSelected = false;
         private readonly CustomerService customerService;
+        private List<UploadCsvModel> failedEmailsList = new List<UploadCsvModel>();
+        private List<UploadCsvModel> sucessUploadedEmailsList = new List<UploadCsvModel>();
         public Customers(CustomersWindowType type = CustomersWindowType.LIST)
         {
             try
@@ -31,6 +33,7 @@ namespace NetEmail.View
 
                 bgHelper = new BackgroundHelper();
 
+                uploadResponseGB.Visible = false;
                 RefreshCustomersTable();
                 UpdateWindowType();
             }
@@ -148,6 +151,23 @@ namespace NetEmail.View
             {
                 UploadCustomerCSV form = new UploadCustomerCSV();
                 form.ShowDialog();
+                uploadResponseGB.Visible = true; 
+
+                failedEmailsList = form.failedEmailsList;
+                sucessUploadedEmailsList = form.successUploadedList;
+                failedCountLabel.Text = failedEmailsList.Count.ToString(); 
+                uploadedCountLabel.Text = sucessUploadedEmailsList.Count.ToString();
+
+
+                if (failedEmailsList.Count > 0)
+                {
+                    viewFailedListButton.Enabled = true;
+                }
+                else
+                {
+
+                    viewFailedListButton.Enabled = false;
+                }
 
                 RefreshCustomersTable();
             }
@@ -181,6 +201,18 @@ namespace NetEmail.View
         {
             IsCustomersSelected = true;
             Close();
+        }
+
+        private void viewFailedListButton_Click(object sender, EventArgs e)
+        {
+            SuccessAndFailedUploadEmails form = new SuccessAndFailedUploadEmails(failedEmailsList);
+            form.Show();
+        }
+
+        private void viewUploadedButton_Click(object sender, EventArgs e)
+        {
+            SuccessAndFailedUploadEmails form = new SuccessAndFailedUploadEmails(sucessUploadedEmailsList);
+            form.Show();
         }
     }
 }

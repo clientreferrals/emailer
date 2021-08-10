@@ -9,7 +9,7 @@ namespace BusniessLayer
         public string GetValue(string key)
         {
 
-            using (var db = new DirectEmailerEntities())
+            using (var db = new DirectEmailContext())
             {
                 ApplicationSetting applicationSetting = db.ApplicationSettings.Where(x => x.SettingKey == key).FirstOrDefault();
                 if (applicationSetting == null)
@@ -23,7 +23,7 @@ namespace BusniessLayer
         public ApplicationSetting AddUpdate(string key, string value)
         {
 
-            using (var db = new DirectEmailerEntities())
+            using (var db = new DirectEmailContext())
             {
                 ApplicationSetting applicationSetting = db.ApplicationSettings.Where(x => x.SettingKey == key).FirstOrDefault();
                 if (applicationSetting == null)

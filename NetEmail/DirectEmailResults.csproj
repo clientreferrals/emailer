@@ -143,6 +143,12 @@
     <Compile Include="View\FailedEmailAccounts.Designer.cs">
       <DependentUpon>FailedEmailAccounts.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\SuccessAndFailedUploadEmails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\SuccessAndFailedUploadEmails.Designer.cs">
+      <DependentUpon>SuccessAndFailedUploadEmails.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\Settings.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -224,6 +230,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\FailedEmailAccounts.resx">
       <DependentUpon>FailedEmailAccounts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\SuccessAndFailedUploadEmails.resx">
+      <DependentUpon>SuccessAndFailedUploadEmails.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\Settings.resx">
       <DependentUpon>Settings.cs</DependentUpon>

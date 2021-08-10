@@ -12,7 +12,7 @@ namespace BusniessLayer
 
         public List<EmailQueueItem> GetEmailQueueItems()
         {
-            using (DirectEmailerEntities db = new DirectEmailerEntities())
+            using (var db = new DirectEmailContext())
             {
                 string sql = @"
                             select 
@@ -40,7 +40,7 @@ namespace BusniessLayer
 
         public List<EmailForLogs> GetUniqueEmail()
         {
-            using (DirectEmailerEntities db = new DirectEmailerEntities())
+            using (var db = new DirectEmailContext())
             {
                 return db.EmailQueueLogs.Where(x => !string.IsNullOrEmpty(x.ErrorLog)).Select(x => x.FromAddress).Distinct().Select(x => new EmailForLogs()
                 {
@@ -51,7 +51,7 @@ namespace BusniessLayer
 
         public bool SaveEmailQueueLog(EmailQueueItem item, string fromEmailAddress, string mail, string errorLog, bool isEmailSent)
         {
-            using (DirectEmailerEntities db = new DirectEmailerEntities())
+            using (var db = new DirectEmailContext())
             {
                 EmailQueueLog log = new EmailQueueLog()
                 {
@@ -84,7 +84,7 @@ namespace BusniessLayer
 
         public List<EmailLogs> GetLogsByEmail(string email)
         {
-            using (DirectEmailerEntities db = new DirectEmailerEntities())
+            using (var db = new DirectEmailContext())
             {
                 return db.EmailQueueLogs.Where(x => x.FromAddress == email && !string.IsNullOrEmpty(x.ErrorLog))
                     .Distinct().Select(x => new EmailLogs()
@@ -97,7 +97,7 @@ namespace BusniessLayer
 
         public List<EmailQueueLog> GetEmailQueueLogs()
         {
-            using (DirectEmailerEntities db = new DirectEmailerEntities())
+            using (var db = new DirectEmailContext())
             {
                 return db.EmailQueueLogs.OrderByDescending(l => l.Id).ToList();
             }
@@ -105,7 +105,7 @@ namespace BusniessLayer
 
         public bool DeleteAllLogs()
         {
-            using (DirectEmailerEntities db = new DirectEmailerEntities())
+            using (var db = new DirectEmailContext())
             {
                 string sql = @"delete from EmailQueueLog";
 

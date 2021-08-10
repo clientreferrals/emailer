@@ -3,6 +3,8 @@ using BusniessLayer;
 using Models.DTO;
 using NetMail.Utility;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace NetEmail.View
@@ -12,7 +14,8 @@ namespace NetEmail.View
         private readonly EmailDTO emailAccount;
         private readonly BackgroundHelper bgHelper;
         private readonly EmailSettingService emailSettingService;
-
+        private readonly EmailValidationService emailValidationService;
+        private readonly List<string> notAllowedList = new List<string>();
         public EditEmailAccount(EmailDTO emailAccount)
         {
             try
@@ -20,7 +23,8 @@ namespace NetEmail.View
                 InitializeComponent();
 
                 emailSettingService = new EmailSettingService();
-
+                emailValidationService = new EmailValidationService();
+                notAllowedList = emailValidationService.GetNotAllowList();
                 bgHelper = new BackgroundHelper();
 
                 if (emailAccount.Port == 0)
@@ -73,11 +77,9 @@ namespace NetEmail.View
         {
             try
             {
-                int port = 0;
-                int dailyLimit = 0;
 
-                int.TryParse(tbxPort.Text, out port);
-                int.TryParse(tbxDailyLimit.Text, out dailyLimit);
+                int.TryParse(tbxPort.Text, out int port);
+                int.TryParse(tbxDailyLimit.Text, out int dailyLimit);
                 if (!IsValidEmail(tbxAddress.Text))
                 {
                     MessageBox.Show("Please enter a valid email.");
@@ -92,6 +94,11 @@ namespace NetEmail.View
                 if (string.IsNullOrEmpty(tbxFromAlias.Text.Trim()))
                 {
                     MessageBox.Show("Please enter From Alias.");
+                    return;
+                }
+                if(notAllowedList.Any(x=> tbxAddress.Text.ToLower().Contains(x.ToLower())))
+                {
+                    MessageBox.Show("There some keyword which are not allowed to enter.");
                     return;
                 }
                 emailSettingService.Save(

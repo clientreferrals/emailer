@@ -10,7 +10,7 @@ namespace BusniessLayer
     {
         public List<BlockListEmailDto> GetBlackListEmails()
         {
-            using (var db = new DirectEmailerEntities())
+            using (var db = new DirectEmailContext())
             {
                 return (from e in db.BlockListEmails
                         select new BlockListEmailDto
@@ -25,7 +25,7 @@ namespace BusniessLayer
         {
             if (id == 0)
             {
-                using (var db = new DirectEmailerEntities())
+                using (var db = new DirectEmailContext())
                 {
                     BlockListEmail record = new BlockListEmail()
                     {
@@ -41,7 +41,7 @@ namespace BusniessLayer
             }
             else
             {
-                using (var db = new DirectEmailerEntities())
+                using (var db = new DirectEmailContext())
                 {
                     var record = db.BlockListEmails.Where(x => x.Id == id).FirstOrDefault();
 
@@ -57,7 +57,7 @@ namespace BusniessLayer
 
         public bool Delete(int id)
         {
-            using (var db = new DirectEmailerEntities())
+            using (var db = new DirectEmailContext())
             {
                 var record = db.BlockListEmails.Where(x => x.Id == id).FirstOrDefault();
 

@@ -12,7 +12,7 @@ namespace BusniessLayer
 
         public List<EmailDTO> GetEmails()
         {
-            using (var db = new DirectEmailerEntities())
+            using (var db = new DirectEmailContext())
             {
                 return (from e in db.OurEmailLists
                         select new EmailDTO
@@ -37,7 +37,7 @@ namespace BusniessLayer
         {
             if (id == 0)
             {
-                using (var db = new DirectEmailerEntities())
+                using (var db = new DirectEmailContext())
                 {
                     OurEmailList record = new OurEmailList()
                     {
@@ -59,7 +59,7 @@ namespace BusniessLayer
             }
             else
             {
-                using (var db = new DirectEmailerEntities())
+                using (var db = new DirectEmailContext())
                 {
                     var record = db.OurEmailLists.Where(x => x.Id == id).FirstOrDefault();
 
@@ -82,7 +82,7 @@ namespace BusniessLayer
 
         public bool Delete(int id)
         {
-            using (var db = new DirectEmailerEntities())
+            using (var db = new DirectEmailContext())
             {
                 var record = db.OurEmailLists.Where(x => x.Id == id).FirstOrDefault();
 

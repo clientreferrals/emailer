@@ -1,8 +1,11 @@
 ﻿using Backgrounder;
 using BusniessLayer;
+using Models.DTO;
 using NetMail.Utility;
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace NetEmail.View
@@ -11,12 +14,20 @@ namespace NetEmail.View
     {
         private readonly BackgroundHelper bgHelper;
         private readonly CustomerService customerService;
+        private readonly EmailValidationService emailValidationService;
+        private readonly List<string> notAllowedList = new List<string>();
+        public List<UploadCsvModel> failedEmailsList = new List<UploadCsvModel>();
+        public List<UploadCsvModel> successUploadedList = new List<UploadCsvModel>();
+
         public UploadCustomerCSV()
         {
             try
             {
                 InitializeComponent();
                 customerService = new CustomerService();
+
+                emailValidationService = new EmailValidationService();
+                notAllowedList = emailValidationService.GetNotAllowList();
 
                 bgHelper = new BackgroundHelper();
             }
@@ -80,21 +91,43 @@ namespace NetEmail.View
                         int i = 0;
                         if (dtCustomers.Rows.Count > 0)
                         {
+                            failedEmailsList = new List<UploadCsvModel>();
+                            successUploadedList = new List<UploadCsvModel>(); 
                             foreach (DataRow row in dtCustomers.Rows)
                             {
                                 string _email = row["email"].ToString().Trim();
                                 if (!string.IsNullOrEmpty(_email))
                                 {
-                                    customerService.Save(
-                                       name: row["name"].ToString(),
-                                       phoneNo: row["phone"].ToString(),
-                                       email: _email,
-                                       tags: tbxTag.Text,
-                                       website: row["url"].ToString(),
-                                       state: row["state"].ToString(),
-                                       city: row["city"].ToString(),
-                                       zipCode: row["zipCode"].ToString()
-                                   );
+                                    UploadCsvModel uploadCsvModel = new UploadCsvModel
+                                    {
+                                        Name = row["name"].ToString(),
+                                        Phone = row["phone"].ToString(),
+                                        Email = _email,
+                                        Tag = tbxTag.Text,
+                                        URL = row["url"].ToString(),
+                                        State = row["state"].ToString(),
+                                        City = row["city"].ToString(),
+                                        ZipCode = row["zipCode"].ToString()
+                                    };
+                                    if (notAllowedList.Any(x => _email.ToLower().Contains(x.ToLower())))
+                                    {
+                                        failedEmailsList.Add(uploadCsvModel);
+                                    }
+                                    else
+                                    {
+                                        customerService.Save(
+                                         uploadCsvModel.Name,
+                                         uploadCsvModel.Phone,
+                                         _email,
+                                         uploadCsvModel.Tag,
+                                         uploadCsvModel.URL,
+                                         uploadCsvModel.State,
+                                         uploadCsvModel.City,
+                                         uploadCsvModel.ZipCode
+                                      );
+                                        successUploadedList.Add(uploadCsvModel);
+                                    }
+
                                 }
 
                                 i++;

@@ -17,6 +17,7 @@
         <EntityTypeShape EntityType="DirectEmailerModel.sysdiagram" Width="1.5" PointX="4.75" PointY="7.75" IsExpanded="true" />
         <AssociationConnector Association="DirectEmailerModel.FK_CampaignCustomer_Campaign" ManuallyRouted="false" />
         <AssociationConnector Association="DirectEmailerModel.FK_CampaignCustomer_Customer" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DirectEmailerModel.NotAllowedEmail" Width="1.5" PointX="7.375" PointY="7.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
