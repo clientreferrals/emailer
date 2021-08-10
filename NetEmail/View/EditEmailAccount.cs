@@ -1,5 +1,6 @@
 ﻿using Backgrounder;
 using BusniessLayer;
+using BusniessLayer.Utility;
 using Models.DTO;
 using NetMail.Utility;
 using System;
@@ -96,9 +97,11 @@ namespace NetEmail.View
                     MessageBox.Show("Please enter From Alias.");
                     return;
                 }
-                if(notAllowedList.Any(x=> tbxAddress.Text.ToLower().Contains(x.ToLower())))
+                if (notAllowedList.Any(x => tbxAddress.Text.ToLower().Contains(x.ToLower()))
+                || ValidateEmailUsingAPI.EmailValidationUsingAPI(tbxAddress.Text).Result == false)
+
                 {
-                    MessageBox.Show("There some keyword which are not allowed to enter.");
+                    MessageBox.Show("There some keyword which are not allowed to enter or the email is not valid.");
                     return;
                 }
                 emailSettingService.Save(
@@ -205,7 +208,7 @@ namespace NetEmail.View
                 var addr = new System.Net.Mail.MailAddress(email);
                 return addr.Address == email;
             }
-            catch 
+            catch
             {
                 return false;
             }

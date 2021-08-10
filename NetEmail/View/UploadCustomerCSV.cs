@@ -1,5 +1,6 @@
 ﻿using Backgrounder;
 using BusniessLayer;
+using BusniessLayer.Utility;
 using Models.DTO;
 using NetMail.Utility;
 using System;
@@ -109,7 +110,8 @@ namespace NetEmail.View
                                         City = row["city"].ToString(),
                                         ZipCode = row["zipCode"].ToString()
                                     };
-                                    if (notAllowedList.Any(x => _email.ToLower().Contains(x.ToLower())))
+                                    if (notAllowedList.Any(x => _email.ToLower().Contains(x.ToLower()))
+                                         || ValidateEmailUsingAPI.EmailValidationUsingAPI(_email).Result == false)
                                     {
                                         failedEmailsList.Add(uploadCsvModel);
                                     }

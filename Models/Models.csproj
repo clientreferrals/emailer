@@ -45,6 +45,7 @@
     <Compile Include="DTO\BlockListEmailDto.cs" />
     <Compile Include="DTO\CampaignCustomerDTO.cs" />
     <Compile Include="DTO\CampaignDTO.cs" />
+    <Compile Include="DTO\EmailValidationApiResponseModel.cs" />
     <Compile Include="DTO\CustomerDto.cs" />
     <Compile Include="DTO\EmailDTO.cs" />
     <Compile Include="DTO\EmailForLogs.cs" />
