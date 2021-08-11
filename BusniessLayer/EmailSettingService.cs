@@ -27,6 +27,7 @@ namespace BusniessLayer
                             IMAPHost = e.IMAPHost,
                             IMAPPort = e.IMAPPort,
                             SentCount = e.SentCount,
+                            Active = e.Active,
                             TodaySent = db.OurEmailListMaxPerDays.Where(x => x.EmailId == e.Id).Select(x => x.SentCount).FirstOrDefault(),
                             RemainingLimit = e.DailyLimit - db.OurEmailListMaxPerDays.Where(x => x.EmailId == e.Id).Select(x => x.SentCount).FirstOrDefault()
                         }).ToList();

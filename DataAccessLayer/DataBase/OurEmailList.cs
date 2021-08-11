@@ -26,5 +26,6 @@ namespace DataAccessLayer.DataBase
         public int IMAPPort { get; set; }
         public System.DateTime CreatedDateTime { get; set; }
         public Nullable<System.DateTime> EditedDateTime { get; set; }
+        public bool Active { get; set; }
     }
 }

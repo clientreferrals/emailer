@@ -21,6 +21,7 @@
         public string IMAPHost { get; set; }
 
         public int IMAPPort { get; set; }
+        public bool Active { get; set; }
 
     }
 }
