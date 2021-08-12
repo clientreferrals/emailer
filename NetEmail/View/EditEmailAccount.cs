@@ -17,6 +17,7 @@ namespace NetEmail.View
         private readonly EmailSettingService emailSettingService;
         private readonly EmailValidationService emailValidationService;
         private readonly List<string> notAllowedList = new List<string>();
+        private readonly List<string> alreadyValidEmailList = new List<string>();
         public EditEmailAccount(EmailDTO emailAccount)
         {
             try
@@ -26,6 +27,7 @@ namespace NetEmail.View
                 emailSettingService = new EmailSettingService();
                 emailValidationService = new EmailValidationService();
                 notAllowedList = emailValidationService.GetNotAllowList();
+                alreadyValidEmailList = emailValidationService.GetValidEmails();
                 bgHelper = new BackgroundHelper();
 
                 if (emailAccount.Port == 0)
@@ -97,28 +99,49 @@ namespace NetEmail.View
                     MessageBox.Show("Please enter From Alias.");
                     return;
                 }
-                if (notAllowedList.Any(x => tbxAddress.Text.ToLower().Contains(x.ToLower()))
-                || ValidateEmailUsingAPI.EmailValidationUsingAPI(tbxAddress.Text).Result == false)
+
+                btnOK.Enabled = false;
+                bool valid = true;
+
+                if (notAllowedList.Any(x => tbxAddress.Text.ToLower().Contains(x.ToLower())))
 
                 {
+                    valid = false;
+                }
+                else if (alreadyValidEmailList.Any(x => tbxAddress.Text.ToLower().Contains(x.ToLower())))
+                {
+                    valid = true;
+                }
+                else if (ValidateEmailUsingAPI.EmailValidationUsingAPI(tbxAddress.Text).Result == false)
+                {
+                    valid = false;
+                }
+
+                if (valid == false)
+                {
                     MessageBox.Show("There some keyword which are not allowed to enter or the email is not valid.");
+                    btnOK.Enabled = true;
                     return;
                 }
-                emailSettingService.Save(
-                    emailAccount.Id,
-                    tbxHostAddress.Text,
-                    port,
-                    tbxAddress.Text,
-                    tbxPassword.Text,
-                    tbxHostAddress.Text,
-                    tbxFromAlias.Text,
-                    dailyLimit,
-                    Convert.ToInt32(popPortNoTbx.Text),
-                    popHostAddressTbx.Text
+                valid = emailSettingService.Save(
+                  emailAccount.Id, 
+                  tbxHostAddress.Text,
+                  port,
+                  tbxAddress.Text,
+                  tbxPassword.Text,
+                  tbxHostAddress.Text,
+                  tbxFromAlias.Text,
+                  dailyLimit,
+                  Convert.ToInt32(popPortNoTbx.Text),
+                  popHostAddressTbx.Text
 
-                );
+              );
+                if (valid)
+                {
+                    emailValidationService.SaveNewRecord(tbxAddress.Text);
+                }
 
-                this.Close();
+                Close();
             }
             catch (Exception ex)
             {

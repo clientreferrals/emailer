@@ -17,6 +17,7 @@ namespace NetEmail.View
         private readonly CustomerService customerService;
         private readonly EmailValidationService emailValidationService;
         private readonly List<string> notAllowedList = new List<string>();
+        private readonly List<string> alreadyValidEmailList = new List<string>();
         public List<UploadCsvModel> failedEmailsList = new List<UploadCsvModel>();
         public List<UploadCsvModel> successUploadedList = new List<UploadCsvModel>();
 
@@ -29,6 +30,7 @@ namespace NetEmail.View
 
                 emailValidationService = new EmailValidationService();
                 notAllowedList = emailValidationService.GetNotAllowList();
+                alreadyValidEmailList = emailValidationService.GetValidEmails();
 
                 bgHelper = new BackgroundHelper();
             }
@@ -110,14 +112,28 @@ namespace NetEmail.View
                                         City = row["city"].ToString(),
                                         ZipCode = row["zipCode"].ToString()
                                     };
-                                    if (notAllowedList.Any(x => _email.ToLower().Contains(x.ToLower()))
-                                         || ValidateEmailUsingAPI.EmailValidationUsingAPI(_email).Result == false)
+                                    bool valid = true; 
+                                    if (notAllowedList.Any(x => _email.ToLower().Contains(x.ToLower())))
+
+                                    {
+                                        valid = false;
+                                    }
+                                    else if (alreadyValidEmailList.Any(x => _email.ToLower().Contains(x.ToLower())))
+                                    {
+                                        valid = true;
+                                    }
+                                    else if (ValidateEmailUsingAPI.EmailValidationUsingAPI(_email).Result == false)
+                                    {
+                                        valid = false;
+                                    }
+
+                                    if (valid == false)
                                     {
                                         failedEmailsList.Add(uploadCsvModel);
-                                    }
+                                    } 
                                     else
                                     {
-                                        customerService.Save(
+                                       bool isSave =  customerService.Save(
                                          uploadCsvModel.Name,
                                          uploadCsvModel.Phone,
                                          _email,
@@ -126,7 +142,12 @@ namespace NetEmail.View
                                          uploadCsvModel.State,
                                          uploadCsvModel.City,
                                          uploadCsvModel.ZipCode
-                                      );
+                                            );
+
+                                        if (isSave)
+                                        {
+                                            emailValidationService.SaveNewRecord(_email);
+                                        }
                                         successUploadedList.Add(uploadCsvModel);
                                     }
 

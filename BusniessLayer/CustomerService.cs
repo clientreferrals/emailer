@@ -43,7 +43,7 @@ namespace BusniessLayer
             }
         }
 
-        public Customer Save(string name, string phoneNo, string tags, string email, string website, string state, string city, string zipCode)
+        public bool Save(string name, string phoneNo, string tags, string email, string website, string state, string city, string zipCode)
         {
             if (string.IsNullOrEmpty(tags)) throw new Exception("Please enter a tag for customer: " + name);
 
@@ -69,7 +69,7 @@ namespace BusniessLayer
                     db.Customers.Add(record);
                     db.SaveChanges();
 
-                    return record;
+                    return true;
 
                 }
                 else
@@ -84,7 +84,7 @@ namespace BusniessLayer
                     record.EditedDateTime = DateTime.Now;
                     record.zipCode = zipCode; 
                     db.SaveChanges();
-                    return record;
+                    return true;
 
                 }
             }

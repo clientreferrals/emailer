@@ -34,15 +34,23 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnAddEmail = new System.Windows.Forms.Button();
             this.tableEmails = new System.Windows.Forms.DataGridView();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Activecheckbox = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.TodaySentCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TotalSentCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Address = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FromAlias = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label1 = new System.Windows.Forms.Label();
             this.tbxFromWaitTime = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.tbxToWaitTime = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.maxEmailTextBox = new System.Windows.Forms.TextBox();
-            this.MaxSendsPerDay = new System.Windows.Forms.Label();
             this.bccEmailsTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.maxEmailTextBox = new System.Windows.Forms.TextBox();
+            this.MaxSendsPerDay = new System.Windows.Forms.Label();
+            this.makeAllActivateButton = new System.Windows.Forms.Button();
+            this.MarkAllInActive = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tableEmails)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -70,6 +78,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.MarkAllInActive);
+            this.groupBox2.Controls.Add(this.makeAllActivateButton);
             this.groupBox2.Controls.Add(this.btnAddEmail);
             this.groupBox2.Controls.Add(this.tableEmails);
             this.groupBox2.Location = new System.Drawing.Point(12, 120);
@@ -94,12 +104,56 @@
             this.tableEmails.AllowUserToAddRows = false;
             this.tableEmails.AllowUserToDeleteRows = false;
             this.tableEmails.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.tableEmails.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Id,
+            this.Activecheckbox,
+            this.TodaySentCount,
+            this.TotalSentCount,
+            this.Address,
+            this.FromAlias});
             this.tableEmails.Location = new System.Drawing.Point(0, 19);
             this.tableEmails.Name = "tableEmails";
             this.tableEmails.ReadOnly = true;
             this.tableEmails.Size = new System.Drawing.Size(493, 311);
             this.tableEmails.TabIndex = 0;
+            this.tableEmails.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tableEmails_CellContentClick);
             this.tableEmails.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tableEmails_CellContentDoubleClick);
+            // 
+            // Id
+            // 
+            this.Id.HeaderText = "Id";
+            this.Id.Name = "Id";
+            this.Id.ReadOnly = true;
+            // 
+            // Activecheckbox
+            // 
+            this.Activecheckbox.HeaderText = "Active";
+            this.Activecheckbox.Name = "Activecheckbox";
+            this.Activecheckbox.ReadOnly = true;
+            // 
+            // TodaySentCount
+            // 
+            this.TodaySentCount.HeaderText = "Today Sent Count";
+            this.TodaySentCount.Name = "TodaySentCount";
+            this.TodaySentCount.ReadOnly = true;
+            // 
+            // TotalSentCount
+            // 
+            this.TotalSentCount.HeaderText = "Total Sent Count";
+            this.TotalSentCount.Name = "TotalSentCount";
+            this.TotalSentCount.ReadOnly = true;
+            // 
+            // Address
+            // 
+            this.Address.HeaderText = "Address";
+            this.Address.Name = "Address";
+            this.Address.ReadOnly = true;
+            // 
+            // FromAlias
+            // 
+            this.FromAlias.HeaderText = "From Alias";
+            this.FromAlias.Name = "FromAlias";
+            this.FromAlias.ReadOnly = true;
             // 
             // label1
             // 
@@ -150,6 +204,22 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Basic";
             // 
+            // bccEmailsTextBox
+            // 
+            this.bccEmailsTextBox.Location = new System.Drawing.Point(41, 61);
+            this.bccEmailsTextBox.Name = "bccEmailsTextBox";
+            this.bccEmailsTextBox.Size = new System.Drawing.Size(464, 20);
+            this.bccEmailsTextBox.TabIndex = 4;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(7, 64);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(28, 13);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "BCC";
+            // 
             // maxEmailTextBox
             // 
             this.maxEmailTextBox.Location = new System.Drawing.Point(428, 19);
@@ -166,21 +236,25 @@
             this.MaxSendsPerDay.TabIndex = 5;
             this.MaxSendsPerDay.Text = "Max Sends Per Day: ";
             // 
-            // bccEmailsTextBox
+            // makeAllActivateButton
             // 
-            this.bccEmailsTextBox.Location = new System.Drawing.Point(41, 61);
-            this.bccEmailsTextBox.Name = "bccEmailsTextBox";
-            this.bccEmailsTextBox.Size = new System.Drawing.Size(464, 20);
-            this.bccEmailsTextBox.TabIndex = 4;
+            this.makeAllActivateButton.Location = new System.Drawing.Point(97, 337);
+            this.makeAllActivateButton.Name = "makeAllActivateButton";
+            this.makeAllActivateButton.Size = new System.Drawing.Size(116, 23);
+            this.makeAllActivateButton.TabIndex = 2;
+            this.makeAllActivateButton.Text = "Make All Active";
+            this.makeAllActivateButton.UseVisualStyleBackColor = true;
+            this.makeAllActivateButton.Click += new System.EventHandler(this.makeAllActivateButton_Click);
             // 
-            // label2
+            // MarkAllInActive
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 64);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(28, 13);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "BCC";
+            this.MarkAllInActive.Location = new System.Drawing.Point(227, 337);
+            this.MarkAllInActive.Name = "MarkAllInActive";
+            this.MarkAllInActive.Size = new System.Drawing.Size(116, 23);
+            this.MarkAllInActive.TabIndex = 3;
+            this.MarkAllInActive.Text = "Make All In Active";
+            this.MarkAllInActive.UseVisualStyleBackColor = true;
+            this.MarkAllInActive.Click += new System.EventHandler(this.MarkAllInActive_Click);
             // 
             // Settings
             // 
@@ -218,5 +292,13 @@
         private System.Windows.Forms.Label MaxSendsPerDay;
         private System.Windows.Forms.TextBox bccEmailsTextBox;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Activecheckbox;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TodaySentCount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TotalSentCount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Address;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FromAlias;
+        private System.Windows.Forms.Button makeAllActivateButton;
+        private System.Windows.Forms.Button MarkAllInActive;
     }
 }

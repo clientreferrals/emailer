@@ -3,7 +3,7 @@ using BusniessLayer;
 using Models.DTO;
 using System;
 using System.Collections.Generic;
-using System.Data;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace NetEmail.View
@@ -12,7 +12,6 @@ namespace NetEmail.View
     {
         private readonly BackgroundHelper bgHelper;
         private List<EmailDTO> ourEmailRecords = new List<EmailDTO>();
-        private DataTable datatable;
 
         private readonly EmailSettingService emailSettingService;
         private readonly OurEmailListMaxPerDayService ourEmailListMaxPerDayService;
@@ -31,7 +30,7 @@ namespace NetEmail.View
                 tbxToWaitTime.Text = applicationSettingServices.GetValue("WaitToTime");
                 maxEmailTextBox.Text = applicationSettingServices.GetValue("MaxSendsPerDay");
                 bccEmailsTextBox.Text = applicationSettingServices.GetValue("BccEmails");
-                if(bccEmailsTextBox.Text == "0")
+                if (bccEmailsTextBox.Text == "0")
                 {
                     bccEmailsTextBox.Text = "";
                 }
@@ -46,7 +45,7 @@ namespace NetEmail.View
 
         private void button2_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -55,7 +54,7 @@ namespace NetEmail.View
             {
 
                 int.TryParse(tbxFromWaitTime.Text, out int waitFromTime);
-                int.TryParse(tbxToWaitTime.Text, out int waitToTime); 
+                int.TryParse(tbxToWaitTime.Text, out int waitToTime);
                 int.TryParse(maxEmailTextBox.Text, out int maxSendsPerDay);
                 if (waitFromTime == 0)
                 {
@@ -70,7 +69,7 @@ namespace NetEmail.View
                 string bccEmail = bccEmailsTextBox.Text;
 
                 if (!string.IsNullOrEmpty(bccEmail.Trim()))
-                { 
+                {
                     string[] bccEmailAddress = bccEmail.Split(',');
                     for (int i = 0; i < bccEmailAddress.Length; i++)
                     {
@@ -86,7 +85,7 @@ namespace NetEmail.View
                 applicationSettingServices.AddUpdate("MaxSendsPerDay", maxSendsPerDay.ToString());
                 if (!string.IsNullOrEmpty(bccEmail.Trim()))
                 {
-                    applicationSettingServices.AddUpdate("BccEmails", bccEmail); 
+                    applicationSettingServices.AddUpdate("BccEmails", bccEmail);
                 }
 
                 this.Close();
@@ -106,46 +105,15 @@ namespace NetEmail.View
                 {
                     ourEmailListMaxPerDayService.ResetCount();
                     ourEmailRecords = emailSettingService.GetEmails();
-                    
+                    ourEmailRecords = ourEmailRecords.OrderBy(x => x.Address.ToLower().EndsWith("@gmail.com".ToLower())).ToList();
+
                     bgHelper.Foreground(() =>
                     {
-                        datatable = (DataTable)tableEmails.DataSource;
-                        if (datatable == null)
+                        tableEmails.Rows.Clear();
+                        foreach (var item in ourEmailRecords)
                         {
-                            datatable = new DataTable();
-                            datatable.Columns.Add(new DataColumn("ID"));
-                            datatable.Columns.Add(new DataColumn("Active"));
-                            datatable.Columns.Add(new DataColumn("TodaySentCount"));
-                            datatable.Columns.Add(new DataColumn("TotalSentCount"));
-                            datatable.Columns.Add(new DataColumn("Address"));
-                            datatable.Columns.Add(new DataColumn("FromAlias"));
-
-                        }
-                        // for refresh button
-                        if (datatable.Rows.Count > 0)
-                        {
-                            datatable.Rows.Clear();
-                        }
-
-                        foreach (var email in ourEmailRecords)
-                        {
-                            DataRow row = this.datatable.NewRow();
-                            row["ID"] = email.Id.ToString();
-                            row["Active"] = email.Active.ToString();
-                            row["TodaySentCount"] = email.TodaySent.ToString();
-                            row["TotalSentCount"] = email.SentCount.ToString();
-                            row["Address"] = email.Address;
-                            row["FromAlias"] = email.FromAlias;
-                            datatable.Rows.Add(row);
-                        }
-                        tableEmails.DataSource = datatable;
-                        if (tableEmails.Rows.Count > 0)
-                        {
-                            tableEmails.Columns[0].Width = 50;
-                            tableEmails.Columns[1].Width = 50;
-                            tableEmails.Columns[2].Width = 50;
-                            tableEmails.Columns[3].Width = 200;
-                            tableEmails.Columns[4].Width = 200;
+                            tableEmails.Rows.Add(item.Id.ToString(), item.Active, item.TodaySent.ToString(),
+                                item.SentCount.ToString(), item.Address, item.FromAlias);
                         }
                     });
                 }
@@ -203,9 +171,57 @@ namespace NetEmail.View
                 var addr = new System.Net.Mail.MailAddress(email);
                 return addr.Address == email;
             }
-            catch  
+            catch
             {
                 return false;
+            }
+        }
+
+        private void tableEmails_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if(e.ColumnIndex == 1)
+                { 
+                    var emailRecord = ourEmailRecords[e.RowIndex]; 
+                    // no need to save the email because this on for Active and In Active
+                    emailSettingService.MarkActiveInActiveById(
+                       emailRecord.Id);
+
+                    RefreshEmailsTable();
+                } 
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void makeAllActivateButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                emailSettingService.MarkAllActiveInActive(true);
+
+                RefreshEmailsTable();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void MarkAllInActive_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                emailSettingService.MarkAllActiveInActive(false);
+
+                RefreshEmailsTable();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }

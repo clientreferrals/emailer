@@ -34,7 +34,7 @@ namespace BusniessLayer
             }
         }
 
-        public OurEmailList Save(int id, string host, int port, string address, string password, string fromAddress, string fromAlias, int dailyLimit, int popPort, string popHost)
+        public bool Save(int id, string host, int port, string address, string password, string fromAddress, string fromAlias, int dailyLimit, int popPort, string popHost)
         {
             if (id == 0)
             {
@@ -44,6 +44,7 @@ namespace BusniessLayer
                     {
                         Host = host,
                         Port = port,
+                        Active = true,
                         EmailAddress = address,
                         Password = password,
                         FromAlias = fromAlias,
@@ -55,7 +56,7 @@ namespace BusniessLayer
                     db.OurEmailLists.Add(record);
                     db.SaveChanges();
 
-                    return record;
+                    return true;
                 }
             }
             else
@@ -63,20 +64,27 @@ namespace BusniessLayer
                 using (var db = new DirectEmailContext())
                 {
                     var record = db.OurEmailLists.Where(x => x.Id == id).FirstOrDefault();
+                    if (record != null)
+                    {
+                        record.Host = host;
+                        record.Port = port; 
+                        record.EmailAddress = address;
+                        record.Password = password;
+                        record.FromAlias = fromAlias;
+                        record.DailyLimit = dailyLimit;
+                        record.IMAPHost = popHost;
+                        record.IMAPPort = popPort;
+                        record.EditedDateTime = DateTime.Now;
 
-                    record.Host = host;
-                    record.Port = port;
-                    record.EmailAddress = address;
-                    record.Password = password;
-                    record.FromAlias = fromAlias;
-                    record.DailyLimit = dailyLimit;
-                    record.IMAPHost = popHost;
-                    record.IMAPPort = popPort;
-                    record.EditedDateTime = DateTime.Now;
+                        db.SaveChanges();
 
-                    db.SaveChanges();
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
-                    return record;
                 }
             }
         }
@@ -91,6 +99,30 @@ namespace BusniessLayer
                 db.SaveChanges();
 
                 return true;
+            }
+        }
+        public void MarkActiveInActiveById(int id)
+        {
+            using (var db = new DirectEmailContext())
+            {
+                var record = db.OurEmailLists.Where(x => x.Id == id).FirstOrDefault();
+                if(record!= null)
+                {
+                    record.Active = !record.Active;
+                    db.SaveChanges();
+                }
+               
+            }
+        }
+        public void MarkAllActiveInActive(bool condition)
+        {
+            using (var db = new DirectEmailContext())
+            {
+                foreach (var item in db.OurEmailLists.ToList())
+                {
+                    item.Active = condition;
+                }
+                db.SaveChanges();
             }
         }
 

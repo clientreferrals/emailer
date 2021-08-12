@@ -136,6 +136,15 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
+        <EntityType Name="ValidEmailAddresses">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ValidEmailAddresses" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreateDateTime" Type="datetime" Nullable="false" />
+          <Property Name="EditDateTime" Type="datetime" />
+        </EntityType>
         <Association Name="FK_CampaignCustomer_Campaign">
           <End Role="Campaign" Type="Self.Campaign" Multiplicity="1" />
           <End Role="CampaignCustomer" Type="Self.CampaignCustomer" Multiplicity="*" />
@@ -172,6 +181,7 @@
           <EntitySet Name="OurEmailList" EntityType="Self.OurEmailList" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OurEmailListMaxPerDay" EntityType="Self.OurEmailListMaxPerDay" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ValidEmailAddresses" EntityType="Self.ValidEmailAddresses" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_CampaignCustomer_Campaign" Association="Self.FK_CampaignCustomer_Campaign">
             <End Role="Campaign" EntitySet="Campaign" />
             <End Role="CampaignCustomer" EntitySet="CampaignCustomer" />
@@ -354,6 +364,7 @@
             <End Role="CampaignCustomer" EntitySet="CampaignCustomers" />
           </AssociationSet>
           <EntitySet Name="NotAllowedEmails" EntityType="DirectEmailerModel.NotAllowedEmail" />
+          <EntitySet Name="ValidEmailAddresses" EntityType="DirectEmailerModel.ValidEmailAddress" />
         </EntityContainer>
         <EntityType Name="NotAllowedEmail">
           <Key>
@@ -364,6 +375,15 @@
           <Property Name="Conditions" Type="Int32" Nullable="false" />
           <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="EditedDateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="ValidEmailAddress">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ValidEmailAddresses" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EditDateTime" Type="DateTime" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -509,6 +529,16 @@
                 <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
                 <ScalarProperty Name="Conditions" ColumnName="Conditions" />
                 <ScalarProperty Name="NotAllowedString" ColumnName="NotAllowedString" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ValidEmailAddresses">
+            <EntityTypeMapping TypeName="DirectEmailerModel.ValidEmailAddress">
+              <MappingFragment StoreEntitySet="ValidEmailAddresses">
+                <ScalarProperty Name="EditDateTime" ColumnName="EditDateTime" />
+                <ScalarProperty Name="CreateDateTime" ColumnName="CreateDateTime" />
+                <ScalarProperty Name="ValidEmailAddresses" ColumnName="ValidEmailAddresses" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

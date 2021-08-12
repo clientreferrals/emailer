@@ -4,6 +4,7 @@ using DirectEmailResults.View;
 using Models.DTO;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace NetEmail.View
@@ -72,6 +73,8 @@ namespace NetEmail.View
                 try
                 {
                     customerRecords = customerService.GetCustomers(tbxName.Text, tbxPhoneNo.Text, tbxTag.Text, txtWebsite.Text, txbCity.Text);
+                    customerRecords = customerRecords.OrderBy(x => x.Email.ToLower().EndsWith("@gmail.com".ToLower())).ToList();
+
 
                     bgHelper.Foreground(() =>
                     {
@@ -151,11 +154,11 @@ namespace NetEmail.View
             {
                 UploadCustomerCSV form = new UploadCustomerCSV();
                 form.ShowDialog();
-                uploadResponseGB.Visible = true; 
+                uploadResponseGB.Visible = true;
 
                 failedEmailsList = form.failedEmailsList;
                 sucessUploadedEmailsList = form.successUploadedList;
-                failedCountLabel.Text = failedEmailsList.Count.ToString(); 
+                failedCountLabel.Text = failedEmailsList.Count.ToString();
                 uploadedCountLabel.Text = sucessUploadedEmailsList.Count.ToString();
 
 

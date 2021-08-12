@@ -1,8 +1,10 @@
 ﻿
 using BusniessLayer;
-using DataAccessLayer.DataBase;
+using BusniessLayer.Utility;
 using Models.DTO;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace NetEmail.View
@@ -11,6 +13,9 @@ namespace NetEmail.View
     {
         readonly CustomerDto CustomerRecord = null;
         private readonly CustomerService customerService;
+        private readonly EmailValidationService emailValidationService;
+        private readonly List<string> notAllowedList = new List<string>();
+        private readonly List<string> alreadyValidEmailList = new List<string>();
         public EditCustomer(CustomerDto customer)
         {
             try
@@ -18,6 +23,10 @@ namespace NetEmail.View
                 InitializeComponent();
                 customerService = new CustomerService();
                 CustomerRecord = customer;
+
+                emailValidationService = new EmailValidationService();
+                notAllowedList = emailValidationService.GetNotAllowList();
+                alreadyValidEmailList = emailValidationService.GetValidEmails();
 
                 tbxEmail.Text = CustomerRecord.Email;
                 tbxName.Text = CustomerRecord.Name;
@@ -40,10 +49,42 @@ namespace NetEmail.View
         {
             try
             {
-                customerService.Save(tbxName.Text.Trim(),tbxPhoneNo.Text.Trim(), tbxTags.Text.Trim(), tbxEmail.Text.Trim(),
-                    txbWebsite.Text.Trim(), txbState.Text.Trim(), txbCity.Text.Trim(), zipCodeTextBox.Text.Trim());
+                string _email = tbxEmail.Text.Trim();
+                bool valid = true;
 
-                this.Close();
+                btnOK.Enabled = false;
+                if (notAllowedList.Any(x => _email.ToLower().Contains(x.ToLower())))
+
+                {
+                    valid = false;
+                }
+                else if (alreadyValidEmailList.Any(x => _email.ToLower().Contains(x.ToLower())))
+                {
+                    valid = true;
+                }
+                else if (ValidateEmailUsingAPI.EmailValidationUsingAPI(_email).Result == false)
+                {
+                    valid = false;
+                }
+
+                if (valid == false)
+                {
+                    MessageBox.Show("There some keyword which are not allowed to enter or the email is not valid.");
+                    btnOK.Enabled = true;
+                    return;
+                }
+                else
+                {
+                    bool isSave = customerService.Save(tbxName.Text.Trim(), tbxPhoneNo.Text.Trim(), tbxTags.Text.Trim(), _email,
+                        txbWebsite.Text.Trim(), txbState.Text.Trim(), txbCity.Text.Trim(), zipCodeTextBox.Text.Trim());
+                    if (isSave)
+                    {
+                        emailValidationService.SaveNewRecord(_email);
+                    }
+                }
+
+
+                Close();
             }
             catch (Exception ex)
             {

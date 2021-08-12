@@ -18,6 +18,7 @@
         <AssociationConnector Association="DirectEmailerModel.FK_CampaignCustomer_Campaign" ManuallyRouted="false" />
         <AssociationConnector Association="DirectEmailerModel.FK_CampaignCustomer_Customer" ManuallyRouted="false" />
         <EntityTypeShape EntityType="DirectEmailerModel.NotAllowedEmail" Width="1.5" PointX="7.375" PointY="7.75" />
+        <EntityTypeShape EntityType="DirectEmailerModel.ValidEmailAddress" Width="1.5" PointX="9.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
