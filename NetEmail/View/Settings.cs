@@ -114,6 +114,7 @@ namespace NetEmail.View
                         {
                             datatable = new DataTable();
                             datatable.Columns.Add(new DataColumn("ID"));
+                            datatable.Columns.Add(new DataColumn("Active"));
                             datatable.Columns.Add(new DataColumn("TodaySentCount"));
                             datatable.Columns.Add(new DataColumn("TotalSentCount"));
                             datatable.Columns.Add(new DataColumn("Address"));
@@ -130,6 +131,7 @@ namespace NetEmail.View
                         {
                             DataRow row = this.datatable.NewRow();
                             row["ID"] = email.Id.ToString();
+                            row["Active"] = email.Active.ToString();
                             row["TodaySentCount"] = email.TodaySent.ToString();
                             row["TotalSentCount"] = email.SentCount.ToString();
                             row["Address"] = email.Address;
