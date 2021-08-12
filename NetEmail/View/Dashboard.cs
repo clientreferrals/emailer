@@ -57,7 +57,7 @@ namespace NetEmail.View
             {
                 try
                 {
-                    ourEmailList = emailSettingService.GetEmails();
+                    ourEmailList = emailSettingService.GetActiveEmails();
                 }
                 catch (Exception ex)
                 {

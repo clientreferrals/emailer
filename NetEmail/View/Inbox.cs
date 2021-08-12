@@ -47,8 +47,8 @@ namespace DirectEmailResults.View
             string[] bccEmailAddress = bccEmail.Split(',');
             for (int i = 0; i < bccEmailAddress.Length; i++)
             {
-                if(!bccEmailsList.Any(x=>x == bccEmailAddress[i]))
-                { 
+                if (!bccEmailsList.Any(x => x == bccEmailAddress[i]))
+                {
                     bccEmailsList.Add(bccEmailAddress[i]);
                 }
             }
@@ -112,7 +112,7 @@ namespace DirectEmailResults.View
 
         private void dataGridEmails_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            ReadAndViewEmail(e.RowIndex); 
+            ReadAndViewEmail(e.RowIndex);
         }
         private void refreshEmails_Click(object sender, EventArgs e)
         {
@@ -157,7 +157,7 @@ namespace DirectEmailResults.View
         private void viewEmailButton_Click(object sender, EventArgs e)
         {
             int rowNumber = int.Parse(rowNoTextBox.Text);
-            if (rowNumber-1 < unReadEmails.Count)
+            if (rowNumber - 1 < unReadEmails.Count)
             {
                 ReadAndViewEmail(rowNumber - 1);
 
@@ -234,7 +234,7 @@ namespace DirectEmailResults.View
         private Response<bool> SendMail()
         {
             try
-            { 
+            {
                 Response<bool> sendResult = EmailHelper.Instance.SetCredentials(_currentInboxEmail.CurrentUserEmail.Host,
                 _currentInboxEmail.CurrentUserEmail.Port,
                 _currentInboxEmail.CurrentUserEmail.Address,
@@ -336,8 +336,8 @@ namespace DirectEmailResults.View
                         //}
                         var emailLog = new InboxLogsModel()
                         {
-                            EmailAddress = item.Address, 
-                            Password = item.Password, 
+                            EmailAddress = item.Address,
+                            Password = item.Password,
                             ErrorMessage = ex.ToString()
                         };
                         emailLogs.Add(emailLog);
@@ -351,7 +351,7 @@ namespace DirectEmailResults.View
                 bgHelper.Foreground(() =>
                 {
 
-                    ourEmailRecords = emailSettingService.GetEmails();
+                    ourEmailRecords = emailSettingService.GetActiveEmails();
 
                     dataGridEmails.Enabled = true;
                     downloadEmailButton.Enabled = true;
@@ -377,7 +377,7 @@ namespace DirectEmailResults.View
                         srNo++;
                     }
                     dataGridEmails.DataSource = datatable;
-                    
+
                 });
             });
 
@@ -402,7 +402,7 @@ namespace DirectEmailResults.View
         {
             try
             {
-                ourEmailRecords = emailSettingService.GetEmails();
+                ourEmailRecords = emailSettingService.GetActiveEmails();
                 unReadEmails = new List<ViewEmailDto>();
                 totalEmailNumber = 0;
                 downloadLablel.Text = "";
@@ -443,7 +443,7 @@ namespace DirectEmailResults.View
 
         private void viewLogsButton_Click(object sender, EventArgs e)
         {
-            if(emailLogs.Count == 0)
+            if (emailLogs.Count == 0)
             {
                 MessageBox.Show("No logs found");
                 return;
@@ -452,7 +452,7 @@ namespace DirectEmailResults.View
             form.Show();
         }
 
-        
+
         private void ReadAndViewEmail(int index)
         {
             try
@@ -479,6 +479,6 @@ namespace DirectEmailResults.View
             }
         }
 
-      
+
     }//end of class 
 }//end of namespace 

@@ -33,7 +33,30 @@ namespace BusniessLayer
                         }).ToList();
             }
         }
-
+        public List<EmailDTO> GetActiveEmails()
+        {
+            using (var db = new DirectEmailContext())
+            {
+                return (from e in db.OurEmailLists
+                        where e.Active
+                        select new EmailDTO
+                        {
+                            Address = e.EmailAddress,
+                            DailyLimit = e.DailyLimit,
+                            FromAlias = e.FromAlias,
+                            Host = e.Host,
+                            Id = e.Id,
+                            Password = e.Password,
+                            Port = e.Port,
+                            IMAPHost = e.IMAPHost,
+                            IMAPPort = e.IMAPPort,
+                            SentCount = e.SentCount,
+                            Active = e.Active,
+                            TodaySent = db.OurEmailListMaxPerDays.Where(x => x.EmailId == e.Id).Select(x => x.SentCount).FirstOrDefault(),
+                            RemainingLimit = e.DailyLimit - db.OurEmailListMaxPerDays.Where(x => x.EmailId == e.Id).Select(x => x.SentCount).FirstOrDefault()
+                        }).ToList();
+            }
+        }
         public bool Save(int id, string host, int port, string address, string password, string fromAddress, string fromAlias, int dailyLimit, int popPort, string popHost)
         {
             if (id == 0)
