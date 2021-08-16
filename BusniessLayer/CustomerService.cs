@@ -16,11 +16,27 @@ namespace BusniessLayer
             {
                 var query = db.Customers.AsQueryable();
 
-                if (string.IsNullOrEmpty(name) == false) query = query.Where(q => q.Name.Contains(name));
-                if (string.IsNullOrEmpty(phoneNo) == false) query = query.Where(q => q.PhoneNo.Contains(phoneNo));
-                if (string.IsNullOrEmpty(website) == false) query = query.Where(q => q.Website.Contains(website));
-                if (string.IsNullOrEmpty(city) == false) query = query.Where(q => q.City.Contains(city));
-                if (string.IsNullOrEmpty(tag) == false) query = query.Where(q => q.Tags.Contains(tag + "|"));
+                if (string.IsNullOrEmpty(name) == false)
+                {
+                    query = query.Where(q => q.Name.Contains(name));
+                }
+                if (string.IsNullOrEmpty(phoneNo) == false)
+                {
+                    query = query.Where(q => q.PhoneNo.Contains(phoneNo));
+                }
+                if (string.IsNullOrEmpty(website) == false)
+                {
+                    query = query.Where(q => q.Website.Contains(website));
+
+                }
+                if (string.IsNullOrEmpty(city) == false)
+                {
+                    query = query.Where(q => q.City.Contains(city));
+                }
+                if (string.IsNullOrEmpty(tag) == false)
+                {
+                    query = query.Where(q => q.Tags.Contains(tag));
+                }
 
                 var result = query.Select(
                     x => new CustomerDto()
@@ -82,7 +98,7 @@ namespace BusniessLayer
                     record.State = state;
                     record.City = city;
                     record.EditedDateTime = DateTime.Now;
-                    record.zipCode = zipCode; 
+                    record.zipCode = zipCode;
                     db.SaveChanges();
                     return true;
 
