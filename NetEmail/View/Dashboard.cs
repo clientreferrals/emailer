@@ -171,9 +171,20 @@ namespace NetEmail.View
                 prgQueue.Maximum = QueueItems.Count;
                 prgQueue.Value = 0;
                 IsQueueActive = true;
+                int timeIndex = Convert.ToInt32(applicationSettingServices.GetValue("SecMinHourIndex"));
                 int waitFromTimeBetweenMails = Convert.ToInt32(applicationSettingServices.GetValue("WaitFromTime"));
                 int waitToTimeBetweenMails = Convert.ToInt32(applicationSettingServices.GetValue("WaitToTime"));
                 int maxSendsPerDay = Convert.ToInt32(applicationSettingServices.GetValue("MaxSendsPerDay"));
+                if (timeIndex == 1)
+                {
+                    waitFromTimeBetweenMails *= 60;
+                    waitToTimeBetweenMails *= 60;
+                }
+                else if (timeIndex == 2)
+                {
+                    waitFromTimeBetweenMails = waitFromTimeBetweenMails * 60 * 60;
+                    waitToTimeBetweenMails = waitToTimeBetweenMails * 60 * 60;
+                }
 
                 bgHelper.Background(() =>
                 {

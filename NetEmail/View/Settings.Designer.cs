@@ -32,6 +32,8 @@
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.MarkAllInActive = new System.Windows.Forms.Button();
+            this.makeAllActivateButton = new System.Windows.Forms.Button();
             this.btnAddEmail = new System.Windows.Forms.Button();
             this.tableEmails = new System.Windows.Forms.DataGridView();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -45,12 +47,11 @@
             this.label3 = new System.Windows.Forms.Label();
             this.tbxToWaitTime = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.timeSpanDropdown = new System.Windows.Forms.ComboBox();
             this.bccEmailsTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.maxEmailTextBox = new System.Windows.Forms.TextBox();
             this.MaxSendsPerDay = new System.Windows.Forms.Label();
-            this.makeAllActivateButton = new System.Windows.Forms.Button();
-            this.MarkAllInActive = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tableEmails)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -88,6 +89,26 @@
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Email Accounts";
+            // 
+            // MarkAllInActive
+            // 
+            this.MarkAllInActive.Location = new System.Drawing.Point(227, 337);
+            this.MarkAllInActive.Name = "MarkAllInActive";
+            this.MarkAllInActive.Size = new System.Drawing.Size(116, 23);
+            this.MarkAllInActive.TabIndex = 3;
+            this.MarkAllInActive.Text = "Make All In Active";
+            this.MarkAllInActive.UseVisualStyleBackColor = true;
+            this.MarkAllInActive.Click += new System.EventHandler(this.MarkAllInActive_Click);
+            // 
+            // makeAllActivateButton
+            // 
+            this.makeAllActivateButton.Location = new System.Drawing.Point(97, 337);
+            this.makeAllActivateButton.Name = "makeAllActivateButton";
+            this.makeAllActivateButton.Size = new System.Drawing.Size(116, 23);
+            this.makeAllActivateButton.TabIndex = 2;
+            this.makeAllActivateButton.Text = "Make All Active";
+            this.makeAllActivateButton.UseVisualStyleBackColor = true;
+            this.makeAllActivateButton.Click += new System.EventHandler(this.makeAllActivateButton_Click);
             // 
             // btnAddEmail
             // 
@@ -160,13 +181,13 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(7, 20);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(73, 13);
+            this.label1.Size = new System.Drawing.Size(30, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "From seconds";
+            this.label1.Text = "From";
             // 
             // tbxFromWaitTime
             // 
-            this.tbxFromWaitTime.Location = new System.Drawing.Point(86, 19);
+            this.tbxFromWaitTime.Location = new System.Drawing.Point(41, 17);
             this.tbxFromWaitTime.Name = "tbxFromWaitTime";
             this.tbxFromWaitTime.Size = new System.Drawing.Size(60, 20);
             this.tbxFromWaitTime.TabIndex = 1;
@@ -174,21 +195,22 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(167, 20);
+            this.label3.Location = new System.Drawing.Point(107, 20);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(63, 13);
+            this.label3.Size = new System.Drawing.Size(20, 13);
             this.label3.TabIndex = 4;
-            this.label3.Text = "To seconds";
+            this.label3.Text = "To";
             // 
             // tbxToWaitTime
             // 
-            this.tbxToWaitTime.Location = new System.Drawing.Point(236, 19);
+            this.tbxToWaitTime.Location = new System.Drawing.Point(133, 17);
             this.tbxToWaitTime.Name = "tbxToWaitTime";
             this.tbxToWaitTime.Size = new System.Drawing.Size(60, 20);
             this.tbxToWaitTime.TabIndex = 2;
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.timeSpanDropdown);
             this.groupBox1.Controls.Add(this.bccEmailsTextBox);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.maxEmailTextBox);
@@ -203,6 +225,18 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Basic";
+            // 
+            // timeSpanDropdown
+            // 
+            this.timeSpanDropdown.FormattingEnabled = true;
+            this.timeSpanDropdown.Items.AddRange(new object[] {
+            "Seconds",
+            "Minutes",
+            "Hours"});
+            this.timeSpanDropdown.Location = new System.Drawing.Point(200, 17);
+            this.timeSpanDropdown.Name = "timeSpanDropdown";
+            this.timeSpanDropdown.Size = new System.Drawing.Size(91, 21);
+            this.timeSpanDropdown.TabIndex = 8; 
             // 
             // bccEmailsTextBox
             // 
@@ -230,31 +264,11 @@
             // MaxSendsPerDay
             // 
             this.MaxSendsPerDay.AutoSize = true;
-            this.MaxSendsPerDay.Location = new System.Drawing.Point(315, 20);
+            this.MaxSendsPerDay.Location = new System.Drawing.Point(315, 22);
             this.MaxSendsPerDay.Name = "MaxSendsPerDay";
             this.MaxSendsPerDay.Size = new System.Drawing.Size(107, 13);
             this.MaxSendsPerDay.TabIndex = 5;
             this.MaxSendsPerDay.Text = "Max Sends Per Day: ";
-            // 
-            // makeAllActivateButton
-            // 
-            this.makeAllActivateButton.Location = new System.Drawing.Point(97, 337);
-            this.makeAllActivateButton.Name = "makeAllActivateButton";
-            this.makeAllActivateButton.Size = new System.Drawing.Size(116, 23);
-            this.makeAllActivateButton.TabIndex = 2;
-            this.makeAllActivateButton.Text = "Make All Active";
-            this.makeAllActivateButton.UseVisualStyleBackColor = true;
-            this.makeAllActivateButton.Click += new System.EventHandler(this.makeAllActivateButton_Click);
-            // 
-            // MarkAllInActive
-            // 
-            this.MarkAllInActive.Location = new System.Drawing.Point(227, 337);
-            this.MarkAllInActive.Name = "MarkAllInActive";
-            this.MarkAllInActive.Size = new System.Drawing.Size(116, 23);
-            this.MarkAllInActive.TabIndex = 3;
-            this.MarkAllInActive.Text = "Make All In Active";
-            this.MarkAllInActive.UseVisualStyleBackColor = true;
-            this.MarkAllInActive.Click += new System.EventHandler(this.MarkAllInActive_Click);
             // 
             // Settings
             // 
@@ -300,5 +314,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn FromAlias;
         private System.Windows.Forms.Button makeAllActivateButton;
         private System.Windows.Forms.Button MarkAllInActive;
+        private System.Windows.Forms.ComboBox timeSpanDropdown;
     }
 }

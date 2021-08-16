@@ -12,7 +12,6 @@ namespace NetEmail.View
     {
         private readonly BackgroundHelper bgHelper;
         private List<EmailDTO> ourEmailRecords = new List<EmailDTO>();
-
         private readonly EmailSettingService emailSettingService;
         private readonly OurEmailListMaxPerDayService ourEmailListMaxPerDayService;
         private readonly ApplicationSettingServices applicationSettingServices;
@@ -26,10 +25,20 @@ namespace NetEmail.View
                 emailSettingService = new EmailSettingService();
                 ourEmailListMaxPerDayService = new OurEmailListMaxPerDayService();
                 applicationSettingServices = new ApplicationSettingServices();
+                var index = applicationSettingServices.GetValue("SecMinHourIndex");
+                if(index == "")
+                { 
+                    timeSpanDropdown.SelectedIndex = 0;
+                }
+                else
+                {
+                    timeSpanDropdown.SelectedIndex = int.Parse(index);
+                }
                 tbxFromWaitTime.Text = applicationSettingServices.GetValue("WaitFromTime");
                 tbxToWaitTime.Text = applicationSettingServices.GetValue("WaitToTime");
                 maxEmailTextBox.Text = applicationSettingServices.GetValue("MaxSendsPerDay");
                 bccEmailsTextBox.Text = applicationSettingServices.GetValue("BccEmails");
+
                 if (bccEmailsTextBox.Text == "0")
                 {
                     bccEmailsTextBox.Text = "";
@@ -52,7 +61,6 @@ namespace NetEmail.View
         {
             try
             {
-
                 int.TryParse(tbxFromWaitTime.Text, out int waitFromTime);
                 int.TryParse(tbxToWaitTime.Text, out int waitToTime);
                 int.TryParse(maxEmailTextBox.Text, out int maxSendsPerDay);
@@ -80,6 +88,8 @@ namespace NetEmail.View
                         }
                     }
                 }
+                var index = timeSpanDropdown.SelectedIndex; 
+                applicationSettingServices.AddUpdate("SecMinHourIndex", index.ToString());
                 applicationSettingServices.AddUpdate("WaitFromTime", waitFromTime.ToString());
                 applicationSettingServices.AddUpdate("WaitToTime", waitToTime.ToString());
                 applicationSettingServices.AddUpdate("MaxSendsPerDay", maxSendsPerDay.ToString());
@@ -181,15 +191,15 @@ namespace NetEmail.View
         {
             try
             {
-                if(e.ColumnIndex == 1)
-                { 
-                    var emailRecord = ourEmailRecords[e.RowIndex]; 
+                if (e.ColumnIndex == 1)
+                {
+                    var emailRecord = ourEmailRecords[e.RowIndex];
                     // no need to save the email because this on for Active and In Active
                     emailSettingService.MarkActiveInActiveById(
                        emailRecord.Id);
 
                     RefreshEmailsTable();
-                } 
+                }
             }
             catch (Exception ex)
             {
@@ -224,5 +234,7 @@ namespace NetEmail.View
                 MessageBox.Show(ex.Message);
             }
         }
+
+
     }
 }
