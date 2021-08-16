@@ -16,6 +16,7 @@ namespace DataAccessLayer.DataBase
     {
         public int Id { get; set; }
         public string ValidEmailAddresses { get; set; }
+        public bool IsValid { get; set; }
         public System.DateTime CreateDateTime { get; set; }
         public Nullable<System.DateTime> EditDateTime { get; set; }
     }

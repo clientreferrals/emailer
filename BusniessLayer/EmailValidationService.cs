@@ -26,7 +26,7 @@ namespace BusniessLayer
             return returnList;
         }
 
-        public void SaveNewRecord(string text)
+        public void SaveNewRecord(string text, bool condition)
         {
             using (var db = new DirectEmailContext())
             {
@@ -36,12 +36,14 @@ namespace BusniessLayer
                     record = new ValidEmailAddress()
                     {
                         ValidEmailAddresses = text,
+                        IsValid = condition,
                         CreateDateTime = DateTime.Now,
                     };
                     db.ValidEmailAddresses.Add(record);
                 }
                 else
                 {
+                    record.IsValid = condition;
                     record.EditDateTime = DateTime.Now;
                 }
 

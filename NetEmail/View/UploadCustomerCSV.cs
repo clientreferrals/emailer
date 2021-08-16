@@ -89,13 +89,14 @@ namespace NetEmail.View
                             progressBar1.Minimum = 0;
                             progressBar1.Maximum = dtCustomers.Rows.Count;
                             progressBar1.Value = 0;
+                            btnOK.Enabled = false;
                         });
 
                         int i = 0;
                         if (dtCustomers.Rows.Count > 0)
                         {
                             failedEmailsList = new List<UploadCsvModel>();
-                            successUploadedList = new List<UploadCsvModel>(); 
+                            successUploadedList = new List<UploadCsvModel>();
                             foreach (DataRow row in dtCustomers.Rows)
                             {
                                 string _email = row["email"].ToString().Trim();
@@ -112,7 +113,7 @@ namespace NetEmail.View
                                         City = row["city"].ToString(),
                                         ZipCode = row["zipCode"].ToString()
                                     };
-                                    bool valid = true; 
+                                    bool valid = true;
                                     if (notAllowedList.Any(x => _email.ToLower().Contains(x.ToLower())))
 
                                     {
@@ -130,23 +131,23 @@ namespace NetEmail.View
                                     if (valid == false)
                                     {
                                         failedEmailsList.Add(uploadCsvModel);
-                                    } 
+                                    }
                                     else
                                     {
-                                       bool isSave =  customerService.Save(
-                                         uploadCsvModel.Name,
-                                         uploadCsvModel.Phone,
-                                         _email,
-                                         uploadCsvModel.Tag,
-                                         uploadCsvModel.URL,
-                                         uploadCsvModel.State,
-                                         uploadCsvModel.City,
-                                         uploadCsvModel.ZipCode
-                                            );
+                                        bool isSave = customerService.Save(
+                                          uploadCsvModel.Name,
+                                          uploadCsvModel.Phone,
+                                          _email,
+                                          uploadCsvModel.Tag,
+                                          uploadCsvModel.URL,
+                                          uploadCsvModel.State,
+                                          uploadCsvModel.City,
+                                          uploadCsvModel.ZipCode
+                                             );
 
                                         if (isSave)
                                         {
-                                            emailValidationService.SaveNewRecord(_email);
+                                            emailValidationService.SaveNewRecord(_email, valid);
                                         }
                                         successUploadedList.Add(uploadCsvModel);
                                     }
@@ -162,19 +163,23 @@ namespace NetEmail.View
                             }
                         }
 
-                        bgHelper.Foreground(() =>
+                        bgHelper.Foreground(() => 
                         {
+                            btnOK.Enabled = true;
                             this.Close();
                         });
                     }
                     catch (Exception ex)
                     {
+                        btnOK.Enabled = true;
                         MessageBox.Show(ex.Message);
+
                     }
                 });
             }
             catch (Exception ex)
-            {
+            { 
+                btnOK.Enabled = true;
                 MessageBox.Show(ex.Message);
             }
         }

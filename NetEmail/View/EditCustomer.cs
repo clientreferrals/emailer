@@ -79,7 +79,7 @@ namespace NetEmail.View
                         txbWebsite.Text.Trim(), txbState.Text.Trim(), txbCity.Text.Trim(), zipCodeTextBox.Text.Trim());
                     if (isSave)
                     {
-                        emailValidationService.SaveNewRecord(_email);
+                        emailValidationService.SaveNewRecord(_email, valid);
                     }
                 }
 

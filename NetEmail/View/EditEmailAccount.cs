@@ -138,7 +138,7 @@ namespace NetEmail.View
               );
                 if (valid)
                 {
-                    emailValidationService.SaveNewRecord(tbxAddress.Text);
+                    emailValidationService.SaveNewRecord(tbxAddress.Text, valid);
                 }
 
                 Close();
