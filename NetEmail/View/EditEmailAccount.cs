@@ -124,7 +124,7 @@ namespace NetEmail.View
                     return;
                 }
                 valid = emailSettingService.Save(
-                  emailAccount.Id, 
+                  emailAccount.Id,
                   tbxHostAddress.Text,
                   port,
                   tbxAddress.Text,

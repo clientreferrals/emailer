@@ -137,8 +137,8 @@ namespace NetEmail.View
                                         bool isSave = customerService.Save(
                                           uploadCsvModel.Name,
                                           uploadCsvModel.Phone,
-                                          _email,
                                           uploadCsvModel.Tag,
+                                          _email,
                                           uploadCsvModel.URL,
                                           uploadCsvModel.State,
                                           uploadCsvModel.City,
