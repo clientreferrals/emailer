@@ -1,5 +1,6 @@
 ﻿using Backgrounder;
 using BusniessLayer;
+using BusniessLayer.Utility;
 using Models.DTO;
 using NetMail.Utility;
 using S22.Imap;
@@ -43,7 +44,7 @@ namespace DirectEmailResults.View
             emailSettingService = new EmailSettingService();
             applicationSettingServices = new ApplicationSettingServices();
 
-            string bccEmail = applicationSettingServices.GetValue("BccEmails");
+            string bccEmail = applicationSettingServices.GetValue(ConstantKey.BccEmails);
             string[] bccEmailAddress = bccEmail.Split(',');
             for (int i = 0; i < bccEmailAddress.Length; i++)
             {
@@ -156,7 +157,7 @@ namespace DirectEmailResults.View
         }
         private void viewEmailButton_Click(object sender, EventArgs e)
         {
-            if(rowNoTextBox.Text.Trim() == "")
+            if (rowNoTextBox.Text.Trim() == "")
             {
                 MessageBox.Show("Please enter the Row number in left text box.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -286,6 +287,7 @@ namespace DirectEmailResults.View
                     toDateTimePicker.Enabled = false;
                     downloadLablel.Text = "Downloading....";
                 });
+                int srNo = 1;
                 foreach (var item in ourEmailRecords)
                 {
                     try
@@ -299,7 +301,7 @@ namespace DirectEmailResults.View
 
                             IEnumerable<uint> uids = client.Search(searchFrom.And(searchTo));
                             List<uint> newList = uids.Skip(0).Take(perEmailCount).ToList();
-                            int srNo = 1;
+
                             foreach (var uid in newList)
                             {
                                 MailMessage mailMessage = client.GetMessage(uid);
@@ -335,10 +337,6 @@ namespace DirectEmailResults.View
                     }
                     catch (Exception ex)
                     {
-                        //if (ex.ToString().ToLower().Contains("invalid".ToLower()))
-                        //{
-                        //    emailSettingService.Delete(item.Id);
-                        //}
                         var emailLog = new InboxLogsModel()
                         {
                             EmailAddress = item.Address,
@@ -349,15 +347,12 @@ namespace DirectEmailResults.View
                         bgHelper.Foreground(() =>
                         {
                             failedCount.Text = emailLogs.Count().ToString();
-                            errorRichTextBox.Text = "Error while downloading emails for " + item.Address +" " + ex.ToString();
+                            errorRichTextBox.Text = "Error while downloading emails for " + item.Address + " " + ex.ToString();
                         });
                     }
-                }
+                }// end of for each loop for Our email list to download 
                 bgHelper.Foreground(() =>
                 {
-
-                    ourEmailRecords = emailSettingService.GetActiveEmails();
-
                     dataGridEmails.Enabled = true;
                     downloadEmailButton.Enabled = true;
 
@@ -371,7 +366,7 @@ namespace DirectEmailResults.View
                     datatable.Rows.Clear();
 
                     unReadEmails = unReadEmails.OrderByDescending(x => x.DateOfEmail).ToList();
-                    int srNo = 1;
+                    srNo = 1;
                     foreach (var email in unReadEmails)
                     {
                         DataRow row = this.datatable.NewRow();

@@ -43,6 +43,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.uploadResponseGB = new System.Windows.Forms.GroupBox();
+            this.viewUploadedButton = new System.Windows.Forms.Button();
             this.failedCountLabel = new System.Windows.Forms.Label();
             this.uploadedCountLabel = new System.Windows.Forms.Label();
             this.viewFailedListButton = new System.Windows.Forms.Button();
@@ -55,7 +56,6 @@
             this.dataGridCustomers = new System.Windows.Forms.DataGridView();
             this.btnAddCsv = new System.Windows.Forms.Button();
             this.btnAddNew = new System.Windows.Forms.Button();
-            this.viewUploadedButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.uploadResponseGB.SuspendLayout();
@@ -204,10 +204,20 @@
             this.uploadResponseGB.TabStop = false;
             this.uploadResponseGB.Text = "Upload Response";
             // 
+            // viewUploadedButton
+            // 
+            this.viewUploadedButton.Location = new System.Drawing.Point(107, 10);
+            this.viewUploadedButton.Name = "viewUploadedButton";
+            this.viewUploadedButton.Size = new System.Drawing.Size(77, 35);
+            this.viewUploadedButton.TabIndex = 19;
+            this.viewUploadedButton.Text = "View Uploaded";
+            this.viewUploadedButton.UseVisualStyleBackColor = true;
+            this.viewUploadedButton.Click += new System.EventHandler(this.viewUploadedButton_Click);
+            // 
             // failedCountLabel
             // 
             this.failedCountLabel.AutoSize = true;
-            this.failedCountLabel.ForeColor = System.Drawing.Color.Red;
+            this.failedCountLabel.ForeColor = System.Drawing.Color.Black;
             this.failedCountLabel.Location = new System.Drawing.Point(191, 31);
             this.failedCountLabel.Name = "failedCountLabel";
             this.failedCountLabel.Size = new System.Drawing.Size(13, 13);
@@ -217,7 +227,7 @@
             // uploadedCountLabel
             // 
             this.uploadedCountLabel.AutoSize = true;
-            this.uploadedCountLabel.ForeColor = System.Drawing.Color.Lime;
+            this.uploadedCountLabel.ForeColor = System.Drawing.Color.Black;
             this.uploadedCountLabel.Location = new System.Drawing.Point(8, 32);
             this.uploadedCountLabel.Name = "uploadedCountLabel";
             this.uploadedCountLabel.Size = new System.Drawing.Size(13, 13);
@@ -228,7 +238,7 @@
             // 
             this.viewFailedListButton.Location = new System.Drawing.Point(262, 10);
             this.viewFailedListButton.Name = "viewFailedListButton";
-            this.viewFailedListButton.Size = new System.Drawing.Size(89, 35);
+            this.viewFailedListButton.Size = new System.Drawing.Size(77, 35);
             this.viewFailedListButton.TabIndex = 16;
             this.viewFailedListButton.Text = "View Failed";
             this.viewFailedListButton.UseVisualStyleBackColor = true;
@@ -237,7 +247,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.ForeColor = System.Drawing.Color.Red;
+            this.label5.ForeColor = System.Drawing.Color.Black;
             this.label5.Location = new System.Drawing.Point(190, 15);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(66, 13);
@@ -247,7 +257,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.ForeColor = System.Drawing.Color.Lime;
+            this.label4.ForeColor = System.Drawing.Color.Black;
             this.label4.Location = new System.Drawing.Point(7, 16);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(84, 13);
@@ -321,16 +331,6 @@
             this.btnAddNew.Text = "Add New";
             this.btnAddNew.UseVisualStyleBackColor = true;
             this.btnAddNew.Click += new System.EventHandler(this.btnAddNew_Click);
-            // 
-            // viewUploadedButton
-            // 
-            this.viewUploadedButton.Location = new System.Drawing.Point(95, 9);
-            this.viewUploadedButton.Name = "viewUploadedButton";
-            this.viewUploadedButton.Size = new System.Drawing.Size(89, 35);
-            this.viewUploadedButton.TabIndex = 19;
-            this.viewUploadedButton.Text = "View Uploaded";
-            this.viewUploadedButton.UseVisualStyleBackColor = true;
-            this.viewUploadedButton.Click += new System.EventHandler(this.viewUploadedButton_Click);
             // 
             // Customers
             // 

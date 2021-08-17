@@ -47,19 +47,27 @@
             this.label3 = new System.Windows.Forms.Label();
             this.tbxToWaitTime = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.SendRateGroupBox = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.SendRateTextBox = new System.Windows.Forms.TextBox();
+            this.SendRateCheckBox = new System.Windows.Forms.CheckBox();
             this.timeSpanDropdown = new System.Windows.Forms.ComboBox();
-            this.bccEmailsTextBox = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.TimeDelayGroupBox = new System.Windows.Forms.GroupBox();
+            this.TimeDelayCheckBox = new System.Windows.Forms.CheckBox();
             this.maxEmailTextBox = new System.Windows.Forms.TextBox();
             this.MaxSendsPerDay = new System.Windows.Forms.Label();
+            this.bccEmailsTextBox = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tableEmails)).BeginInit();
             this.groupBox1.SuspendLayout();
+            this.SendRateGroupBox.SuspendLayout();
+            this.TimeDelayGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(359, 509);
+            this.btnOK.Location = new System.Drawing.Point(505, 534);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 2;
@@ -69,7 +77,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(444, 509);
+            this.btnCancel.Location = new System.Drawing.Point(590, 534);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 3;
@@ -83,9 +91,9 @@
             this.groupBox2.Controls.Add(this.makeAllActivateButton);
             this.groupBox2.Controls.Add(this.btnAddEmail);
             this.groupBox2.Controls.Add(this.tableEmails);
-            this.groupBox2.Location = new System.Drawing.Point(12, 120);
+            this.groupBox2.Location = new System.Drawing.Point(12, 162);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(511, 366);
+            this.groupBox2.Size = new System.Drawing.Size(657, 366);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Email Accounts";
@@ -135,7 +143,7 @@
             this.tableEmails.Location = new System.Drawing.Point(0, 19);
             this.tableEmails.Name = "tableEmails";
             this.tableEmails.ReadOnly = true;
-            this.tableEmails.Size = new System.Drawing.Size(493, 311);
+            this.tableEmails.Size = new System.Drawing.Size(645, 311);
             this.tableEmails.TabIndex = 0;
             this.tableEmails.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tableEmails_CellContentClick);
             this.tableEmails.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tableEmails_CellContentDoubleClick);
@@ -179,52 +187,86 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 20);
+            this.label1.Location = new System.Drawing.Point(82, 18);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(30, 13);
+            this.label1.Size = new System.Drawing.Size(70, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "From";
+            this.label1.Text = "From Second";
             // 
             // tbxFromWaitTime
             // 
-            this.tbxFromWaitTime.Location = new System.Drawing.Point(41, 17);
+            this.tbxFromWaitTime.Location = new System.Drawing.Point(158, 15);
             this.tbxFromWaitTime.Name = "tbxFromWaitTime";
-            this.tbxFromWaitTime.Size = new System.Drawing.Size(60, 20);
+            this.tbxFromWaitTime.Size = new System.Drawing.Size(82, 20);
             this.tbxFromWaitTime.TabIndex = 1;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(107, 20);
+            this.label3.Location = new System.Drawing.Point(250, 18);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(20, 13);
+            this.label3.Size = new System.Drawing.Size(60, 13);
             this.label3.TabIndex = 4;
-            this.label3.Text = "To";
+            this.label3.Text = "To Second";
             // 
             // tbxToWaitTime
             // 
-            this.tbxToWaitTime.Location = new System.Drawing.Point(133, 17);
+            this.tbxToWaitTime.Location = new System.Drawing.Point(328, 15);
             this.tbxToWaitTime.Name = "tbxToWaitTime";
-            this.tbxToWaitTime.Size = new System.Drawing.Size(60, 20);
+            this.tbxToWaitTime.Size = new System.Drawing.Size(82, 20);
             this.tbxToWaitTime.TabIndex = 2;
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.timeSpanDropdown);
+            this.groupBox1.Controls.Add(this.SendRateGroupBox);
+            this.groupBox1.Controls.Add(this.TimeDelayGroupBox);
             this.groupBox1.Controls.Add(this.bccEmailsTextBox);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.maxEmailTextBox);
-            this.groupBox1.Controls.Add(this.MaxSendsPerDay);
-            this.groupBox1.Controls.Add(this.tbxToWaitTime);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.tbxFromWaitTime);
-            this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(511, 102);
+            this.groupBox1.Size = new System.Drawing.Size(657, 144);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Basic";
+            // 
+            // SendRateGroupBox
+            // 
+            this.SendRateGroupBox.Controls.Add(this.label4);
+            this.SendRateGroupBox.Controls.Add(this.SendRateTextBox);
+            this.SendRateGroupBox.Controls.Add(this.SendRateCheckBox);
+            this.SendRateGroupBox.Controls.Add(this.timeSpanDropdown);
+            this.SendRateGroupBox.Location = new System.Drawing.Point(7, 67);
+            this.SendRateGroupBox.Name = "SendRateGroupBox";
+            this.SendRateGroupBox.Size = new System.Drawing.Size(644, 45);
+            this.SendRateGroupBox.TabIndex = 10;
+            this.SendRateGroupBox.TabStop = false;
+            this.SendRateGroupBox.Text = "Send Rate";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(82, 20);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(30, 13);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "Rate";
+            // 
+            // SendRateTextBox
+            // 
+            this.SendRateTextBox.Location = new System.Drawing.Point(158, 17);
+            this.SendRateTextBox.Name = "SendRateTextBox";
+            this.SendRateTextBox.Size = new System.Drawing.Size(82, 20);
+            this.SendRateTextBox.TabIndex = 10;
+            // 
+            // SendRateCheckBox
+            // 
+            this.SendRateCheckBox.AutoSize = true;
+            this.SendRateCheckBox.Location = new System.Drawing.Point(13, 19);
+            this.SendRateCheckBox.Name = "SendRateCheckBox";
+            this.SendRateCheckBox.Size = new System.Drawing.Size(15, 14);
+            this.SendRateCheckBox.TabIndex = 5;
+            this.SendRateCheckBox.UseVisualStyleBackColor = true;
+            this.SendRateCheckBox.CheckedChanged += new System.EventHandler(this.SendRateCheckBox_CheckedChanged);
             // 
             // timeSpanDropdown
             // 
@@ -233,48 +275,74 @@
             "Seconds",
             "Minutes",
             "Hours"});
-            this.timeSpanDropdown.Location = new System.Drawing.Point(200, 17);
+            this.timeSpanDropdown.Location = new System.Drawing.Point(253, 16);
             this.timeSpanDropdown.Name = "timeSpanDropdown";
-            this.timeSpanDropdown.Size = new System.Drawing.Size(91, 21);
-            this.timeSpanDropdown.TabIndex = 8; 
+            this.timeSpanDropdown.Size = new System.Drawing.Size(121, 21);
+            this.timeSpanDropdown.TabIndex = 8;
             // 
-            // bccEmailsTextBox
+            // TimeDelayGroupBox
             // 
-            this.bccEmailsTextBox.Location = new System.Drawing.Point(41, 61);
-            this.bccEmailsTextBox.Name = "bccEmailsTextBox";
-            this.bccEmailsTextBox.Size = new System.Drawing.Size(464, 20);
-            this.bccEmailsTextBox.TabIndex = 4;
+            this.TimeDelayGroupBox.Controls.Add(this.TimeDelayCheckBox);
+            this.TimeDelayGroupBox.Controls.Add(this.label1);
+            this.TimeDelayGroupBox.Controls.Add(this.tbxFromWaitTime);
+            this.TimeDelayGroupBox.Controls.Add(this.label3);
+            this.TimeDelayGroupBox.Controls.Add(this.maxEmailTextBox);
+            this.TimeDelayGroupBox.Controls.Add(this.tbxToWaitTime);
+            this.TimeDelayGroupBox.Controls.Add(this.MaxSendsPerDay);
+            this.TimeDelayGroupBox.Location = new System.Drawing.Point(7, 21);
+            this.TimeDelayGroupBox.Name = "TimeDelayGroupBox";
+            this.TimeDelayGroupBox.Size = new System.Drawing.Size(644, 45);
+            this.TimeDelayGroupBox.TabIndex = 9;
+            this.TimeDelayGroupBox.TabStop = false;
+            this.TimeDelayGroupBox.Text = "Time Delay";
             // 
-            // label2
+            // TimeDelayCheckBox
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 64);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(28, 13);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "BCC";
+            this.TimeDelayCheckBox.AutoSize = true;
+            this.TimeDelayCheckBox.Location = new System.Drawing.Point(15, 17);
+            this.TimeDelayCheckBox.Name = "TimeDelayCheckBox";
+            this.TimeDelayCheckBox.Size = new System.Drawing.Size(15, 14);
+            this.TimeDelayCheckBox.TabIndex = 9;
+            this.TimeDelayCheckBox.UseVisualStyleBackColor = true;
+            this.TimeDelayCheckBox.CheckedChanged += new System.EventHandler(this.TimeDelayCheckBox_CheckedChanged);
             // 
             // maxEmailTextBox
             // 
-            this.maxEmailTextBox.Location = new System.Drawing.Point(428, 19);
+            this.maxEmailTextBox.Location = new System.Drawing.Point(545, 15);
             this.maxEmailTextBox.Name = "maxEmailTextBox";
-            this.maxEmailTextBox.Size = new System.Drawing.Size(77, 20);
+            this.maxEmailTextBox.Size = new System.Drawing.Size(82, 20);
             this.maxEmailTextBox.TabIndex = 3;
             // 
             // MaxSendsPerDay
             // 
             this.MaxSendsPerDay.AutoSize = true;
-            this.MaxSendsPerDay.Location = new System.Drawing.Point(315, 22);
+            this.MaxSendsPerDay.Location = new System.Drawing.Point(432, 18);
             this.MaxSendsPerDay.Name = "MaxSendsPerDay";
             this.MaxSendsPerDay.Size = new System.Drawing.Size(107, 13);
             this.MaxSendsPerDay.TabIndex = 5;
             this.MaxSendsPerDay.Text = "Max Sends Per Day: ";
             // 
+            // bccEmailsTextBox
+            // 
+            this.bccEmailsTextBox.Location = new System.Drawing.Point(41, 118);
+            this.bccEmailsTextBox.Name = "bccEmailsTextBox";
+            this.bccEmailsTextBox.Size = new System.Drawing.Size(604, 20);
+            this.bccEmailsTextBox.TabIndex = 4;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(7, 121);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(28, 13);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "BCC";
+            // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(539, 544);
+            this.ClientSize = new System.Drawing.Size(690, 571);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
@@ -287,6 +355,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.tableEmails)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.SendRateGroupBox.ResumeLayout(false);
+            this.SendRateGroupBox.PerformLayout();
+            this.TimeDelayGroupBox.ResumeLayout(false);
+            this.TimeDelayGroupBox.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -315,5 +387,11 @@
         private System.Windows.Forms.Button makeAllActivateButton;
         private System.Windows.Forms.Button MarkAllInActive;
         private System.Windows.Forms.ComboBox timeSpanDropdown;
+        private System.Windows.Forms.GroupBox SendRateGroupBox;
+        private System.Windows.Forms.GroupBox TimeDelayGroupBox;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox SendRateTextBox;
+        private System.Windows.Forms.CheckBox SendRateCheckBox;
+        private System.Windows.Forms.CheckBox TimeDelayCheckBox;
     }
 }

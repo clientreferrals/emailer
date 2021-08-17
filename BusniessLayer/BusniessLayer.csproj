@@ -61,6 +61,7 @@
     <Compile Include="List.cs" />
     <Compile Include="OurEmailListMaxPerDayService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\ConstantKey.cs" />
     <Compile Include="Utility\ValidateEmailUsingAPI.cs" />
   </ItemGroup>
   <ItemGroup>

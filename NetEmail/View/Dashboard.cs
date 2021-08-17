@@ -1,5 +1,6 @@
 ﻿using Backgrounder;
 using BusniessLayer;
+using BusniessLayer.Utility;
 using DirectEmailResults.View;
 using Models.DTO;
 using NetMail.Utility;
@@ -170,22 +171,10 @@ namespace NetEmail.View
                 prgQueue.Minimum = 0;
                 prgQueue.Maximum = QueueItems.Count;
                 prgQueue.Value = 0;
-                IsQueueActive = true;
-                int timeIndex = Convert.ToInt32(applicationSettingServices.GetValue("SecMinHourIndex"));
-                int waitFromTimeBetweenMails = Convert.ToInt32(applicationSettingServices.GetValue("WaitFromTime"));
-                int waitToTimeBetweenMails = Convert.ToInt32(applicationSettingServices.GetValue("WaitToTime"));
-                int maxSendsPerDay = Convert.ToInt32(applicationSettingServices.GetValue("MaxSendsPerDay"));
-                if (timeIndex == 1)
-                {
-                    waitFromTimeBetweenMails *= 60;
-                    waitToTimeBetweenMails *= 60;
-                }
-                else if (timeIndex == 2)
-                {
-                    waitFromTimeBetweenMails = waitFromTimeBetweenMails * 60 * 60;
-                    waitToTimeBetweenMails = waitToTimeBetweenMails * 60 * 60;
-                }
-
+                IsQueueActive = true; 
+                int waitFromTimeBetweenMails = Convert.ToInt32(applicationSettingServices.GetValue(ConstantKey.WaitFromTime));
+                int waitToTimeBetweenMails = Convert.ToInt32(applicationSettingServices.GetValue(ConstantKey.WaitToTime));
+                int maxSendsPerDay = Convert.ToInt32(applicationSettingServices.GetValue(ConstantKey.MaxSendsPerDay)); 
                 bgHelper.Background(() =>
                 {
                     try

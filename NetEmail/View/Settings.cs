@@ -1,5 +1,6 @@
 ﻿using Backgrounder;
 using BusniessLayer;
+using BusniessLayer.Utility;
 using Models.DTO;
 using System;
 using System.Collections.Generic;
@@ -25,19 +26,11 @@ namespace NetEmail.View
                 emailSettingService = new EmailSettingService();
                 ourEmailListMaxPerDayService = new OurEmailListMaxPerDayService();
                 applicationSettingServices = new ApplicationSettingServices();
-                var index = applicationSettingServices.GetValue("SecMinHourIndex");
-                if(index == "")
-                { 
-                    timeSpanDropdown.SelectedIndex = 0;
-                }
-                else
-                {
-                    timeSpanDropdown.SelectedIndex = int.Parse(index);
-                }
-                tbxFromWaitTime.Text = applicationSettingServices.GetValue("WaitFromTime");
-                tbxToWaitTime.Text = applicationSettingServices.GetValue("WaitToTime");
-                maxEmailTextBox.Text = applicationSettingServices.GetValue("MaxSendsPerDay");
-                bccEmailsTextBox.Text = applicationSettingServices.GetValue("BccEmails");
+               
+                tbxFromWaitTime.Text = applicationSettingServices.GetValue(ConstantKey.WaitFromTime);
+                tbxToWaitTime.Text = applicationSettingServices.GetValue(ConstantKey.WaitToTime);
+                maxEmailTextBox.Text = applicationSettingServices.GetValue(ConstantKey.MaxSendsPerDay);
+                bccEmailsTextBox.Text = applicationSettingServices.GetValue(ConstantKey.BccEmails);
 
                 if (bccEmailsTextBox.Text == "0")
                 {
@@ -88,14 +81,13 @@ namespace NetEmail.View
                         }
                     }
                 }
-                var index = timeSpanDropdown.SelectedIndex; 
-                applicationSettingServices.AddUpdate("SecMinHourIndex", index.ToString());
-                applicationSettingServices.AddUpdate("WaitFromTime", waitFromTime.ToString());
-                applicationSettingServices.AddUpdate("WaitToTime", waitToTime.ToString());
-                applicationSettingServices.AddUpdate("MaxSendsPerDay", maxSendsPerDay.ToString());
+                var index = timeSpanDropdown.SelectedIndex;  
+                applicationSettingServices.AddUpdate(ConstantKey.WaitFromTime, waitFromTime.ToString());
+                applicationSettingServices.AddUpdate(ConstantKey.WaitToTime, waitToTime.ToString());
+                applicationSettingServices.AddUpdate(ConstantKey.MaxSendsPerDay, maxSendsPerDay.ToString());
                 if (!string.IsNullOrEmpty(bccEmail.Trim()))
                 {
-                    applicationSettingServices.AddUpdate("BccEmails", bccEmail);
+                    applicationSettingServices.AddUpdate(ConstantKey.BccEmails, bccEmail);
                 }
 
                 this.Close();
@@ -235,6 +227,32 @@ namespace NetEmail.View
             }
         }
 
+        private void TimeDelayCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (TimeDelayCheckBox.Checked)
+            {
+                SendRateGroupBox.Enabled = false; 
+                TimeDelayGroupBox.Enabled = true;
+            }
+            else
+            { 
+                SendRateGroupBox.Enabled = true;
+                TimeDelayGroupBox.Enabled = true;
+            }
+        }
 
+        private void SendRateCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (SendRateCheckBox.Checked)
+            {
+                SendRateGroupBox.Enabled = true;
+                TimeDelayGroupBox.Enabled = false;
+            }
+            else
+            {
+                SendRateGroupBox.Enabled = true;
+                TimeDelayGroupBox.Enabled = true;
+            }
+        }
     }
 }
