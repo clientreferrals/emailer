@@ -26,7 +26,29 @@ namespace NetEmail.View
                 emailSettingService = new EmailSettingService();
                 ourEmailListMaxPerDayService = new OurEmailListMaxPerDayService();
                 applicationSettingServices = new ApplicationSettingServices();
-               
+
+                SendRateTextBox.Text = applicationSettingServices.GetValue(ConstantKey.SendRateValue);
+                int selectedIndex = 0;
+                var databaseValue = applicationSettingServices.GetValue(ConstantKey.SendRateKey);
+                if (databaseValue != "")
+                {
+                    selectedIndex = Convert.ToInt32(databaseValue);
+                }
+                timeSpanDropdown.SelectedIndex = selectedIndex;
+
+                var checkBox = applicationSettingServices.GetValue(ConstantKey.SelectedDelay);
+                if (checkBox == "1")
+                {
+                    TimeDelayGroupBox.Enabled = true;
+                    TimeDelayCheckBox.Checked = true;
+                    SendRateGroupBox.Enabled = false;
+                } else if (checkBox == "2")
+                {
+                    SendRateGroupBox.Enabled = true;
+                    SendRateCheckBox.Checked = true;
+                    TimeDelayGroupBox.Enabled = false;
+                }
+
                 tbxFromWaitTime.Text = applicationSettingServices.GetValue(ConstantKey.WaitFromTime);
                 tbxToWaitTime.Text = applicationSettingServices.GetValue(ConstantKey.WaitToTime);
                 maxEmailTextBox.Text = applicationSettingServices.GetValue(ConstantKey.MaxSendsPerDay);
@@ -81,7 +103,28 @@ namespace NetEmail.View
                         }
                     }
                 }
-                var index = timeSpanDropdown.SelectedIndex;  
+                var checkBoxValue = 0;
+                if (TimeDelayCheckBox.Checked)
+                {
+                    checkBoxValue = 1;
+                }
+                else if (SendRateCheckBox.Checked)
+                {
+                    checkBoxValue = 2;
+                }
+                else
+                {
+                    MessageBox.Show("Please select the Time Delay or Send Rate", "Required", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                var index = timeSpanDropdown.SelectedIndex;
+                applicationSettingServices.AddUpdate(ConstantKey.SendRateKey, index.ToString());
+                applicationSettingServices.AddUpdate(ConstantKey.SendRateValue, SendRateTextBox.Text.ToString());
+                applicationSettingServices.AddUpdate(ConstantKey.SelectedDelay, checkBoxValue.ToString());
+
+
+
                 applicationSettingServices.AddUpdate(ConstantKey.WaitFromTime, waitFromTime.ToString());
                 applicationSettingServices.AddUpdate(ConstantKey.WaitToTime, waitToTime.ToString());
                 applicationSettingServices.AddUpdate(ConstantKey.MaxSendsPerDay, maxSendsPerDay.ToString());
@@ -237,7 +280,7 @@ namespace NetEmail.View
             else
             { 
                 SendRateGroupBox.Enabled = true;
-                TimeDelayGroupBox.Enabled = true;
+                TimeDelayGroupBox.Enabled = true; 
             }
         }
 
@@ -251,7 +294,7 @@ namespace NetEmail.View
             else
             {
                 SendRateGroupBox.Enabled = true;
-                TimeDelayGroupBox.Enabled = true;
+                TimeDelayGroupBox.Enabled = true; 
             }
         }
     }
