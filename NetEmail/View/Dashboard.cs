@@ -171,10 +171,35 @@ namespace NetEmail.View
                 prgQueue.Minimum = 0;
                 prgQueue.Maximum = QueueItems.Count;
                 prgQueue.Value = 0;
-                IsQueueActive = true; 
+                IsQueueActive = true;
                 int waitFromTimeBetweenMails = Convert.ToInt32(applicationSettingServices.GetValue(ConstantKey.WaitFromTime));
                 int waitToTimeBetweenMails = Convert.ToInt32(applicationSettingServices.GetValue(ConstantKey.WaitToTime));
-                int maxSendsPerDay = Convert.ToInt32(applicationSettingServices.GetValue(ConstantKey.MaxSendsPerDay)); 
+                int maxSendsPerDay = Convert.ToInt32(applicationSettingServices.GetValue(ConstantKey.MaxSendsPerDay));
+
+                if (applicationSettingServices.GetValue(ConstantKey.SelectedDelay) == "2")
+                {
+                    // this means user select send rate 
+                    var emailPerCount = Convert.ToInt32(applicationSettingServices.GetValue(ConstantKey.SendRateValue));
+                    // 0 for sec,1 mints and 2 for hours 
+                    int selectedIndex = 0;
+                    var databaseValue = applicationSettingServices.GetValue(ConstantKey.SendRateKey);
+                    if (databaseValue != "")
+                    {
+                        selectedIndex = Convert.ToInt32(databaseValue);
+                    }
+                    if (selectedIndex == 1)
+                    {
+                        waitFromTimeBetweenMails = 60/emailPerCount ;
+                    }
+                    else if (selectedIndex == 2)
+                    {
+                        waitFromTimeBetweenMails = 3600/emailPerCount;
+                    }
+
+
+                    waitToTimeBetweenMails = waitFromTimeBetweenMails;
+                }
+
                 bgHelper.Background(() =>
                 {
                     try
@@ -182,7 +207,7 @@ namespace NetEmail.View
 
 
                         List<EmailDTO> availableEmails = ourEmailList.Where(x => x.RemainingLimit > 0).ToList();
-                        
+
                         foreach (EmailQueueItem item in QueueItems)
                         {
                             if (IsQueueActive == false) break;
@@ -212,8 +237,8 @@ namespace NetEmail.View
                                         ourEmailListMaxPerDayService.AddUpdate(fromEmailAccount.Id);
                                         // for cycling 
                                         availableEmails.Where(x => x.Id == fromEmailAccount.Id).FirstOrDefault().RemainingLimit = availableEmails.Where(x => x.Id == fromEmailAccount.Id).FirstOrDefault().RemainingLimit - 1;
-                                        ourEmailList.Where(x => x.Id == fromEmailAccount.Id).FirstOrDefault().RemainingLimit = ourEmailList.Where(x => x.Id == fromEmailAccount.Id).FirstOrDefault().RemainingLimit -1;
-                                        
+                                        ourEmailList.Where(x => x.Id == fromEmailAccount.Id).FirstOrDefault().RemainingLimit = ourEmailList.Where(x => x.Id == fromEmailAccount.Id).FirstOrDefault().RemainingLimit - 1;
+
                                         bgHelper.Foreground(() =>
                                         {
                                             lblRemaining.Text = (Convert.ToInt32(lblRemaining.Text) - 1).ToString();
@@ -246,7 +271,8 @@ namespace NetEmail.View
                                 }
                             }
 
-                            int threadSleepTime = myRandom.Next(waitFromTimeBetweenMails, waitToTimeBetweenMails);
+                            int threadSleepTime = waitFromTimeBetweenMails == waitToTimeBetweenMails
+                                ? waitFromTimeBetweenMails : myRandom.Next(waitFromTimeBetweenMails, waitToTimeBetweenMails);
                             Thread.Sleep(TimeSpan.FromSeconds(threadSleepTime));
                         }
                         bgHelper.Foreground(() =>
@@ -280,8 +306,8 @@ namespace NetEmail.View
                 {
                     Random rnd = new Random();
                     string title = spintax(rnd, item.MailSubject.Replace("@Name@", item.CustomerName));
-                    string message = spintax(rnd, item.TemplateContent.Replace("@Name@", item.CustomerName)); 
-                     
+                    string message = spintax(rnd, item.TemplateContent.Replace("@Name@", item.CustomerName));
+
 
                     Response<bool> sendResult = EmailHelper.Instance.SetCredentials(emailAccount.Host,
                     emailAccount.Port,

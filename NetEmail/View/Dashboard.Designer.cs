@@ -65,7 +65,7 @@
             this.btnCustomers.Location = new System.Drawing.Point(200, 176);
             this.btnCustomers.Name = "btnCustomers";
             this.btnCustomers.Size = new System.Drawing.Size(160, 60);
-            this.btnCustomers.TabIndex = 0;
+            this.btnCustomers.TabIndex = 2;
             this.btnCustomers.Text = "Contacts";
             this.btnCustomers.UseVisualStyleBackColor = true;
             this.btnCustomers.Click += new System.EventHandler(this.btnCustomers_Click);
@@ -75,7 +75,7 @@
             this.btnCampaigns.Location = new System.Drawing.Point(384, 176);
             this.btnCampaigns.Name = "btnCampaigns";
             this.btnCampaigns.Size = new System.Drawing.Size(160, 60);
-            this.btnCampaigns.TabIndex = 1;
+            this.btnCampaigns.TabIndex = 3;
             this.btnCampaigns.Text = "Campaings";
             this.btnCampaigns.UseVisualStyleBackColor = true;
             this.btnCampaigns.Click += new System.EventHandler(this.btnCampaigns_Click);
@@ -85,7 +85,7 @@
             this.btnSettings.Location = new System.Drawing.Point(384, 242);
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.Size = new System.Drawing.Size(160, 60);
-            this.btnSettings.TabIndex = 2;
+            this.btnSettings.TabIndex = 7;
             this.btnSettings.Text = "Settings";
             this.btnSettings.UseVisualStyleBackColor = true;
             this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
@@ -95,7 +95,7 @@
             this.btnTemplates.Location = new System.Drawing.Point(11, 242);
             this.btnTemplates.Name = "btnTemplates";
             this.btnTemplates.Size = new System.Drawing.Size(160, 60);
-            this.btnTemplates.TabIndex = 3;
+            this.btnTemplates.TabIndex = 4;
             this.btnTemplates.Text = "Templates";
             this.btnTemplates.UseVisualStyleBackColor = true;
             this.btnTemplates.Click += new System.EventHandler(this.btnTemplates_Click);
@@ -245,7 +245,7 @@
             this.unifiedInboxButton.Location = new System.Drawing.Point(11, 176);
             this.unifiedInboxButton.Name = "unifiedInboxButton";
             this.unifiedInboxButton.Size = new System.Drawing.Size(160, 60);
-            this.unifiedInboxButton.TabIndex = 6;
+            this.unifiedInboxButton.TabIndex = 1;
             this.unifiedInboxButton.Text = "Inbox";
             this.unifiedInboxButton.UseVisualStyleBackColor = true;
             this.unifiedInboxButton.Click += new System.EventHandler(this.unifiedInboxButton_Click);
@@ -255,7 +255,7 @@
             this.blackEmailsButton.Location = new System.Drawing.Point(11, 308);
             this.blackEmailsButton.Name = "blackEmailsButton";
             this.blackEmailsButton.Size = new System.Drawing.Size(160, 60);
-            this.blackEmailsButton.TabIndex = 7;
+            this.blackEmailsButton.TabIndex = 8;
             this.blackEmailsButton.Text = "Blocked";
             this.blackEmailsButton.UseVisualStyleBackColor = true;
             this.blackEmailsButton.Click += new System.EventHandler(this.blackEmailsButton_Click);
@@ -265,7 +265,7 @@
             this.button1.Location = new System.Drawing.Point(200, 242);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(160, 60);
-            this.button1.TabIndex = 8;
+            this.button1.TabIndex = 6;
             this.button1.Text = "Failed";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
