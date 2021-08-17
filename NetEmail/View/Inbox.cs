@@ -156,6 +156,11 @@ namespace DirectEmailResults.View
         }
         private void viewEmailButton_Click(object sender, EventArgs e)
         {
+            if(rowNoTextBox.Text.Trim() == "")
+            {
+                MessageBox.Show("Please enter the Row number in left text box.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             int rowNumber = int.Parse(rowNoTextBox.Text);
             if (rowNumber - 1 < unReadEmails.Count)
             {
@@ -172,7 +177,7 @@ namespace DirectEmailResults.View
         private void rowNoTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
-          (e.KeyChar != '.'))
+            (e.KeyChar != '.'))
             {
                 e.Handled = true;
             }
@@ -344,7 +349,7 @@ namespace DirectEmailResults.View
                         bgHelper.Foreground(() =>
                         {
                             failedCount.Text = emailLogs.Count().ToString();
-                            errorRichTextBox.Text = "Error while downloading emails for " + item.Address + ex.ToString();
+                            errorRichTextBox.Text = "Error while downloading emails for " + item.Address +" " + ex.ToString();
                         });
                     }
                 }

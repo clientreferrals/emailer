@@ -163,7 +163,7 @@ namespace NetEmail.View
                             }
                         }
 
-                        bgHelper.Foreground(() => 
+                        bgHelper.Foreground(() =>
                         {
                             btnOK.Enabled = true;
                             this.Close();
@@ -171,15 +171,21 @@ namespace NetEmail.View
                     }
                     catch (Exception ex)
                     {
-                        btnOK.Enabled = true;
+                        bgHelper.Foreground(() =>
+                        {
+                            btnOK.Enabled = true;
+                        });
                         MessageBox.Show(ex.Message);
 
                     }
                 });
             }
             catch (Exception ex)
-            { 
-                btnOK.Enabled = true;
+            {
+                bgHelper.Foreground(() =>
+                {
+                    btnOK.Enabled = true;
+                });
                 MessageBox.Show(ex.Message);
             }
         }
