@@ -60,7 +60,7 @@ namespace NetMail.Utility
             }
         }
 
-        public Response<bool> ReplyTo(string message, MailMessage source, List<string> bccEmails)
+        public Response<bool> ReplyTo(string message, MailMessage source, List<string> bccEmails, List<string> ccEmailsList)
         {
             try
             {
@@ -97,7 +97,11 @@ namespace NetMail.Utility
                 foreach (var item in bccEmails)
                 {
                     replyMessage.Bcc.Add(item);
-                } 
+                }
+                foreach (var item in ccEmailsList)
+                {
+                    replyMessage.CC.Add(item);
+                }
                 replyMessage.Body = message.ToString();
                 replyMessage.IsBodyHtml = true;
 

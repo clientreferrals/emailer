@@ -63,7 +63,7 @@ namespace BusniessLayer
         {
             if (string.IsNullOrEmpty(tags)) throw new Exception("Please enter a tag for customer: " + name);
 
-            if (tags.Last() != '|') tags += '|';
+            
             using (var db = new DirectEmailContext())
             {
                 var record = db.Customers.Where(x => x.Email == email).FirstOrDefault();

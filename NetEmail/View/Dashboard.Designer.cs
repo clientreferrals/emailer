@@ -76,7 +76,7 @@
             this.btnCampaigns.Name = "btnCampaigns";
             this.btnCampaigns.Size = new System.Drawing.Size(160, 60);
             this.btnCampaigns.TabIndex = 3;
-            this.btnCampaigns.Text = "Campaings";
+            this.btnCampaigns.Text = "Campaigns";
             this.btnCampaigns.UseVisualStyleBackColor = true;
             this.btnCampaigns.Click += new System.EventHandler(this.btnCampaigns_Click);
             // 

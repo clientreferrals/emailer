@@ -34,6 +34,8 @@
             this.tbxDailyLimit = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tbxFromAlias = new System.Windows.Forms.TextBox();
             this.tbxPort = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -50,8 +52,6 @@
             this.popHostAddressTbx = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.tbxFromAlias = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -78,7 +78,6 @@
             // 
             this.tbxHostAddress.Location = new System.Drawing.Point(147, 44);
             this.tbxHostAddress.Name = "tbxHostAddress";
-            this.tbxHostAddress.ReadOnly = true;
             this.tbxHostAddress.Size = new System.Drawing.Size(229, 20);
             this.tbxHostAddress.TabIndex = 4;
             this.tbxHostAddress.Text = "smtp.gmail.com";
@@ -87,7 +86,6 @@
             // 
             this.tbxDailyLimit.Location = new System.Drawing.Point(147, 104);
             this.tbxDailyLimit.Name = "tbxDailyLimit";
-            this.tbxDailyLimit.ReadOnly = true;
             this.tbxDailyLimit.Size = new System.Drawing.Size(229, 20);
             this.tbxDailyLimit.TabIndex = 7;
             this.tbxDailyLimit.Text = "500";
@@ -110,11 +108,26 @@
             this.label6.TabIndex = 10;
             this.label6.Text = "Limit in one cycle";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(7, 74);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(54, 13);
+            this.label5.TabIndex = 9;
+            this.label5.Text = "From alias";
+            // 
+            // tbxFromAlias
+            // 
+            this.tbxFromAlias.Location = new System.Drawing.Point(147, 74);
+            this.tbxFromAlias.Name = "tbxFromAlias";
+            this.tbxFromAlias.Size = new System.Drawing.Size(229, 20);
+            this.tbxFromAlias.TabIndex = 6;
+            // 
             // tbxPort
             // 
             this.tbxPort.Location = new System.Drawing.Point(147, 19);
             this.tbxPort.Name = "tbxPort";
-            this.tbxPort.ReadOnly = true;
             this.tbxPort.Size = new System.Drawing.Size(229, 20);
             this.tbxPort.TabIndex = 3;
             this.tbxPort.Text = "587";
@@ -218,7 +231,6 @@
             // 
             this.popPortNoTbx.Location = new System.Drawing.Point(149, 19);
             this.popPortNoTbx.Name = "popPortNoTbx";
-            this.popPortNoTbx.ReadOnly = true;
             this.popPortNoTbx.Size = new System.Drawing.Size(229, 20);
             this.popPortNoTbx.TabIndex = 8;
             this.popPortNoTbx.Text = "993";
@@ -236,7 +248,6 @@
             // 
             this.popHostAddressTbx.Location = new System.Drawing.Point(149, 45);
             this.popHostAddressTbx.Name = "popHostAddressTbx";
-            this.popHostAddressTbx.ReadOnly = true;
             this.popHostAddressTbx.Size = new System.Drawing.Size(229, 20);
             this.popHostAddressTbx.TabIndex = 9;
             this.popHostAddressTbx.Text = "imap.gmail.com";
@@ -262,22 +273,6 @@
             this.groupBox3.TabIndex = 13;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Credentials";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(7, 74);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(54, 13);
-            this.label5.TabIndex = 9;
-            this.label5.Text = "From alias";
-            // 
-            // tbxFromAlias
-            // 
-            this.tbxFromAlias.Location = new System.Drawing.Point(147, 74);
-            this.tbxFromAlias.Name = "tbxFromAlias";
-            this.tbxFromAlias.Size = new System.Drawing.Size(229, 20);
-            this.tbxFromAlias.TabIndex = 6;
             // 
             // EditEmailAccount
             // 

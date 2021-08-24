@@ -33,7 +33,8 @@ namespace DirectEmailResults.View
         private string viewEmailBody = "";
         private readonly BackgroundHelper bgHelper;
         private List<InboxLogsModel> emailLogs = new List<InboxLogsModel>();
-        List<string> bccEmailsList = new List<string>();
+        List<string> bccEmailsList = new List<string>(); 
+        List<string> ccEmailsList = new List<string>();
 
         private readonly ApplicationSettingServices applicationSettingServices;
         public Inbox()
@@ -44,13 +45,23 @@ namespace DirectEmailResults.View
             emailSettingService = new EmailSettingService();
             applicationSettingServices = new ApplicationSettingServices();
 
-            string bccEmail = applicationSettingServices.GetValue(ConstantKey.BccEmails);
+           string bccEmail = applicationSettingServices.GetValue(ConstantKey.BccEmails);
             string[] bccEmailAddress = bccEmail.Split(',');
             for (int i = 0; i < bccEmailAddress.Length; i++)
             {
                 if (!bccEmailsList.Any(x => x == bccEmailAddress[i]))
                 {
                     bccEmailsList.Add(bccEmailAddress[i]);
+                }
+            }
+
+            string ccEmail = applicationSettingServices.GetValue(ConstantKey.CcEmails);
+            string[] ccEmailAddress = ccEmail.Split(',');
+            for (int i = 0; i < ccEmailAddress.Length; i++)
+            {
+                if (!ccEmailsList.Any(x => x == ccEmailAddress[i]))
+                {
+                    ccEmailsList.Add(ccEmailAddress[i]);
                 }
             }
 
@@ -246,7 +257,7 @@ namespace DirectEmailResults.View
                 _currentInboxEmail.CurrentUserEmail.Address,
                 _currentInboxEmail.CurrentUserEmail.Password,
                 _currentInboxEmail.CurrentUserEmail.FromAlias)
-                .ReplyTo(_templateContent, _currentInboxEmail.CurrentCompleteEmail, bccEmailsList);
+                .ReplyTo(_templateContent, _currentInboxEmail.CurrentCompleteEmail, bccEmailsList, ccEmailsList);
 
                 replyButton.Enabled = true;
 

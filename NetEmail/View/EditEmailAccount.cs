@@ -34,7 +34,7 @@ namespace NetEmail.View
                 {
                     emailAccount.Port = 587;
                 }
-                if (emailAccount.Host == null || emailAccount.Host != "smtp.gmail.com")
+                if (string.IsNullOrEmpty(emailAccount.Host))
                 {
                     emailAccount.Host = "smtp.gmail.com";
                 }
@@ -42,7 +42,7 @@ namespace NetEmail.View
                 {
                     emailAccount.IMAPPort = 993;
                 }
-                if (emailAccount.IMAPHost == null || emailAccount.IMAPHost != "imap.gmail.com")
+                if (string.IsNullOrEmpty(emailAccount.IMAPHost))
                 {
                     emailAccount.IMAPHost = "imap.gmail.com";
                 }

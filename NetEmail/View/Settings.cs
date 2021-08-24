@@ -58,6 +58,15 @@ namespace NetEmail.View
                 {
                     bccEmailsTextBox.Text = "";
                 }
+
+                ccTextBox.Text = applicationSettingServices.GetValue(ConstantKey.CcEmails);
+
+                if (ccTextBox.Text == "0")
+                {
+                    ccTextBox.Text = "";
+                }
+
+
                 RefreshEmailsTable();
             }
             catch (Exception ex)
@@ -103,6 +112,21 @@ namespace NetEmail.View
                         }
                     }
                 }
+                string ccEmail = ccTextBox.Text;
+
+                if (!string.IsNullOrEmpty(ccEmail.Trim()))
+                {
+                    string[] ccEmailAddress = ccEmail.Split(',');
+                    for (int i = 0; i < ccEmailAddress.Length; i++)
+                    {
+                        if (!IsValidEmail(ccEmailAddress[i]))
+                        {
+                            MessageBox.Show("Invalid CC emails", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                    }
+                }
+
                 var checkBoxValue = 0;
                 if (TimeDelayCheckBox.Checked)
                 {
@@ -132,7 +156,10 @@ namespace NetEmail.View
                 {
                     applicationSettingServices.AddUpdate(ConstantKey.BccEmails, bccEmail);
                 }
-
+                if (!string.IsNullOrEmpty(ccEmail.Trim()))
+                {
+                    applicationSettingServices.AddUpdate(ConstantKey.CcEmails, ccEmail);
+                }
                 this.Close();
             }
             catch (Exception ex)

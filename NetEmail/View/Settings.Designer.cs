@@ -47,6 +47,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.tbxToWaitTime = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.ccTextBox = new System.Windows.Forms.TextBox();
+            this.ccLabel = new System.Windows.Forms.Label();
             this.SendRateGroupBox = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
             this.SendRateTextBox = new System.Windows.Forms.TextBox();
@@ -67,7 +69,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(505, 534);
+            this.btnOK.Location = new System.Drawing.Point(505, 589);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 2;
@@ -77,7 +79,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(590, 534);
+            this.btnCancel.Location = new System.Drawing.Point(590, 589);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 3;
@@ -91,7 +93,7 @@
             this.groupBox2.Controls.Add(this.makeAllActivateButton);
             this.groupBox2.Controls.Add(this.btnAddEmail);
             this.groupBox2.Controls.Add(this.tableEmails);
-            this.groupBox2.Location = new System.Drawing.Point(12, 162);
+            this.groupBox2.Location = new System.Drawing.Point(12, 217);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(657, 366);
             this.groupBox2.TabIndex = 4;
@@ -218,16 +220,34 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.ccTextBox);
+            this.groupBox1.Controls.Add(this.ccLabel);
             this.groupBox1.Controls.Add(this.SendRateGroupBox);
             this.groupBox1.Controls.Add(this.TimeDelayGroupBox);
             this.groupBox1.Controls.Add(this.bccEmailsTextBox);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(657, 144);
+            this.groupBox1.Size = new System.Drawing.Size(657, 199);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Basic";
+            // 
+            // ccTextBox
+            // 
+            this.ccTextBox.Location = new System.Drawing.Point(47, 127);
+            this.ccTextBox.Name = "ccTextBox";
+            this.ccTextBox.Size = new System.Drawing.Size(604, 20);
+            this.ccTextBox.TabIndex = 11;
+            // 
+            // ccLabel
+            // 
+            this.ccLabel.AutoSize = true;
+            this.ccLabel.Location = new System.Drawing.Point(13, 130);
+            this.ccLabel.Name = "ccLabel";
+            this.ccLabel.Size = new System.Drawing.Size(21, 13);
+            this.ccLabel.TabIndex = 12;
+            this.ccLabel.Text = "CC";
             // 
             // SendRateGroupBox
             // 
@@ -324,7 +344,7 @@
             // 
             // bccEmailsTextBox
             // 
-            this.bccEmailsTextBox.Location = new System.Drawing.Point(41, 118);
+            this.bccEmailsTextBox.Location = new System.Drawing.Point(47, 164);
             this.bccEmailsTextBox.Name = "bccEmailsTextBox";
             this.bccEmailsTextBox.Size = new System.Drawing.Size(604, 20);
             this.bccEmailsTextBox.TabIndex = 4;
@@ -332,7 +352,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 121);
+            this.label2.Location = new System.Drawing.Point(13, 167);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(28, 13);
             this.label2.TabIndex = 7;
@@ -342,7 +362,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(690, 571);
+            this.ClientSize = new System.Drawing.Size(690, 621);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
@@ -393,5 +413,7 @@
         private System.Windows.Forms.TextBox SendRateTextBox;
         private System.Windows.Forms.CheckBox SendRateCheckBox;
         private System.Windows.Forms.CheckBox TimeDelayCheckBox;
+        private System.Windows.Forms.TextBox ccTextBox;
+        private System.Windows.Forms.Label ccLabel;
     }
 }
