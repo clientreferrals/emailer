@@ -185,6 +185,12 @@
     <Compile Include="View\Inbox.Designer.cs">
       <DependentUpon>Inbox.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\UploadContactCSV.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\UploadContactCSV.Designer.cs">
+      <DependentUpon>UploadContactCSV.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\UploadCustomerCSV.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -251,6 +257,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\Inbox.resx">
       <DependentUpon>Inbox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\UploadContactCSV.resx">
+      <DependentUpon>UploadContactCSV.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\UploadCustomerCSV.resx">
       <DependentUpon>UploadCustomerCSV.cs</DependentUpon>

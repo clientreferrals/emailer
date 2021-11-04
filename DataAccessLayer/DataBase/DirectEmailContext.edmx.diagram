@@ -5,21 +5,20 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="5014055a9b974f2bb49a16b2baf701de" Name="Diagram1">
-        <EntityTypeShape EntityType="DirectEmailerModel.ApplicationSetting" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DirectEmailerModel.BlockListEmail" Width="1.5" PointX="4.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DirectEmailerModel.Campaign" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="DirectEmailerModel.CampaignCustomer" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="DirectEmailerModel.Customer" Width="1.5" PointX="0.75" PointY="6.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DirectEmailerModel.EmailQueueLog" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DirectEmailerModel.EmailTemplate" Width="1.5" PointX="6.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DirectEmailerModel.NotAllowedEmail" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DirectEmailerModel.OurEmailList" Width="1.5" PointX="2.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DirectEmailerModel.OurEmailListMaxPerDay" Width="1.5" PointX="4.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DirectEmailerModel.sysdiagram" Width="1.5" PointX="6.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DirectEmailerModel.ValidEmailAddress" Width="1.5" PointX="8.75" PointY="3.75" IsExpanded="true" />
-        <AssociationConnector Association="DirectEmailerModel.FK_CampaignCustomer_Campaign" ManuallyRouted="false" />
-        <AssociationConnector Association="DirectEmailerModel.FK_CampaignCustomer_Customer" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="DirectEmailerModel.InboxEmail" Width="1.5" PointX="9.375" PointY="6.75" />
+        <EntityTypeShape EntityType="DirectEmailerModel.ApplicationSetting" Width="1.5" PointX="2.75" PointY="4.75" />
+        <EntityTypeShape EntityType="DirectEmailerModel.BlockListEmail" Width="1.5" PointX="4.75" PointY="4.75" />
+        <EntityTypeShape EntityType="DirectEmailerModel.Campaign" Width="1.5" PointX="0.75" PointY="1" />
+        <EntityTypeShape EntityType="DirectEmailerModel.CampaignCustomer" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="DirectEmailerModel.Customer" Width="1.5" PointX="0.75" PointY="6.25" />
+        <EntityTypeShape EntityType="DirectEmailerModel.EmailQueueLog" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DirectEmailerModel.EmailTemplate" Width="1.5" PointX="6.75" PointY="4.75" />
+        <EntityTypeShape EntityType="DirectEmailerModel.InboxEmail" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DirectEmailerModel.NotAllowedEmail" Width="1.5" PointX="2.75" PointY="7.75" />
+        <EntityTypeShape EntityType="DirectEmailerModel.OurEmailList" Width="1.5" PointX="4.75" PointY="7.75" />
+        <EntityTypeShape EntityType="DirectEmailerModel.OurEmailListMaxPerDay" Width="1.5" PointX="6.75" PointY="7.75" />
+        <EntityTypeShape EntityType="DirectEmailerModel.ValidEmailAddress" Width="1.5" PointX="8.75" PointY="4.75" />
+        <AssociationConnector Association="DirectEmailerModel.FK_CampaignCustomer_Campaign" />
+        <AssociationConnector Association="DirectEmailerModel.FK_CampaignCustomer_Customer" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

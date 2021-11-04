@@ -32,6 +32,7 @@
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnAddCsv = new System.Windows.Forms.Button();
             this.MarkAllInActive = new System.Windows.Forms.Button();
             this.makeAllActivateButton = new System.Windows.Forms.Button();
             this.btnAddEmail = new System.Windows.Forms.Button();
@@ -89,6 +90,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.btnAddCsv);
             this.groupBox2.Controls.Add(this.MarkAllInActive);
             this.groupBox2.Controls.Add(this.makeAllActivateButton);
             this.groupBox2.Controls.Add(this.btnAddEmail);
@@ -100,9 +102,19 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Email Accounts";
             // 
+            // btnAddCsv
+            // 
+            this.btnAddCsv.Location = new System.Drawing.Point(84, 337);
+            this.btnAddCsv.Name = "btnAddCsv";
+            this.btnAddCsv.Size = new System.Drawing.Size(75, 23);
+            this.btnAddCsv.TabIndex = 4;
+            this.btnAddCsv.Text = "Add CSV";
+            this.btnAddCsv.UseVisualStyleBackColor = true;
+            this.btnAddCsv.Click += new System.EventHandler(this.btnAddCsv_Click);
+            // 
             // MarkAllInActive
             // 
-            this.MarkAllInActive.Location = new System.Drawing.Point(227, 337);
+            this.MarkAllInActive.Location = new System.Drawing.Point(281, 337);
             this.MarkAllInActive.Name = "MarkAllInActive";
             this.MarkAllInActive.Size = new System.Drawing.Size(116, 23);
             this.MarkAllInActive.TabIndex = 3;
@@ -112,7 +124,7 @@
             // 
             // makeAllActivateButton
             // 
-            this.makeAllActivateButton.Location = new System.Drawing.Point(97, 337);
+            this.makeAllActivateButton.Location = new System.Drawing.Point(162, 337);
             this.makeAllActivateButton.Name = "makeAllActivateButton";
             this.makeAllActivateButton.Size = new System.Drawing.Size(116, 23);
             this.makeAllActivateButton.TabIndex = 2;
@@ -415,5 +427,6 @@
         private System.Windows.Forms.CheckBox TimeDelayCheckBox;
         private System.Windows.Forms.TextBox ccTextBox;
         private System.Windows.Forms.Label ccLabel;
+        private System.Windows.Forms.Button btnAddCsv;
     }
 }

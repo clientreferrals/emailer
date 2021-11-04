@@ -1,6 +1,7 @@
 ﻿using Backgrounder;
 using BusniessLayer;
 using BusniessLayer.Utility;
+using DirectEmailResults.View;
 using Models.DTO;
 using System;
 using System.Collections.Generic;
@@ -322,6 +323,20 @@ namespace NetEmail.View
             {
                 SendRateGroupBox.Enabled = true;
                 TimeDelayGroupBox.Enabled = true; 
+            }
+        }
+
+        private void btnAddCsv_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                UploadContactCSV form = new UploadContactCSV();
+                form.ShowDialog();
+                RefreshEmailsTable();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }
