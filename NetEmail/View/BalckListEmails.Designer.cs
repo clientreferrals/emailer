@@ -72,6 +72,7 @@ namespace DirectEmailResults.View
             this.Controls.Add(this.addEmailToBlackListButton);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "BalckListEmails";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Show New Emails";
             ((System.ComponentModel.ISupportInitialize)(this.blackListEmailsDataGridView)).EndInit();

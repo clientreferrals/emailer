@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Dashboard));
             this.btnCustomers = new System.Windows.Forms.Button();
             this.btnCampaigns = new System.Windows.Forms.Button();
             this.btnSettings = new System.Windows.Forms.Button();
@@ -51,18 +50,16 @@
             this.unifiedInboxButton = new System.Windows.Forms.Button();
             this.blackEmailsButton = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // btnCustomers
             // 
-            this.btnCustomers.Location = new System.Drawing.Point(200, 176);
+            this.btnCustomers.Location = new System.Drawing.Point(205, 40);
             this.btnCustomers.Name = "btnCustomers";
             this.btnCustomers.Size = new System.Drawing.Size(160, 60);
             this.btnCustomers.TabIndex = 2;
@@ -72,7 +69,7 @@
             // 
             // btnCampaigns
             // 
-            this.btnCampaigns.Location = new System.Drawing.Point(384, 176);
+            this.btnCampaigns.Location = new System.Drawing.Point(389, 40);
             this.btnCampaigns.Name = "btnCampaigns";
             this.btnCampaigns.Size = new System.Drawing.Size(160, 60);
             this.btnCampaigns.TabIndex = 3;
@@ -82,7 +79,7 @@
             // 
             // btnSettings
             // 
-            this.btnSettings.Location = new System.Drawing.Point(384, 242);
+            this.btnSettings.Location = new System.Drawing.Point(389, 106);
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.Size = new System.Drawing.Size(160, 60);
             this.btnSettings.TabIndex = 7;
@@ -92,7 +89,7 @@
             // 
             // btnTemplates
             // 
-            this.btnTemplates.Location = new System.Drawing.Point(11, 242);
+            this.btnTemplates.Location = new System.Drawing.Point(16, 106);
             this.btnTemplates.Name = "btnTemplates";
             this.btnTemplates.Size = new System.Drawing.Size(160, 60);
             this.btnTemplates.TabIndex = 4;
@@ -106,7 +103,7 @@
             this.groupBox1.Controls.Add(this.groupBox4);
             this.groupBox1.Controls.Add(this.groupBox3);
             this.groupBox1.Controls.Add(this.groupBox2);
-            this.groupBox1.Location = new System.Drawing.Point(12, 383);
+            this.groupBox1.Location = new System.Drawing.Point(17, 247);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(532, 138);
             this.groupBox1.TabIndex = 4;
@@ -242,7 +239,7 @@
             // 
             // unifiedInboxButton
             // 
-            this.unifiedInboxButton.Location = new System.Drawing.Point(11, 176);
+            this.unifiedInboxButton.Location = new System.Drawing.Point(16, 40);
             this.unifiedInboxButton.Name = "unifiedInboxButton";
             this.unifiedInboxButton.Size = new System.Drawing.Size(160, 60);
             this.unifiedInboxButton.TabIndex = 1;
@@ -252,7 +249,7 @@
             // 
             // blackEmailsButton
             // 
-            this.blackEmailsButton.Location = new System.Drawing.Point(11, 308);
+            this.blackEmailsButton.Location = new System.Drawing.Point(16, 172);
             this.blackEmailsButton.Name = "blackEmailsButton";
             this.blackEmailsButton.Size = new System.Drawing.Size(160, 60);
             this.blackEmailsButton.TabIndex = 8;
@@ -262,7 +259,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(200, 242);
+            this.button1.Location = new System.Drawing.Point(205, 106);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(160, 60);
             this.button1.TabIndex = 6;
@@ -270,21 +267,11 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new System.Drawing.Point(146, 27);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(273, 143);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 9;
-            this.pictureBox1.TabStop = false;
-            // 
             // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 561);
-            this.Controls.Add(this.pictureBox1);
+            this.ClientSize = new System.Drawing.Size(584, 412);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.blackEmailsButton);
             this.Controls.Add(this.unifiedInboxButton);
@@ -294,9 +281,9 @@
             this.Controls.Add(this.btnCampaigns);
             this.Controls.Add(this.btnCustomers);
             this.Controls.Add(this.menuStrip1);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Dashboard";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Inbox Emailer";
             this.groupBox1.ResumeLayout(false);
@@ -305,7 +292,6 @@
             this.groupBox2.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -335,7 +321,6 @@
         private System.Windows.Forms.Button unifiedInboxButton;
         private System.Windows.Forms.Button blackEmailsButton;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 

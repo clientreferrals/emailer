@@ -114,6 +114,7 @@ namespace DirectEmailResults.View
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.groupBox1);
             this.Name = "UploadContactCSV";
+            this.ShowIcon = false;
             this.Text = "UploadContactCSV";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
