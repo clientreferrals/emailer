@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DirectEmailerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DirectEmailerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ApplicationSetting">
           <Key>
             <PropertyRef Name="Id" />
@@ -85,6 +85,21 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TemplateName" Type="varchar(max)" Nullable="false" />
           <Property Name="TemplateContent" Type="varchar(max)" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="datetime" Nullable="false" />
+          <Property Name="EditedDateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="InboxEmails">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CurrentEmail" Type="varchar(max)" Nullable="false" />
+          <Property Name="DateEmail" Type="datetime" />
+          <Property Name="Subject" Type="varchar(max)" Nullable="false" />
+          <Property Name="FromEmailAddress" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Body" Type="varchar(max)" Nullable="false" />
+          <Property Name="CurrentUserEmail" Type="varchar(max)" Nullable="false" />
+          <Property Name="Uid" Type="int" Nullable="false" />
           <Property Name="CreatedDateTime" Type="datetime" Nullable="false" />
           <Property Name="EditedDateTime" Type="datetime" />
         </EntityType>
@@ -178,6 +193,7 @@
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmailQueueLog" EntityType="Self.EmailQueueLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmailTemplate" EntityType="Self.EmailTemplate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InboxEmails" EntityType="Self.InboxEmails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NotAllowedEmails" EntityType="Self.NotAllowedEmails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OurEmailList" EntityType="Self.OurEmailList" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OurEmailListMaxPerDay" EntityType="Self.OurEmailListMaxPerDay" Schema="dbo" store:Type="Tables" />
@@ -192,8 +208,7 @@
             <End Role="CampaignCustomer" EntitySet="CampaignCustomer" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DirectEmailerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -387,7 +402,23 @@
             <End Role="Customer" EntitySet="Customers" />
             <End Role="CampaignCustomer" EntitySet="CampaignCustomers" />
           </AssociationSet>
+          <EntitySet Name="InboxEmails" EntityType="DirectEmailerModel.InboxEmail" />
         </EntityContainer>
+        <EntityType Name="InboxEmail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CurrentEmail" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DateEmail" Type="DateTime" Precision="3" />
+          <Property Name="Subject" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FromEmailAddress" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Body" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CurrentUserEmail" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Uid" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EditedDateTime" Type="DateTime" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -544,6 +575,22 @@
                 <ScalarProperty Name="IsValid" ColumnName="IsValid" />
                 <ScalarProperty Name="CreateDateTime" ColumnName="CreateDateTime" />
                 <ScalarProperty Name="EditDateTime" ColumnName="EditDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InboxEmails">
+            <EntityTypeMapping TypeName="DirectEmailerModel.InboxEmail">
+              <MappingFragment StoreEntitySet="InboxEmails">
+                <ScalarProperty Name="EditedDateTime" ColumnName="EditedDateTime" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="Uid" ColumnName="Uid" />
+                <ScalarProperty Name="CurrentUserEmail" ColumnName="CurrentUserEmail" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="FromEmailAddress" ColumnName="FromEmailAddress" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="DateEmail" ColumnName="DateEmail" />
+                <ScalarProperty Name="CurrentEmail" ColumnName="CurrentEmail" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -16,16 +16,17 @@ namespace NetEmail.View
 {
     public partial class Dashboard : Form
     {
-        BackgroundHelper bgHelper;
+        private readonly BackgroundHelper bgHelper;
         List<EmailQueueItem> QueueItems = new List<EmailQueueItem>();
         bool IsQueueActive = false;
         List<EmailDTO> ourEmailList = new List<EmailDTO>();
-        Random myRandom = new Random();
+        private readonly Random myRandom = new Random();
         private readonly EmailSettingService emailSettingService;
         private readonly EmailQueueLogService emailQueueLogService;
         private readonly ApplicationSettingServices applicationSettingServices;
         private readonly CampaignService campaignService;
         private readonly OurEmailListMaxPerDayService ourEmailListMaxPerDayService;
+        private readonly InboxEmailService  inboxEmailService;
         public Dashboard()
         {
             try
@@ -38,13 +39,16 @@ namespace NetEmail.View
                 applicationSettingServices = new ApplicationSettingServices();
                 ourEmailListMaxPerDayService = new OurEmailListMaxPerDayService();
                 ourEmailListMaxPerDayService.ResetCount();
+                // we will use this class to download emails in background 
+                inboxEmailService = new InboxEmailService();
+
 
                 campaignService = new CampaignService();
                 bgHelper = new BackgroundHelper();
                 stopProcessingToolStripMenuItem.Enabled = false;
 
                 RefreshQueue();
-                GetEmails();
+                GetEmails(); 
             }
             catch (Exception ex)
             {
@@ -59,6 +63,7 @@ namespace NetEmail.View
                 try
                 {
                     ourEmailList = emailSettingService.GetActiveEmails();
+                    inboxEmailService.DownloadEmails(ourEmailList);
                 }
                 catch (Exception ex)
                 {
@@ -76,7 +81,7 @@ namespace NetEmail.View
                 try
                 {
                     QueueItems = emailQueueLogService.GetEmailQueueItems();
-
+                    
                     bgHelper.Foreground(() =>
                     {
                         lblTotal.Text = QueueItems.Count.ToString();

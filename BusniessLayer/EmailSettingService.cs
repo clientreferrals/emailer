@@ -57,7 +57,7 @@ namespace BusniessLayer
                         }).ToList();
             }
         }
-        public bool Save(int id, string host, int port, string address, string password, string fromAddress, string fromAlias, int dailyLimit, int popPort, string popHost)
+        public bool Save(int id, string host, int port, string address, string password,string fromAlias, int dailyLimit, int popPort, string popHost)
         {
             if (id == 0)
             {

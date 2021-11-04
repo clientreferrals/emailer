@@ -90,6 +90,7 @@ namespace DirectEmailResults.View
 
 
             ShowHideReplySection(false);
+            
         }
         #region Feild Methods
         private void perEmailCountTextBox_TextChanged(object sender, EventArgs e)

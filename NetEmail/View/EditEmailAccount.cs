@@ -129,7 +129,6 @@ namespace NetEmail.View
                   port,
                   tbxAddress.Text,
                   tbxPassword.Text,
-                  tbxHostAddress.Text,
                   tbxFromAlias.Text,
                   dailyLimit,
                   Convert.ToInt32(popPortNoTbx.Text),
