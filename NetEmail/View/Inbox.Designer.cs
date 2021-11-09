@@ -36,7 +36,6 @@ namespace DirectEmailResults.View
             this.toDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.fromDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.downloadLablel = new System.Windows.Forms.Label();
-            this.downloadEmailButton = new System.Windows.Forms.Button();
             this.dataGridEmails = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.viewEmailWebBrowser = new System.Windows.Forms.WebBrowser();
@@ -61,7 +60,6 @@ namespace DirectEmailResults.View
             this.groupBox2.Controls.Add(this.toDateTimePicker);
             this.groupBox2.Controls.Add(this.fromDateTimePicker);
             this.groupBox2.Controls.Add(this.downloadLablel);
-            this.groupBox2.Controls.Add(this.downloadEmailButton);
             this.groupBox2.Controls.Add(this.dataGridEmails);
             this.groupBox2.Location = new System.Drawing.Point(12, 4);
             this.groupBox2.Name = "groupBox2";
@@ -72,9 +70,9 @@ namespace DirectEmailResults.View
             // 
             // viewLogsButton
             // 
-            this.viewLogsButton.Location = new System.Drawing.Point(418, 109);
+            this.viewLogsButton.Location = new System.Drawing.Point(418, 48);
             this.viewLogsButton.Name = "viewLogsButton";
-            this.viewLogsButton.Size = new System.Drawing.Size(135, 23);
+            this.viewLogsButton.Size = new System.Drawing.Size(135, 44);
             this.viewLogsButton.TabIndex = 6;
             this.viewLogsButton.Text = "View Logs";
             this.viewLogsButton.UseVisualStyleBackColor = true;
@@ -82,7 +80,7 @@ namespace DirectEmailResults.View
             // 
             // errorRichTextBox
             // 
-            this.errorRichTextBox.Location = new System.Drawing.Point(6, 88);
+            this.errorRichTextBox.Location = new System.Drawing.Point(6, 48);
             this.errorRichTextBox.Name = "errorRichTextBox";
             this.errorRichTextBox.ReadOnly = true;
             this.errorRichTextBox.Size = new System.Drawing.Size(406, 44);
@@ -91,14 +89,14 @@ namespace DirectEmailResults.View
             // 
             // toDateTimePicker
             // 
-            this.toDateTimePicker.Location = new System.Drawing.Point(205, 61);
+            this.toDateTimePicker.Location = new System.Drawing.Point(205, 21);
             this.toDateTimePicker.Name = "toDateTimePicker";
             this.toDateTimePicker.Size = new System.Drawing.Size(207, 20);
             this.toDateTimePicker.TabIndex = 3;
             // 
             // fromDateTimePicker
             // 
-            this.fromDateTimePicker.Location = new System.Drawing.Point(7, 61);
+            this.fromDateTimePicker.Location = new System.Drawing.Point(7, 21);
             this.fromDateTimePicker.Name = "fromDateTimePicker";
             this.fromDateTimePicker.Size = new System.Drawing.Size(192, 20);
             this.fromDateTimePicker.TabIndex = 2;
@@ -106,11 +104,10 @@ namespace DirectEmailResults.View
             // downloadLablel
             // 
             this.downloadLablel.AutoSize = true;
-            this.downloadLablel.Location = new System.Drawing.Point(15, 24);
+            this.downloadLablel.Location = new System.Drawing.Point(426, 27);
             this.downloadLablel.Name = "downloadLablel";
             this.downloadLablel.Size = new System.Drawing.Size(0, 13);
             this.downloadLablel.TabIndex = 4;
-           
             // 
             // dataGridEmails
             // 
@@ -118,7 +115,7 @@ namespace DirectEmailResults.View
             this.dataGridEmails.AllowUserToDeleteRows = false;
             this.dataGridEmails.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
             this.dataGridEmails.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridEmails.Location = new System.Drawing.Point(6, 138);
+            this.dataGridEmails.Location = new System.Drawing.Point(6, 98);
             this.dataGridEmails.Name = "dataGridEmails";
             this.dataGridEmails.ReadOnly = true;
             this.dataGridEmails.Size = new System.Drawing.Size(547, 551);
@@ -261,6 +258,5 @@ namespace DirectEmailResults.View
         private System.Windows.Forms.WebBrowser viewEmailWebBrowser;
         private System.Windows.Forms.RichTextBox errorRichTextBox;
         private System.Windows.Forms.Button viewLogsButton;
-        private System.Windows.Forms.Button downloadEmailButton;
     }
 }

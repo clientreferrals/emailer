@@ -57,7 +57,7 @@ namespace BusniessLayer
                         }).ToList();
             }
         }
-        public bool Save(int id, string host, int port, string address, string password,string fromAlias, int dailyLimit, int popPort, string popHost)
+        public bool Save(int id, string host, int port, string address, string password, string fromAlias, int dailyLimit, int popPort, string popHost)
         {
             try
             {
@@ -137,12 +137,12 @@ namespace BusniessLayer
             using (var db = new DirectEmailerEntities())
             {
                 var record = db.OurEmailLists.Where(x => x.Id == id).FirstOrDefault();
-                if(record!= null)
+                if (record != null)
                 {
                     record.Active = !record.Active;
                     db.SaveChanges();
                 }
-               
+
             }
         }
         public void MarkAllActiveInActive(bool condition)
@@ -156,6 +156,32 @@ namespace BusniessLayer
                 db.SaveChanges();
             }
         }
+
+        public EmailDTO GetEmailByAddress(string ourEmailAddress)
+        {
+            using (var db = new DirectEmailerEntities())
+            {
+                return (from e in db.OurEmailLists
+                        where e.EmailAddress == ourEmailAddress
+                        select new EmailDTO
+                        {
+                            Address = e.EmailAddress,
+                            DailyLimit = e.DailyLimit,
+                            FromAlias = e.FromAlias,
+                            Host = e.Host,
+                            Id = e.Id,
+                            Password = e.Password,
+                            Port = e.Port,
+                            IMAPHost = e.IMAPHost,
+                            IMAPPort = e.IMAPPort,
+                            SentCount = e.SentCount,
+                            Active = e.Active,
+                            TodaySent = db.OurEmailListMaxPerDays.Where(x => x.EmailId == e.Id).Select(x => x.SentCount).FirstOrDefault(),
+                            RemainingLimit = e.DailyLimit - db.OurEmailListMaxPerDays.Where(x => x.EmailId == e.Id).Select(x => x.SentCount).FirstOrDefault()
+                        }).FirstOrDefault();
+            }
+        }
+
 
         #endregion
     }

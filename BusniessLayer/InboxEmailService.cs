@@ -97,11 +97,11 @@ namespace BusniessLayer
                     record = new InboxEmail()
                     {
                         FromEmailAddress = input.FromEmailAddress,
+                        OurEmailAddress = input.OurEmailAddress,
                         Body = input.Body,
                         CurrentUserEmail = encodedCurrentUserEmail,
                         CurrentEmail = encodedCurrentCompleteEmail,
                         DateEmail = input.DateOfEmail,
-                        OurEmailAddress = input.OurEmailAddress,
                         Subject = input.Subject,
                         Uid = (int)input.UID,
                         CreatedDateTime = DateTime.Now,
@@ -143,9 +143,8 @@ namespace BusniessLayer
 
                         ViewEmailDto obj = new ViewEmailDto()
                         {
-
-
                             FromEmailAddress = item.FromEmailAddress,
+                            OurEmailAddress = item.OurEmailAddress,
                             Body = item.Body,
                             CurrentUserEmail = decodedCurrentUserEmail,
                             CurrentCompleteEmail = decodedCurrentCompleteEmail,

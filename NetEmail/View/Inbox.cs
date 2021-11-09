@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -19,9 +20,7 @@ namespace DirectEmailResults.View
         private readonly EmailSettingService emailSettingService;
 
         private List<BlockListEmailDto> blackListEmailRecords = new List<BlockListEmailDto>();
-        private List<EmailDTO> ourEmailRecords;
-        private int totalEmailNumber = 0;
-        private int perEmailCount = 25;
+        private List<EmailDTO> ourEmailRecords; 
 
         private List<ViewEmailFromDataDto> unReadEmails = new List<ViewEmailFromDataDto>();
         private DataTable datatable;
@@ -34,7 +33,7 @@ namespace DirectEmailResults.View
         private readonly List<string> bccEmailsList = new List<string>();
         private readonly List<string> ccEmailsList = new List<string>();
         private readonly InboxEmailService inboxEmailService;
-        private readonly ApplicationSettingServices applicationSettingServices;
+        private readonly ApplicationSettingServices applicationSettingServices; 
         public Inbox()
         {
 
@@ -66,8 +65,7 @@ namespace DirectEmailResults.View
             blackListEmailRecords = blockListEmailService.GetBlackListEmails();
             CreateGridView();
 
-            unReadEmails = new List<ViewEmailFromDataDto>();
-            totalEmailNumber = 0;
+            unReadEmails = new List<ViewEmailFromDataDto>(); 
             downloadLablel.Text = "";
 
 
@@ -87,6 +85,7 @@ namespace DirectEmailResults.View
             toDateTimePicker.MaxDate = DateTime.Now;
 
             inboxEmailService = new InboxEmailService();
+            _currentInboxEmail = new ViewEmailDto();
             ShowHideReplySection(false);
             RefreshEmailsTable();
 
@@ -257,8 +256,6 @@ namespace DirectEmailResults.View
             {
                 bgHelper.Foreground(() =>
                 {
-
-                    downloadEmailButton.Enabled = false;
                     dataGridEmails.Enabled = false;
                     fromDateTimePicker.Enabled = false;
                     toDateTimePicker.Enabled = false;
@@ -271,7 +268,7 @@ namespace DirectEmailResults.View
                     {
                         DateTime toDateTime = DateTime.Now;
                         DateTime fromDateTime = toDateTime.AddDays(-5);
-                        
+
                         var getEmailFromDataBase = inboxEmailService.GetEmailOfRange(item.Address, fromDateTime, toDateTime);
                         foreach (var emailItem in getEmailFromDataBase)
                         {
@@ -281,7 +278,7 @@ namespace DirectEmailResults.View
                                 DateOfEmail = emailItem.DateOfEmail,
                                 Subject = emailItem.Subject,
                                 FromEmailAddress = emailItem.FromEmailAddress,
-                                OurEmailAddress = emailItem.OurEmailAddress, 
+                                OurEmailAddress = emailItem.OurEmailAddress,
                                 Body = emailItem.Body,
                                 CurrentUserEmail = item,
                                 UID = emailItem.UID,
@@ -316,7 +313,6 @@ namespace DirectEmailResults.View
                 bgHelper.Foreground(() =>
                 {
                     dataGridEmails.Enabled = true;
-                    downloadEmailButton.Enabled = true;
                     fromDateTimePicker.Enabled = true;
                     toDateTimePicker.Enabled = true;
 
@@ -466,16 +462,14 @@ namespace DirectEmailResults.View
                 dataGridEmails.Columns[0].Width = 30;
                 dataGridEmails.Columns[1].Width = 350;
                 dataGridEmails.Columns[2].Width = 140;
-            }
-            totalEmailNumber += 1;
+            } 
         }
         private void RefreshEmailsTable()
         {
             try
             {
                 ourEmailRecords = emailSettingService.GetActiveEmails();
-                unReadEmails = new List<ViewEmailFromDataDto>();
-                totalEmailNumber = 0;
+                unReadEmails = new List<ViewEmailFromDataDto>(); 
                 downloadLablel.Text = "";
                 CreateGridView();
                 ReadFromDatabaseEmails();
@@ -528,27 +522,61 @@ namespace DirectEmailResults.View
         {
             try
             {
-                ShowHideReplySection(false);
-                // Need to do this 
-                //_currentInboxEmail = unReadEmails[index];
-                viewEmailBody = _currentInboxEmail.Body;
-                fromEmailTextBox.Text = unReadEmails[index].OurEmailAddress;
-                userEmailTextBox.Text = _currentInboxEmail.FromEmailAddress;
-                SetViewContent();
-                ShowHideReplySection(true);
-                using (ImapClient client = new ImapClient(_currentInboxEmail.CurrentUserEmail.IMAPHost,
-                    _currentInboxEmail.CurrentUserEmail.IMAPPort, true))
+                bgHelper.Background(() =>
                 {
-                    // Login
-                    client.Login(_currentInboxEmail.CurrentUserEmail.Address, _currentInboxEmail.CurrentUserEmail.Password, AuthMethod.Auto);
+                    bgHelper.Foreground(() =>
+                    {
+                        downloadLablel.Text = "Downloading";
+                        ShowHideReplySection(false);
+                    });
+                    EmailDTO item = emailSettingService.GetEmailByAddress(unReadEmails[index].OurEmailAddress);
 
-                    client.RemoveMessageFlags(_currentInboxEmail.UID, null, MessageFlag.Seen);
-                }
+                    using (ImapClient client = new ImapClient(item.IMAPHost, item.IMAPPort, true))
+                    {
+                        // Login
+                        client.Login(item.Address, item.Password, AuthMethod.Auto);
+                        SearchCondition searchFrom = SearchCondition.SentSince(fromDateTimePicker.Value);
+                        SearchCondition searchTo = SearchCondition.SentBefore(toDateTimePicker.Value.AddDays(1));
+                         
+                        MailMessage mailMessage = client.GetMessage(unReadEmails[index].UID);
+                        _currentInboxEmail = new ViewEmailDto
+                        { 
+                            CurrentCompleteEmail = mailMessage,
+                            DateOfEmail = mailMessage.Date(),
+                            Subject = mailMessage.Subject,
+                            FromEmailAddress = mailMessage.From.Address.ToString(),
+                            OurEmailAddress = unReadEmails[index].OurEmailAddress,
+                            Body = mailMessage.Body,
+                            CurrentUserEmail = item,
+                            UID = unReadEmails[index].UID,
+                        };
+                        // Need to do this 
+                        //_currentInboxEmail = unReadEmails[index];
+                        viewEmailBody = _currentInboxEmail.Body;
+                    }
+
+                    bgHelper.Foreground(() =>
+                    {
+                        downloadLablel.Text = "";
+                        fromEmailTextBox.Text = unReadEmails[index].OurEmailAddress;
+                        userEmailTextBox.Text = _currentInboxEmail.FromEmailAddress;
+                        SetViewContent();
+                        ShowHideReplySection(true);
+                    });
+                });
+
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+
+                bgHelper.Foreground(() =>
+                {
+                    downloadLablel.Text = "";
+                    errorRichTextBox.Text = "Error while downloading emails for " + unReadEmails[index].OurEmailAddress + " " + ex.ToString();
+                });
             }
+
+
         }
 
 
