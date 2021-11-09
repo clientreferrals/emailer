@@ -48,6 +48,7 @@ namespace DirectEmailResults.View
             this.ClientSize = new System.Drawing.Size(633, 511);
             this.Controls.Add(this.failedUploadedEmailDataGridView);
             this.Name = "SuccessAndFailedUploadEmails";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Emails ";
             ((System.ComponentModel.ISupportInitialize)(this.failedUploadedEmailDataGridView)).EndInit();

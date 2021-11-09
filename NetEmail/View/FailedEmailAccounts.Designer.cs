@@ -91,6 +91,7 @@ namespace DirectEmailResults.View
             this.Controls.Add(this.emailsDataGridView);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FailedEmailAccounts";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Failed Email Accounts";
             ((System.ComponentModel.ISupportInitialize)(this.emailsDataGridView)).EndInit();

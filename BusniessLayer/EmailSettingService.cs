@@ -59,56 +59,64 @@ namespace BusniessLayer
         }
         public bool Save(int id, string host, int port, string address, string password,string fromAlias, int dailyLimit, int popPort, string popHost)
         {
-            if (id == 0)
+            try
             {
-                using (var db = new DirectEmailContext())
+                if (id == 0)
                 {
-                    OurEmailList record = new OurEmailList()
+                    using (var db = new DirectEmailContext())
                     {
-                        Host = host,
-                        Port = port,
-                        Active = true,
-                        EmailAddress = address,
-                        Password = password,
-                        FromAlias = fromAlias,
-                        DailyLimit = dailyLimit,
-                        IMAPHost = popHost,
-                        IMAPPort = popPort,
-                        CreatedDateTime = DateTime.Now
-                    };
-                    db.OurEmailLists.Add(record);
-                    db.SaveChanges();
-
-                    return true;
-                }
-            }
-            else
-            {
-                using (var db = new DirectEmailContext())
-                {
-                    var record = db.OurEmailLists.Where(x => x.Id == id).FirstOrDefault();
-                    if (record != null)
-                    {
-                        record.Host = host;
-                        record.Port = port; 
-                        record.EmailAddress = address;
-                        record.Password = password;
-                        record.FromAlias = fromAlias;
-                        record.DailyLimit = dailyLimit;
-                        record.IMAPHost = popHost;
-                        record.IMAPPort = popPort;
-                        record.EditedDateTime = DateTime.Now;
-
+                        OurEmailList record = new OurEmailList()
+                        {
+                            Host = host,
+                            Port = port,
+                            Active = true,
+                            EmailAddress = address,
+                            Password = password,
+                            FromAlias = fromAlias,
+                            DailyLimit = dailyLimit,
+                            IMAPHost = popHost,
+                            IMAPPort = popPort,
+                            CreatedDateTime = DateTime.Now
+                        };
+                        db.OurEmailLists.Add(record);
                         db.SaveChanges();
 
                         return true;
                     }
-                    else
-                    {
-                        return false;
-                    }
-
                 }
+                else
+                {
+                    using (var db = new DirectEmailContext())
+                    {
+                        var record = db.OurEmailLists.Where(x => x.Id == id).FirstOrDefault();
+                        if (record != null)
+                        {
+                            record.Host = host;
+                            record.Port = port;
+                            record.EmailAddress = address;
+                            record.Password = password;
+                            record.FromAlias = fromAlias;
+                            record.DailyLimit = dailyLimit;
+                            record.IMAPHost = popHost;
+                            record.IMAPPort = popPort;
+                            record.EditedDateTime = DateTime.Now;
+
+                            db.SaveChanges();
+
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return false;
             }
         }
 

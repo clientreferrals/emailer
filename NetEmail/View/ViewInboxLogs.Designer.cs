@@ -52,6 +52,7 @@ namespace DirectEmailResults.View
             this.Controls.Add(this.logsGridView);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ViewInboxLogs";
+            this.ShowIcon = false;
             this.Text = "ViewInboxLogs";
             ((System.ComponentModel.ISupportInitialize)(this.logsGridView)).EndInit();
             this.ResumeLayout(false);
