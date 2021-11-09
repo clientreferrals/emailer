@@ -12,7 +12,7 @@ namespace BusniessLayer
 
         public List<CustomerDto> GetCustomers(string name, string phoneNo, string tag, string website, string city)
         {
-            using (var db = new DirectEmailContext())
+            using (var db = new DirectEmailerEntities())
             {
                 var query = db.Customers.AsQueryable();
 
@@ -64,7 +64,7 @@ namespace BusniessLayer
             if (string.IsNullOrEmpty(tags)) throw new Exception("Please enter a tag for customer: " + name);
 
             
-            using (var db = new DirectEmailContext())
+            using (var db = new DirectEmailerEntities())
             {
                 var record = db.Customers.Where(x => x.Email == email).FirstOrDefault();
                 if (record == null)
@@ -108,7 +108,7 @@ namespace BusniessLayer
 
         public bool Delete(int id)
         {
-            using (var db = new DirectEmailContext())
+            using (var db = new DirectEmailerEntities())
             {
                 var record = db.Customers.Where(x => x.Id == id).FirstOrDefault();
 
@@ -121,7 +121,7 @@ namespace BusniessLayer
 
         public bool DeleteAll()
         {
-            using (var db = new DirectEmailContext())
+            using (var db = new DirectEmailerEntities())
             {
                 db.Database.ExecuteSqlCommand("delete from Customer");
 

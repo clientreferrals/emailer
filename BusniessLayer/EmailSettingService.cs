@@ -12,7 +12,7 @@ namespace BusniessLayer
 
         public List<EmailDTO> GetEmails()
         {
-            using (var db = new DirectEmailContext())
+            using (var db = new DirectEmailerEntities())
             {
                 return (from e in db.OurEmailLists
                         select new EmailDTO
@@ -35,7 +35,7 @@ namespace BusniessLayer
         }
         public List<EmailDTO> GetActiveEmails()
         {
-            using (var db = new DirectEmailContext())
+            using (var db = new DirectEmailerEntities())
             {
                 return (from e in db.OurEmailLists
                         where e.Active
@@ -63,7 +63,7 @@ namespace BusniessLayer
             {
                 if (id == 0)
                 {
-                    using (var db = new DirectEmailContext())
+                    using (var db = new DirectEmailerEntities())
                     {
                         OurEmailList record = new OurEmailList()
                         {
@@ -86,7 +86,7 @@ namespace BusniessLayer
                 }
                 else
                 {
-                    using (var db = new DirectEmailContext())
+                    using (var db = new DirectEmailerEntities())
                     {
                         var record = db.OurEmailLists.Where(x => x.Id == id).FirstOrDefault();
                         if (record != null)
@@ -122,7 +122,7 @@ namespace BusniessLayer
 
         public bool Delete(int id)
         {
-            using (var db = new DirectEmailContext())
+            using (var db = new DirectEmailerEntities())
             {
                 var record = db.OurEmailLists.Where(x => x.Id == id).FirstOrDefault();
 
@@ -134,7 +134,7 @@ namespace BusniessLayer
         }
         public void MarkActiveInActiveById(int id)
         {
-            using (var db = new DirectEmailContext())
+            using (var db = new DirectEmailerEntities())
             {
                 var record = db.OurEmailLists.Where(x => x.Id == id).FirstOrDefault();
                 if(record!= null)
@@ -147,7 +147,7 @@ namespace BusniessLayer
         }
         public void MarkAllActiveInActive(bool condition)
         {
-            using (var db = new DirectEmailContext())
+            using (var db = new DirectEmailerEntities())
             {
                 foreach (var item in db.OurEmailLists.ToList())
                 {

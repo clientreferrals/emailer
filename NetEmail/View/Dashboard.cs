@@ -32,8 +32,7 @@ namespace NetEmail.View
             try
             {
 
-                InitializeComponent();
-                pictureBox1.ImageLocation = "./Files/InboxEmailerLogo.png";
+                InitializeComponent(); 
                 emailSettingService = new EmailSettingService();
                 emailQueueLogService = new EmailQueueLogService();
                 applicationSettingServices = new ApplicationSettingServices();

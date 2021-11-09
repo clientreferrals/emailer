@@ -13,10 +13,10 @@ namespace DataAccessLayer.DataBase
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class DirectEmailContext : DbContext
+    public partial class DirectEmailerEntities : DbContext
     {
-        public DirectEmailContext()
-            : base("name=DirectEmailContext")
+        public DirectEmailerEntities()
+            : base("name=DirectEmailerEntities")
         {
         }
     
@@ -36,6 +36,7 @@ namespace DataAccessLayer.DataBase
         public DbSet<NotAllowedEmail> NotAllowedEmails { get; set; }
         public DbSet<OurEmailList> OurEmailLists { get; set; }
         public DbSet<OurEmailListMaxPerDay> OurEmailListMaxPerDays { get; set; }
+        public DbSet<sysdiagram> sysdiagrams { get; set; }
         public DbSet<ValidEmailAddress> ValidEmailAddresses { get; set; }
     }
 }

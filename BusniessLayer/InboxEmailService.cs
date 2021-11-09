@@ -78,7 +78,7 @@ namespace BusniessLayer
         }
         private bool SaveUpdateEmail(ViewEmailDto input)
         {
-            using (var db = new DirectEmailContext())
+            using (var db = new DirectEmailerEntities())
             {
                 InboxEmail record = db.InboxEmails.Where(x => x.OurEmailAddress == input.OurEmailAddress
 
@@ -129,7 +129,7 @@ namespace BusniessLayer
         {
             try
             {
-                using (var db = new DirectEmailContext())
+                using (var db = new DirectEmailerEntities())
                 {
                     List<InboxEmail> records = db.InboxEmails
                         .Where(x => x.OurEmailAddress == address

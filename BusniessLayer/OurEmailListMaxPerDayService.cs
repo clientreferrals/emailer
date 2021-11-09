@@ -8,7 +8,7 @@ namespace BusniessLayer
     {
         public bool AddUpdate(int emailId)
         {
-            using (var db = new DirectEmailContext())
+            using (var db = new DirectEmailerEntities())
             {
                 var entity = (from e in db.OurEmailListMaxPerDays
                               where e.EmailId == emailId
@@ -35,7 +35,7 @@ namespace BusniessLayer
         }
         public void ResetCount()
         {
-            using (var db = new DirectEmailContext())
+            using (var db = new DirectEmailerEntities())
             {
                 var entities = (from e in db.OurEmailListMaxPerDays 
                               select e).ToList();
@@ -69,7 +69,7 @@ namespace BusniessLayer
         public int GetSentCount(int emailId)
         {
 
-            using (var db = new DirectEmailContext())
+            using (var db = new DirectEmailerEntities())
             {
                 return (from e in db.OurEmailListMaxPerDays
                         where e.EmailId == emailId

@@ -10,7 +10,7 @@ namespace BusniessLayer
         public List<string> GetNotAllowList()
         {
             List<string> returnList = new List<string>();
-            using (var db = new DirectEmailContext())
+            using (var db = new DirectEmailerEntities())
             {
                 returnList = db.NotAllowedEmails.Select(x => x.NotAllowedString).ToList();
             }
@@ -19,7 +19,7 @@ namespace BusniessLayer
         public List<string> GetValidEmails()
         {
             List<string> returnList = new List<string>();
-            using (var db = new DirectEmailContext())
+            using (var db = new DirectEmailerEntities())
             {
                 returnList = db.ValidEmailAddresses.Select(x => x.ValidEmailAddresses).ToList();
             }
@@ -28,7 +28,7 @@ namespace BusniessLayer
 
         public void SaveNewRecord(string text, bool condition)
         {
-            using (var db = new DirectEmailContext())
+            using (var db = new DirectEmailerEntities())
             {
                 ValidEmailAddress record = db.ValidEmailAddresses.Where(x => x.ValidEmailAddresses == text).FirstOrDefault();
                 if (record == null)

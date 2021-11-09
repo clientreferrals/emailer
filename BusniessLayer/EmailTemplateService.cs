@@ -11,7 +11,7 @@ namespace BusniessLayer
 
         public List<EmailTemplate> GetTemplates()
         {
-            using (var db = new DirectEmailContext())
+            using (var db = new DirectEmailerEntities())
             {
                 return db.EmailTemplates.Select(x=>x).ToList();
 
@@ -27,7 +27,7 @@ namespace BusniessLayer
 
             if (id == 0)
             {
-                using (var db = new DirectEmailContext())
+                using (var db = new DirectEmailerEntities())
                 {
 
                     EmailTemplate record = new EmailTemplate()
@@ -45,7 +45,7 @@ namespace BusniessLayer
             }
             else
             {
-                using (var db = new DirectEmailContext())
+                using (var db = new DirectEmailerEntities())
                 {
                     var record = db.EmailTemplates.Where(x => x.Id == id).FirstOrDefault();
 
@@ -62,7 +62,7 @@ namespace BusniessLayer
 
         public bool Delete(int id)
         {
-            using (var db = new DirectEmailContext())
+            using (var db = new DirectEmailerEntities())
             {
                 var record = db.EmailTemplates.Where(x => x.Id == id).FirstOrDefault();
 
