@@ -21,6 +21,7 @@ namespace DataAccessLayer.DataBase
         public string FromEmailAddress { get; set; }
         public string Body { get; set; }
         public string CurrentUserEmail { get; set; }
+        public string OurEmailAddress { get; set; }
         public int Uid { get; set; }
         public System.DateTime CreatedDateTime { get; set; }
         public Nullable<System.DateTime> EditedDateTime { get; set; }

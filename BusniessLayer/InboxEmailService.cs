@@ -17,7 +17,6 @@ namespace BusniessLayer
         private readonly BlockListEmailService blockListEmailService;
         private readonly List<BlockListEmailDto> blackListEmailRecords = new List<BlockListEmailDto>();
 
-        private int perEmailCount = 25;
         public InboxEmailService()
         {
             blockListEmailService = new BlockListEmailService();
@@ -38,9 +37,7 @@ namespace BusniessLayer
                         SearchCondition searchTo = SearchCondition.SentBefore(DateTime.Now.AddDays(1));
 
                         IEnumerable<uint> uids = client.Search(searchFrom.And(searchTo));
-                        List<uint> newList = uids.Skip(0).Take(perEmailCount).ToList();
-
-                        foreach (var uid in newList)
+                        foreach (var uid in uids)
                         {
                             MailMessage mailMessage = client.GetMessage(uid);
                             if (blackListEmailRecords.Where(x => x.EmailAddress == mailMessage.From.Address).Any())
@@ -55,8 +52,8 @@ namespace BusniessLayer
                                     DateOfEmail = mailMessage.Date(),
                                     Subject = mailMessage.Subject,
                                     FromEmailAddress = mailMessage.From.Address.ToString(),
+                                    OurEmailAddress = item.Address,
                                     Body = mailMessage.Body,
-
                                     CurrentUserEmail = item,
                                     UID = uid,
                                 };
@@ -81,62 +78,63 @@ namespace BusniessLayer
         }
         private bool SaveUpdateEmail(ViewEmailDto input)
         {
-            try
+            using (var db = new DirectEmailContext())
             {
-                using (var db = new DirectEmailContext())
+                InboxEmail record = db.InboxEmails.Where(x => x.OurEmailAddress == input.OurEmailAddress
+
+                && x.Uid == input.UID).FirstOrDefault();
+
+                var encodedCurrentUserEmail = new JavaScriptSerializer().Serialize(input.CurrentUserEmail);
+                MailInDatabase mailInDatabase = new MailInDatabase()
                 {
-                    InboxEmail record = db.InboxEmails.Where(x => x.FromEmailAddress == input.FromEmailAddress
+                    DateTimeOfEmail = input.CurrentCompleteEmail.Date(),
+                    Subject = input.CurrentCompleteEmail.Subject
+                };
+                var encodedCurrentCompleteEmail = new JavaScriptSerializer().Serialize(mailInDatabase);
 
-                    && x.Uid == input.UID).FirstOrDefault();
-
-                    var encodedCurrentUserEmail = new JavaScriptSerializer().Serialize(input.CurrentUserEmail);
-                    var encodedCurrentCompleteEmail = new JavaScriptSerializer().Serialize(input.CurrentCompleteEmail);
-
-                    if (record == null)
+                if (record == null)
+                {
+                    record = new InboxEmail()
                     {
-                        record = new InboxEmail()
-                        {
-                            FromEmailAddress = input.FromEmailAddress,
-                            Body = input.Body,
-                            CurrentUserEmail = encodedCurrentUserEmail,
-                            CurrentEmail = encodedCurrentCompleteEmail,
-                            DateEmail = input.DateOfEmail,
-                            Subject = input.Subject,
-                            Uid = (int)input.UID,
-                            CreatedDateTime = DateTime.Now,
-                        };
-                        db.InboxEmails.Add(record);
-                    }
-                    else
-                    {
-                        record.FromEmailAddress = input.FromEmailAddress;
-                        record.Body = input.Body;
-                        record.CurrentUserEmail = encodedCurrentUserEmail;
-                        record.CurrentEmail = encodedCurrentCompleteEmail;
-                        record.DateEmail = input.DateOfEmail;
-                        record.Subject = input.Subject;
-                        record.Uid = (int)input.UID;
-                        record.EditedDateTime = DateTime.Now;
-                    }
-
-                    db.SaveChanges();
-                    return true;
+                        FromEmailAddress = input.FromEmailAddress,
+                        Body = input.Body,
+                        CurrentUserEmail = encodedCurrentUserEmail,
+                        CurrentEmail = encodedCurrentCompleteEmail,
+                        DateEmail = input.DateOfEmail,
+                        OurEmailAddress = input.OurEmailAddress,
+                        Subject = input.Subject,
+                        Uid = (int)input.UID,
+                        CreatedDateTime = DateTime.Now,
+                    };
+                    db.InboxEmails.Add(record);
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                return false;
-            }
+                else
+                {
+                    record.FromEmailAddress = input.FromEmailAddress;
+                    record.OurEmailAddress = input.OurEmailAddress;
+                    record.Body = input.Body;
+                    record.CurrentUserEmail = encodedCurrentUserEmail;
+                    record.CurrentEmail = encodedCurrentCompleteEmail;
+                    record.DateEmail = input.DateOfEmail;
+                    record.Subject = input.Subject;
+                    record.Uid = (int)input.UID;
+                    record.EditedDateTime = DateTime.Now;
+                }
 
+                db.SaveChanges();
+                return true;
+            }
         }
-        public List<ViewEmailDto> GetEmails()
+        public List<ViewEmailDto> GetEmailOfRange(string address, DateTime fromDateTime, DateTime toDateTime)
         {
             try
             {
                 using (var db = new DirectEmailContext())
                 {
-                    List<InboxEmail> records = db.InboxEmails.ToList();
+                    List<InboxEmail> records = db.InboxEmails
+                        .Where(x => x.OurEmailAddress == address
+                        && x.DateEmail >= fromDateTime
+                        && x.DateEmail <= toDateTime).ToList();
                     List<ViewEmailDto> returnList = new List<ViewEmailDto>();
                     foreach (var item in records)
                     {
@@ -169,6 +167,7 @@ namespace BusniessLayer
             }
 
         }
+
 
     }
 

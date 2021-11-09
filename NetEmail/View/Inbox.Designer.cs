@@ -31,15 +31,10 @@ namespace DirectEmailResults.View
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Inbox));
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.rowNoTextBox = new System.Windows.Forms.TextBox();
-            this.viewEmailButton = new System.Windows.Forms.Button();
-            this.failedCount = new System.Windows.Forms.Label();
             this.viewLogsButton = new System.Windows.Forms.Button();
             this.errorRichTextBox = new System.Windows.Forms.RichTextBox();
             this.toDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.fromDateTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.perEmailCountTextBox = new System.Windows.Forms.TextBox();
-            this.totalLabel = new System.Windows.Forms.Label();
             this.downloadLablel = new System.Windows.Forms.Label();
             this.downloadEmailButton = new System.Windows.Forms.Button();
             this.dataGridEmails = new System.Windows.Forms.DataGridView();
@@ -61,15 +56,10 @@ namespace DirectEmailResults.View
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.rowNoTextBox);
-            this.groupBox2.Controls.Add(this.viewEmailButton);
-            this.groupBox2.Controls.Add(this.failedCount);
             this.groupBox2.Controls.Add(this.viewLogsButton);
             this.groupBox2.Controls.Add(this.errorRichTextBox);
             this.groupBox2.Controls.Add(this.toDateTimePicker);
             this.groupBox2.Controls.Add(this.fromDateTimePicker);
-            this.groupBox2.Controls.Add(this.perEmailCountTextBox);
-            this.groupBox2.Controls.Add(this.totalLabel);
             this.groupBox2.Controls.Add(this.downloadLablel);
             this.groupBox2.Controls.Add(this.downloadEmailButton);
             this.groupBox2.Controls.Add(this.dataGridEmails);
@@ -79,33 +69,6 @@ namespace DirectEmailResults.View
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Inbox";
-            // 
-            // rowNoTextBox
-            // 
-            this.rowNoTextBox.Location = new System.Drawing.Point(312, 21);
-            this.rowNoTextBox.Name = "rowNoTextBox";
-            this.rowNoTextBox.Size = new System.Drawing.Size(100, 20);
-            this.rowNoTextBox.TabIndex = 9;
-            this.rowNoTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rowNoTextBox_KeyPress);
-            // 
-            // viewEmailButton
-            // 
-            this.viewEmailButton.Location = new System.Drawing.Point(418, 19);
-            this.viewEmailButton.Name = "viewEmailButton";
-            this.viewEmailButton.Size = new System.Drawing.Size(135, 23);
-            this.viewEmailButton.TabIndex = 8;
-            this.viewEmailButton.Text = "View Email";
-            this.viewEmailButton.UseVisualStyleBackColor = true;
-            this.viewEmailButton.Click += new System.EventHandler(this.viewEmailButton_Click);
-            // 
-            // failedCount
-            // 
-            this.failedCount.AutoSize = true;
-            this.failedCount.Location = new System.Drawing.Point(129, 24);
-            this.failedCount.Name = "failedCount";
-            this.failedCount.Size = new System.Drawing.Size(13, 13);
-            this.failedCount.TabIndex = 7;
-            this.failedCount.Text = "0";
             // 
             // viewLogsButton
             // 
@@ -140,25 +103,6 @@ namespace DirectEmailResults.View
             this.fromDateTimePicker.Size = new System.Drawing.Size(192, 20);
             this.fromDateTimePicker.TabIndex = 2;
             // 
-            // perEmailCountTextBox
-            // 
-            this.perEmailCountTextBox.Location = new System.Drawing.Point(177, 21);
-            this.perEmailCountTextBox.Name = "perEmailCountTextBox";
-            this.perEmailCountTextBox.Size = new System.Drawing.Size(100, 20);
-            this.perEmailCountTextBox.TabIndex = 1;
-            this.perEmailCountTextBox.Text = "25";
-            this.perEmailCountTextBox.TextChanged += new System.EventHandler(this.perEmailCountTextBox_TextChanged);
-            this.perEmailCountTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.perEmailCountTextBox_KeyPress);
-            // 
-            // totalLabel
-            // 
-            this.totalLabel.AutoSize = true;
-            this.totalLabel.Location = new System.Drawing.Point(293, 24);
-            this.totalLabel.Name = "totalLabel";
-            this.totalLabel.Size = new System.Drawing.Size(13, 13);
-            this.totalLabel.TabIndex = 4;
-            this.totalLabel.Text = "0";
-            // 
             // downloadLablel
             // 
             this.downloadLablel.AutoSize = true;
@@ -166,16 +110,7 @@ namespace DirectEmailResults.View
             this.downloadLablel.Name = "downloadLablel";
             this.downloadLablel.Size = new System.Drawing.Size(0, 13);
             this.downloadLablel.TabIndex = 4;
-            // 
-            // downloadEmailButton
-            // 
-            this.downloadEmailButton.Location = new System.Drawing.Point(418, 62);
-            this.downloadEmailButton.Name = "downloadEmailButton";
-            this.downloadEmailButton.Size = new System.Drawing.Size(135, 23);
-            this.downloadEmailButton.TabIndex = 4;
-            this.downloadEmailButton.Text = "Download";
-            this.downloadEmailButton.UseVisualStyleBackColor = true;
-            this.downloadEmailButton.Click += new System.EventHandler(this.refreshEmails_Click);
+           
             // 
             // dataGridEmails
             // 
@@ -311,13 +246,11 @@ namespace DirectEmailResults.View
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DataGridView dataGridEmails;
         private System.Windows.Forms.Label downloadLablel;
-        private System.Windows.Forms.Label totalLabel;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button replyButton;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.WebBrowser webBrowser1;
-        private System.Windows.Forms.TextBox perEmailCountTextBox;
         private System.Windows.Forms.DateTimePicker toDateTimePicker;
         private System.Windows.Forms.DateTimePicker fromDateTimePicker;
         private System.Windows.Forms.Label userEmailAddressLabel;
@@ -327,9 +260,6 @@ namespace DirectEmailResults.View
         private System.Windows.Forms.WebBrowser viewEmailWebBrowser;
         private System.Windows.Forms.RichTextBox errorRichTextBox;
         private System.Windows.Forms.Button viewLogsButton;
-        private System.Windows.Forms.Label failedCount;
         private System.Windows.Forms.Button downloadEmailButton;
-        private System.Windows.Forms.Button viewEmailButton;
-        private System.Windows.Forms.TextBox rowNoTextBox;
     }
 }

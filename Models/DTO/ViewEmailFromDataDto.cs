@@ -1,15 +1,13 @@
-﻿
-using System;
-using System.Net.Mail;
+﻿using System;
 
 namespace Models.DTO
 {
-    public class ViewEmailDto
+
+    public class ViewEmailFromDataDto
     {
-        public int SrNo { get; set; }
-        public MailMessage CurrentCompleteEmail { get; set; }
+        public int SrNo { get; set; } 
         public EmailDTO CurrentUserEmail { get; set; }
-        public uint UID { get; set; } 
+        public uint UID { get; set; }
         public string FromEmailAddress { get; set; }
         public string OurEmailAddress { get; set; }
         public string Subject { get; set; }

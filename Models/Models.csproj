@@ -52,8 +52,10 @@
     <Compile Include="DTO\EmailLogs.cs" />
     <Compile Include="DTO\EmailQueueItem.cs" />
     <Compile Include="DTO\InboxLogsModel.cs" />
+    <Compile Include="DTO\MailInDatabase.cs" />
     <Compile Include="DTO\UploadCsvModel.cs" />
     <Compile Include="DTO\ViewEmailDto.cs" />
+    <Compile Include="DTO\ViewEmailFromDataDto.cs" />
     <Compile Include="DTO\ViewTemplateDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

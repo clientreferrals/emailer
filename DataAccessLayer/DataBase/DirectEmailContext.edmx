@@ -99,6 +99,7 @@
           <Property Name="FromEmailAddress" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Body" Type="varchar(max)" Nullable="false" />
           <Property Name="CurrentUserEmail" Type="varchar(max)" Nullable="false" />
+          <Property Name="OurEmailAddress" Type="varchar(max)" Nullable="false" />
           <Property Name="Uid" Type="int" Nullable="false" />
           <Property Name="CreatedDateTime" Type="datetime" Nullable="false" />
           <Property Name="EditedDateTime" Type="datetime" />
@@ -415,6 +416,7 @@
           <Property Name="FromEmailAddress" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Body" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="CurrentUserEmail" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="OurEmailAddress" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Uid" Type="Int32" Nullable="false" />
           <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="EditedDateTime" Type="DateTime" Precision="3" />
@@ -584,6 +586,7 @@
                 <ScalarProperty Name="EditedDateTime" ColumnName="EditedDateTime" />
                 <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
                 <ScalarProperty Name="Uid" ColumnName="Uid" />
+                <ScalarProperty Name="OurEmailAddress" ColumnName="OurEmailAddress" />
                 <ScalarProperty Name="CurrentUserEmail" ColumnName="CurrentUserEmail" />
                 <ScalarProperty Name="Body" ColumnName="Body" />
                 <ScalarProperty Name="FromEmailAddress" ColumnName="FromEmailAddress" />
