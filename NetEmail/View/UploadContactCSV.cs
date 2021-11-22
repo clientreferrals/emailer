@@ -102,12 +102,10 @@ namespace DirectEmailResults.View
                                         FromAlias = _fromAlias,
                                         Active = true,
                                         DailyLimit = 500,
-                                        Host = "", 
-                                        Port = 0,
-                                        IMAPHost ="",
-                                        IMAPPort = 0, 
-                                        
-                                        
+                                        Host = "smtp.gmail.com", 
+                                        Port = 587,
+                                        IMAPHost = "imap.gmail.com",
+                                        IMAPPort = 993,  
                                     };
                                     bool valid = true;
                                     if (notAllowedList.Any(x => _emailAddress.ToLower().Contains(x.ToLower())))
