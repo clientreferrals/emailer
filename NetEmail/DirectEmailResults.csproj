@@ -275,7 +275,9 @@
       <DependentUpon>ViewInboxLogs.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="DirectEmailResults_TemporaryKey.pfx" />
-    <None Include="Files\sample_contacts_csv_file.csv" />
+    <Content Include="Files\sample_contacts_csv_file.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
